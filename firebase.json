@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "target": "starmesh-site",
+    "public": "dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

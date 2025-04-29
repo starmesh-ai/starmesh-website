@@ -1,11 +1,183 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="StarMesh - Extract Zoom Calls to Data Warehouses">
+	<Navbar />
+	<main>
+		<div class="hero-section">
+			<div class="stars-container"></div>
+			<h1>
+				Extract Zoom Calls to <span class="dynamic-text">Databricks</span>
+			</h1>
+			<p>
+				Effortlessly integrate Zoom call data to unlock insights and streamline your analytics fast.
+			</p>
+			<button class="request-access-btn mt-8">
+				Request Access
+			</button>
+		</div>
+
+		<div class="how-it-works">
+			<h2 class="text-3xl font-bold text-center mb-8">How It Works</h2>
+			<div class="tabs flex justify-center gap-4">
+				<button class="tab-button active" onclick="showTab('databricks')">Databricks</button>
+				<button class="tab-button" onclick="showTab('snowflake')">Snowflake</button>
+				<button class="tab-button" onclick="showTab('bigquery')">BigQuery</button>
+			</div>
+			<div class="tab-content max-w-4xl mx-auto">
+				<div id="databricks" class="tab active">
+					<img src="/images/z2db.svg" alt="How it works with Databricks" class="w-full" />
+				</div>
+				<div id="snowflake" class="tab hidden">
+					<img src="/images/z2bq.svg" alt="How it works with Snowflake" class="w-full" />
+				</div>
+				<div id="bigquery" class="tab hidden">
+					<img src="/images/z2bq.svg" alt="How it works with BigQuery" class="w-full" />
+				</div>
+			</div>
+		</div>
+	</main>
 </Layout>
+
+<style>
+	.dynamic-text {
+		display: inline-block;
+		min-width: 160px;
+		text-align: left;
+		opacity: 1;
+		transform: translateY(0);
+		transition: opacity 0.3s, transform 0.3s;
+	}
+
+	.slide-out {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+
+	.slide-in {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.hero-section {
+		position: relative;
+		min-height: calc(100vh - 60px);
+		padding: 60px 20px;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+	}
+
+	.hero-section h1 {
+		font-size: clamp(2em, 5vw, 3.5em);
+		font-weight: 500;
+		margin: 1rem 0;
+		position: relative;
+		z-index: 1;
+		white-space: nowrap;
+	}
+
+	.hero-section p {
+		font-size: clamp(1.2em, 3vw, 1.5em);
+		color: #B3acf2;
+		max-width: 800px;
+		margin: 1rem auto;
+		position: relative;
+		z-index: 1;
+	}
+
+	.request-access-btn {
+		background: #8B5CF6;
+		color: white;
+		font-size: 1.1em;
+		padding: 0.75rem 2rem;
+		border-radius: 0.5rem;
+		border: none;
+		cursor: pointer;
+		transition: background-color 0.3s;
+		position: relative;
+		z-index: 1;
+	}
+
+	.request-access-btn:hover {
+		background: #7C3AED;
+	}
+
+	.tab {
+		display: none;
+	}
+
+	.tab.active {
+		display: block;
+	}
+</style>
+
+<script>
+	const names = ['Databricks', 'Snowflake', 'BigQuery'];
+	let index = 0;
+
+	function cycleNames() {
+		const dynamicText = document.querySelector('.dynamic-text');
+		if (!dynamicText) return;
+
+		dynamicText.classList.add('slide-out');
+
+		setTimeout(() => {
+			index = (index + 1) % names.length;
+			dynamicText.textContent = names[index];
+			dynamicText.classList.remove('slide-out');
+			dynamicText.classList.add('slide-in');
+		}, 300);
+
+		setTimeout(() => {
+			dynamicText.classList.remove('slide-in');
+		}, 600);
+	}
+
+	setInterval(cycleNames, 2000);
+
+	// Tab functionality
+	function showTab(tabId: string) {
+		// Hide all tabs
+		document.querySelectorAll('.tab').forEach(tab => {
+			tab.classList.add('hidden');
+			tab.classList.remove('active');
+		});
+
+		// Remove active class from all buttons
+		document.querySelectorAll('.tab-button').forEach(button => {
+			button.classList.remove('active');
+		});
+
+		// Show the selected tab
+		const activeTab = document.getElementById(tabId);
+		if (activeTab) {
+			activeTab.classList.remove('hidden');
+			activeTab.classList.add('active');
+		}
+
+		// Set the clicked button as active
+		const activeButton = document.querySelector(`.tab-button:nth-child(${names.indexOf(tabId.charAt(0).toUpperCase() + tabId.slice(1)) + 1})`);
+		if (activeButton) {
+			activeButton.classList.add('active');
+		}
+	}
+
+	// Add click handlers to buttons
+	document.addEventListener('DOMContentLoaded', () => {
+		document.querySelectorAll('.tab-button').forEach(button => {
+			button.addEventListener('click', (e) => {
+				const tabId = (e.target as HTMLElement).textContent?.toLowerCase() || 'databricks';
+				showTab(tabId);
+			});
+		});
+	});
+</script>

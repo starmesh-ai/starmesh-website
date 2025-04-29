@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "starmesh-dev"
+  },
+  "targets": {
+    "starmesh-dev": {
+      "hosting": {
+        "starmesh-site": [
+          "starmesh-site"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
