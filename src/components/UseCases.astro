@@ -1,0 +1,217 @@
+---
+const useCases = [
+  {
+    title: 'Data Analysts & Business Analysts',
+    icon: '📊',
+    description: 'Build and deploy data products faster with our intuitive interface and automated workflows.',
+    valueProps: [
+      'Ingest Zoom and Gong calls without writing code — no dependency on data engineers.',
+      'Get structured AI outputs instantly — topics, sentiment, objections, competitor mentions.',
+      'Works with your stack — BigQuery, Snowflake, Redshift, dbt, Looker, SQL.',
+      'Query call data like CRM or product data — finally make unstructured data explorable.',
+      'Cost-efficient and cloud-native — no surprise AI infra bills.'
+    ]
+  },
+  {
+    title: 'RevOps & SalesOps',
+    icon: '📈',
+    description: 'Get real-time insights into your sales and revenue data with our powerful analytics tools.',
+    valueProps: [
+      'Track objections across the pipeline — pricing, features, compliance, integrations.',
+      'Measure rep performance — objection handling, customer talk time, win-rate patterns.',
+      'Forecast with confidence — spot risk signals and expansion momentum from calls.',
+      'Build deal health scores — use real call data, not just CRM fields.'
+    ]
+  },
+  {
+    title: 'Customer Success',
+    icon: '🤝',
+    description: 'Understand your customers better with our comprehensive customer data platform.',
+    valueProps: [
+      'Detect churn risk early — based on pricing concerns, product complaints, or sentiment drops.',
+      'Monitor CSM performance at scale — objection resolution, conversation tone, consistency.',
+      'Flag key risk metrics per account — objections, unresolved concerns, escalations, competitor mentions.'
+    ]
+  },
+  {
+    title: 'Product & Engineering',
+    icon: '🧪',
+    description: 'Make data-driven decisions with our product analytics and experimentation platform.',
+    valueProps: [
+      'Identify top feature requests — straight from sales and CS calls.',
+      'Connect call insights to usage and account data — see whos saying what and why it matters.',
+      'Understand segments better — analyze requests and pain points by region, industry, or tier.',
+      'Catch onboarding friction early — before it becomes a support issue.'
+    ]
+  }
+];
+---
+
+<section class="use-cases-section">
+  <div class="container">
+    <h2>USE CASES</h2>
+    <h3>Built for analysts. Loved by ops, product, and revenue teams.</h3>
+
+    <div class="use-cases-accordion">
+      {useCases.map((useCase) => {
+        return (
+          <div class="use-case-item">
+            <button class="use-case-header" aria-expanded="false">
+              <div class="use-case-header-content">
+                <h4>{useCase.title}</h4>
+                <span class="use-case-description">{useCase.description}</span>
+              </div>
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="use-case-content" style="max-height: 0;">
+              <ul class="value-props-list">
+                {useCase.valueProps.map((prop) => {
+                  return <li>{prop}</li>;
+                })}
+              </ul>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .use-cases-section {
+    padding: 4rem 2rem;
+    background: #1a1b26;
+    color: #E4D6F5;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #E4D6F5;
+  }
+
+  h3 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    color: #E4D6F5;
+  }
+
+  .use-cases-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .use-case-item {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .use-case-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    cursor: pointer;
+    color: #E4D6F5;
+    text-align: left;
+  }
+
+  .use-case-header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+  }
+
+  .use-case-header-content h4 {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: #E4D6F5;
+  }
+
+  .use-case-header-content .use-case-description {
+    color: #bcb8d8;
+    font-size: 1.08rem;
+    margin-top: 0.25rem;
+    font-weight: 400;
+  }
+
+  .accordion-icon {
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+  }
+
+  .use-case-header[aria-expanded="true"] .accordion-icon {
+    transform: rotate(45deg);
+  }
+
+  .use-case-content {
+    padding: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .use-case-header[aria-expanded="true"] + .use-case-content {
+    padding: 1.5rem;
+  }
+
+  .value-props-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .value-props-list li {
+    color: #B3acf2;
+    opacity: 0.7;
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  .value-props-list li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #E4D6F5;
+  }
+
+  @media (max-width: 768px) {
+    h3 {
+      font-size: 2rem;
+    }
+  }
+</style>
+
+<script>
+  // Wait for the DOM to be ready
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.use-case-header').forEach(button => {
+      button.addEventListener('click', () => {
+        const expanded = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', !expanded);
+        
+        // Toggle the content visibility
+        const content = button.nextElementSibling;
+        if (content) {
+          content.style.maxHeight = expanded ? '0' : content.scrollHeight + 'px';
+        }
+      });
+    });
+  });
+</script>

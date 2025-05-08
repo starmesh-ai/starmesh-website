@@ -1,0 +1,99 @@
+---
+const painPoints = [
+  {
+    point: 'Blocked on Data Engineers',
+    effect: 'Data engineers are stretched thin, and delays mean lost time and missed opportunities.',
+  },
+  {
+    point: 'Difficult to explore unstructured call data',
+    effect: 'Unlike structured data, unstructured call data cant be explored, filtered, or understood using familiar tools.',
+  },
+  {
+    point: 'Manual tagging just doesn\'t work',
+    effect: 'Manually pulling out topics or entities is slow, inconsistent, and unscalable — it might work for 5 calls, but completely breaks down at 50.',
+  },
+  {
+    point: 'Its hard to join call data with other data',
+    effect: 'Without connecting what was said to what happened, you miss the voice-of-customer signals that explain your outcomes.',
+  },
+];
+---
+
+<section id="pain-points" class="painpoints-section">
+  <div class="painpoints-container">
+    <div class="painpoints-headline">Why is it so hard for data analysts and data engineers to unlock unstructured call data?</div>
+    <div class="painpoints-table-wrapper">
+      <table class="painpoints-table">
+        <tbody>
+          {painPoints.map((item, idx) => (
+            <tr class="painpoints-row">
+              <td class="painpoints-cause">{item.point}</td>
+              <td class="painpoints-effect">{item.effect}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<style>
+.painpoints-section {
+  background: #232435;
+  padding: 4rem 0 4.5rem 0;
+}
+.painpoints-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.painpoints-headline {
+  color: #E4D6F5;
+  font-size: 1.7rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  letter-spacing: 0.01em;
+}
+.painpoints-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+.painpoints-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 1.2rem;
+}
+.painpoints-row {
+  background: none;
+}
+.painpoints-cause {
+  color: #E4D6F5;
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  min-width: 220px;
+  max-width: 320px;
+  padding: 0.7rem 0.2rem 0.7rem 0;
+  vertical-align: top;
+}
+.painpoints-effect {
+  color: #B3acf2;
+  font-size: 1.03rem;
+  font-weight: 400;
+  line-height: 1.5;
+  opacity: 0.7;
+  max-width: 600px;
+  padding: 0.7rem 0 0.7rem 0.2rem;
+  vertical-align: top;
+}
+@media (max-width: 900px) {
+  .painpoints-cause, .painpoints-effect {
+    min-width: 0;
+    max-width: 100%;
+    font-size: 1rem;
+    padding: 0.5rem 0.2rem;
+  }
+}
+</style> 

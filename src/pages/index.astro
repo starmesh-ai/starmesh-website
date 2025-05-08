@@ -1,6 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
+import Pricing from '../components/Pricing.astro';
+import UseCases from '../components/UseCases.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import PainPoints from '../components/PainPoints.astro';
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
@@ -12,34 +16,28 @@ import Navbar from '../components/Navbar.astro';
 		<div class="hero-section">
 			<div class="stars-container"></div>
 			<h1>
-				Extract Zoom Calls to <span class="dynamic-text">Databricks</span>
+				Calls to customer insights<br/>
+				<span class="highlight">in under 5 minutes.</span>
 			</h1>
 			<p>
-				Effortlessly integrate Zoom call data to unlock insights and streamline your analytics fast.
+				Starmesh turns customer call recordings into insights that drive<br/>
+				churn reduction, NRR growth, and better forecasting.
 			</p>
-			<button class="request-access-btn mt-8">
-				Request Access
+			<button class="cta-button">
+				Start Free Trial
 			</button>
 		</div>
 
-		<div class="how-it-works">
-			<h2 class="text-3xl font-bold text-center mb-8">How It Works</h2>
-			<div class="tabs flex justify-center gap-4">
-				<button class="tab-button active" onclick="showTab('databricks')">Databricks</button>
-				<button class="tab-button" onclick="showTab('snowflake')">Snowflake</button>
-				<button class="tab-button" onclick="showTab('bigquery')">BigQuery</button>
-			</div>
-			<div class="tab-content max-w-4xl mx-auto">
-				<div id="databricks" class="tab active">
-					<img src="/images/z2db.svg" alt="How it works with Databricks" class="w-full" />
-				</div>
-				<div id="snowflake" class="tab hidden">
-					<img src="/images/z2bq.svg" alt="How it works with Snowflake" class="w-full" />
-				</div>
-				<div id="bigquery" class="tab hidden">
-					<img src="/images/z2bq.svg" alt="How it works with BigQuery" class="w-full" />
-				</div>
-			</div>
+		<HowItWorks />
+
+		<PainPoints />
+
+		<UseCases />
+
+		<Pricing />
+
+		<div id="contact" class="contact-section">
+			<!-- We'll add contact content later -->
 		</div>
 	</main>
 </Layout>
@@ -77,46 +75,294 @@ import Navbar from '../components/Navbar.astro';
 	}
 
 	.hero-section h1 {
-		font-size: clamp(2em, 5vw, 3.5em);
-		font-weight: 500;
+		font-size: clamp(2.5em, 5vw, 4em);
+		font-weight: 600;
 		margin: 1rem 0;
 		position: relative;
 		z-index: 1;
-		white-space: nowrap;
+		line-height: 1.2;
+	}
+
+	.hero-section h1 .highlight {
+		background: linear-gradient(90deg, #E4D6F5 0%, #8B5CF6 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		font-weight: 700;
 	}
 
 	.hero-section p {
-		font-size: clamp(1.2em, 3vw, 1.5em);
+		font-size: clamp(1.2em, 2vw, 1.4em);
 		color: #B3acf2;
 		max-width: 800px;
-		margin: 1rem auto;
+		margin: 1.5rem auto;
 		position: relative;
 		z-index: 1;
+		line-height: 1.6;
 	}
 
-	.request-access-btn {
+	.cta-button {
 		background: #8B5CF6;
 		color: white;
-		font-size: 1.1em;
-		padding: 0.75rem 2rem;
+		font-size: 1.2em;
+		padding: 1rem 2.5rem;
 		border-radius: 0.5rem;
 		border: none;
 		cursor: pointer;
-		transition: background-color 0.3s;
+		transition: all 0.3s ease;
+		font-weight: 500;
+		margin-top: 2rem;
 		position: relative;
 		z-index: 1;
 	}
 
-	.request-access-btn:hover {
+	.cta-button:hover {
 		background: #7C3AED;
+		transform: translateY(-2px);
+		box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
 	}
 
 	.tab {
 		display: none;
+		border-radius: 1rem;
+		padding: 2rem;
 	}
 
 	.tab.active {
 		display: block;
+	}
+
+	.tab-content {
+		background: rgba(255, 255, 255, 0.05);
+		border-radius: 1.5rem;
+		padding: 1.5rem;
+		margin-top: 2rem;
+		border: 1px solid rgba(255, 255, 255, 0.15);
+	}
+
+	.tab-content img {
+		filter: invert(1) brightness(2);
+		max-width: 100%;
+		height: auto;
+	}
+
+	.elt-section {
+		padding: 4rem 1rem;
+		background: rgba(255, 255, 255, 0.02);
+		border-radius: 2rem;
+		margin: 4rem auto;
+		max-width: 1200px;
+	}
+
+	.elt-container {
+		display: flex;
+		justify-content: space-between;
+		align-items: stretch;
+		gap: 2rem;
+		padding: 2rem;
+	}
+
+	.elt-stage {
+		flex: 1;
+		background: rgba(255, 255, 255, 0.05);
+		border-radius: 1rem;
+		padding: 2rem;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		transition: all 0.3s ease;
+	}
+
+	.elt-stage:hover {
+		transform: translateY(-5px);
+		border-color: rgba(255, 255, 255, 0.2);
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+	}
+
+	.stage-header {
+		text-align: center;
+		margin-bottom: 2rem;
+	}
+
+	.flow-arrow {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 2rem;
+		color: rgba(255, 255, 255, 0.3);
+		padding: 0 1rem;
+	}
+
+	.stage-content {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.data-type, .signal {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		padding: 0.75rem;
+		background: rgba(255, 255, 255, 0.05);
+		border-radius: 0.5rem;
+		transition: all 0.2s ease;
+	}
+
+	.data-type:hover, .signal:hover {
+		background: rgba(255, 255, 255, 0.1);
+	}
+
+	.destinations {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+	}
+
+	.destination {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 1rem;
+		background: rgba(255, 255, 255, 0.05);
+		border-radius: 0.5rem;
+		transition: all 0.2s ease;
+	}
+
+	.destination:hover {
+		background: rgba(255, 255, 255, 0.1);
+	}
+
+	.destination img {
+		width: 40px;
+		height: 40px;
+		filter: brightness(0) invert(1);
+	}
+
+	@media (max-width: 768px) {
+		.elt-container {
+			flex-direction: column;
+		}
+
+		.flow-arrow {
+			transform: rotate(90deg);
+			padding: 1rem 0;
+		}
+	}
+
+	.pain-points-section {
+		padding: 6rem 2rem;
+		background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(139, 92, 246, 0.05) 100%);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.section-header {
+		max-width: 800px;
+		margin: 0 auto 4rem;
+	}
+
+	.problems-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: 2rem;
+		max-width: 1200px;
+		margin: 0 auto 4rem;
+		padding: 0 1rem;
+	}
+
+	.problem-card {
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 1rem;
+		padding: 2rem;
+		transition: all 0.3s ease;
+	}
+
+	.problem-card:hover {
+		transform: translateY(-5px);
+		border-color: rgba(139, 92, 246, 0.3);
+		box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1);
+	}
+
+	.problem-card .icon {
+		font-size: 2rem;
+		margin-bottom: 1rem;
+	}
+
+	.problem-card h3 {
+		font-size: 1.25rem;
+		font-weight: 600;
+		margin-bottom: 1rem;
+		background: linear-gradient(90deg, #E4D6F5 0%, #8B5CF6 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+
+	.problem-card p {
+		color: #B3acf2;
+		line-height: 1.6;
+	}
+
+	.cta-container {
+		max-width: 800px;
+		margin: 4rem auto 0;
+		padding: 0 1rem;
+	}
+
+	.cta-card {
+		background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(139, 92, 246, 0.2) 100%);
+		border-radius: 1.5rem;
+		padding: 3rem;
+		text-align: center;
+		border: 1px solid rgba(139, 92, 246, 0.2);
+	}
+
+	.cta-content {
+		margin-bottom: 2rem;
+	}
+
+	.cta-content h3 {
+		font-size: 1.5rem;
+		font-weight: 600;
+		line-height: 1.4;
+	}
+
+	.cta-content h3:first-child {
+		color: #B3acf2;
+		margin-bottom: 0.5rem;
+	}
+
+	.cta-content h3:last-child {
+		color: #E4D6F5;
+	}
+
+	.cta-button {
+		background: #8B5CF6;
+		color: white;
+		font-size: 1.1em;
+		padding: 1rem 2.5rem;
+		border-radius: 0.5rem;
+		border: none;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		font-weight: 500;
+	}
+
+	.cta-button:hover {
+		background: #7C3AED;
+		transform: translateY(-2px);
+	}
+
+	@media (max-width: 768px) {
+		.problems-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.cta-card {
+			padding: 2rem;
+		}
+
+		.section-header h2 {
+			font-size: 2rem;
+		}
 	}
 </style>
 

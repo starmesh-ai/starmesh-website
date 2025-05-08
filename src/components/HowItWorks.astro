@@ -1,0 +1,549 @@
+---
+const steps = [
+  {
+    id: 1,
+    title: 'Connect your data sources',
+    description: 'Easily connect to your existing data sources, whether they are databases, APIs, or files.',
+  },
+  {
+    id: 2,
+    title: 'Transform and model your data',
+    description: 'Use our intuitive interface to transform and model your data according to your needs.',
+  },
+  {
+    id: 3,
+    title: 'Deploy and scale',
+    description: 'Deploy your data products with a single click and scale them as your needs grow.',
+  },
+  {
+    id: 4,
+    title: 'Monitor and manage',
+    description: 'Monitor your data products in real-time and manage them through our comprehensive dashboard.',
+  },
+];
+---
+
+<!-- Stardust Data Flow Interactive Graphic -->
+<h2 class="stardust-title">How it works</h2>
+<div class="stardust-subtext">Easily extract, load and AI transform your unstructured data such as call transcripts, video and audio files</div>
+<div id="stardust-graphic" class="stardust-graphic">
+  <div class="stardust-row">
+    <!-- Left: Source Apps -->
+    <div class="stardust-source-list">
+      <div class="stardust-source" data-source="zoom">Zoom</div>
+      <div class="stardust-source" data-source="gong">Gong</div>
+      <div class="stardust-source" data-source="teams">Teams</div>
+    </div>
+    <!-- Center: Starmesh -->
+    <div class="stardust-starmesh">
+      <div class="starmesh-label">Starmesh</div>
+      <div class="starmesh-components">
+        <div class="starmesh-component" data-component="connector">Connector</div>
+        <div class="starmesh-component" data-component="intelligence">Intelligence</div>
+      </div>
+    </div>
+    <!-- Right: GCP -->
+    <div class="stardust-gcp">
+      <div class="gcp-label">Google Cloud</div>
+      <div class="gcp-boxes">
+        <div class="gcp-box" data-gcp="bigquery">BigQuery<br/><span class="gcp-meta"><span class="gcp-meta-metadata">Metadata</span>, <span class="gcp-meta-topics">Topics</span>, <span class="gcp-meta-sentiment">Sentiments</span>, <span class="gcp-meta-entities">Entities</span></span></div>
+        <div class="gcp-box" data-gcp="gcs">Cloud Storage<br/><span class="gcp-meta"><span class="gcp-meta-transcripts">Transcripts</span>, <span class="gcp-meta-media">Video & Audio Files</span></span></div>
+      </div>
+    </div>
+  </div>
+  <!-- Canvas for dotted lines and stardust animation -->
+  <canvas id="stardust-canvas" width="1200" height="300" style="position:absolute; left:0; top:0; pointer-events:none;"></canvas>
+</div>
+
+<style>
+.stardust-graphic {
+  position: relative;
+  width: 100%;
+  min-height: 340px;
+  margin: 4.5rem 0 4.5rem 0;
+}
+.stardust-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+.stardust-source-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-left: 60px; /* Increased gutter on left */
+}
+.stardust-source {
+  background: linear-gradient(90deg, #3A4B8F 0%, #6D5DD3 100%);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  padding: 1rem 2.5rem;
+  margin: 0.5rem 0;
+  box-shadow: 0 2px 12px 0 rgba(139,92,246,0.10);
+  cursor: pointer;
+  font-size: 1.1rem;
+  text-align: center;
+  transition: box-shadow 0.2s;
+}
+.stardust-source:hover {
+  box-shadow: 0 4px 24px 0 rgba(139,92,246,0.25);
+}
+.stardust-starmesh {
+  background: linear-gradient(120deg, #2B2D3E 60%, #8B5CF6 100%);
+  border-radius: 1.5rem;
+  padding: 1.5rem 2.5rem;
+  min-width: 200px;
+  box-shadow: 0 2px 16px 0 rgba(139,92,246,0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  border: 2px solid #B3acf2;
+  box-shadow: 0 0 24px 0 #8B5CF6, 0 0 0 4px rgba(139,92,246,0.08);
+}
+.starmesh-label {
+  color: #E4D6F5;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.starmesh-components {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+.starmesh-component {
+  background: #322e4f;
+  color: #B3acf2;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  text-align: center;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.starmesh-component:hover {
+  background: #8B5CF6;
+  color: #fff;
+}
+.stardust-gcp {
+  background: linear-gradient(90deg, #3A4B8F 0%, #6D5DD3 100%);
+  border-radius: 1.5rem;
+  padding: 0.7rem 0.7rem;
+  min-width: 90px;
+  box-shadow: 0 2px 16px 0 rgba(50,69,255,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 60px;
+  font-size: 0.95rem;
+  min-height: 160px;
+  max-width: 180px;
+}
+.gcp-label {
+  color: #E4D6F5;
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.gcp-boxes {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.gcp-box[data-gcp="gcs"] {
+  max-width: 120px;
+  margin: 0 auto;
+}
+.gcp-box {
+  background: #322e4f;
+  color: #B3acf2;
+  border-radius: 0.75rem;
+  padding: 0.4rem 0.7rem;
+  text-align: center;
+  font-weight: 500;
+  font-size: 0.92rem;
+  max-width: 120px;
+  min-width: 100px;
+}
+.gcp-meta {
+  display: block;
+  font-size: 0.72rem;
+  color: #8B5CF6;
+  margin-top: 0.25rem;
+}
+.gcp-meta-glow {
+  color: #fff;
+  text-shadow: 0 0 8px #8B5CF6, 0 0 16px #E4D6F5;
+  font-weight: 700;
+  transition: color 0.2s, text-shadow 0.2s;
+}
+.gcp-meta-glow-intel {
+  color: #fff;
+  text-shadow: 0 0 8px #E4D6F5, 0 0 16px #8B5CF6;
+  font-weight: 700;
+  transition: color 0.2s, text-shadow 0.2s;
+}
+@media (max-width: 900px) {
+  .stardust-row {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .stardust-starmesh, .stardust-gcp {
+    min-width: 160px;
+    padding: 1rem 1.2rem;
+  }
+}
+.stardust-dot {
+  display: none;
+}
+.stardust-static {
+  stroke: #B3acf2;
+  stroke-width: 2;
+  stroke-dasharray: 2,10;
+  stroke-linecap: round;
+  opacity: 0.7;
+}
+.stardust-anim {
+  stroke: #8B5CF6;
+  stroke-width: 4;
+  stroke-dasharray: 2,10;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 8px #8B5CF6) drop-shadow(0 0 16px #E4D6F5);
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+}
+#stardust-canvas {
+  width: 100%;
+  height: 300px;
+  z-index: 2;
+}
+.stardust-title {
+  color: #E4D6F5;
+  font-size: 2.1rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.01em;
+}
+.stardust-subtext {
+  color: #B3acf2;
+  font-size: 1.08rem;
+  text-align: center;
+  margin-bottom: 1.7rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+
+<script>
+function getEdgePoint(from, to, box) {
+  // Get the intersection of the line (from->to) with the box edge
+  const w = box.width / 2;
+  const h = box.height / 2;
+  const cx = box.x + w;
+  const cy = box.y + h;
+  const dx = to.x - from.x;
+  const dy = to.y - from.y;
+  // Calculate intersection with each side
+  let tMin = 1;
+  let edgeX = to.x, edgeY = to.y;
+  // Left/right
+  if (dx !== 0) {
+    let t1 = (cx - w - from.x) / dx;
+    let t2 = (cx + w - from.x) / dx;
+    [t1, t2].forEach(t => {
+      if (t > 0 && t < tMin) {
+        const y = from.y + t * dy;
+        if (y >= cy - h && y <= cy + h) {
+          tMin = t;
+          edgeX = from.x + t * dx;
+          edgeY = y;
+        }
+      }
+    });
+  }
+  // Top/bottom
+  if (dy !== 0) {
+    let t1 = (cy - h - from.y) / dy;
+    let t2 = (cy + h - from.y) / dy;
+    [t1, t2].forEach(t => {
+      if (t > 0 && t < tMin) {
+        const x = from.x + t * dx;
+        if (x >= cx - w && x <= cx + w) {
+          tMin = t;
+          edgeX = x;
+          edgeY = from.y + t * dy;
+        }
+      }
+    });
+  }
+  return { x: edgeX, y: edgeY };
+}
+
+function drawDottedLineWithFlow(ctx, x1, y1, x2, y2, dotRadius, gap, color, flowT = null, tailLength = 6) {
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+  const steps = Math.floor(dist / (dotRadius * 2 + gap));
+  for (let i = 0; i <= steps; i++) {
+    const t = i / steps;
+    const x = x1 + dx * t;
+    const y = y1 + dy * t;
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(x, y, dotRadius, 0, 2 * Math.PI);
+    ctx.closePath();
+    // Stardust flow effect
+    let dotColor = color;
+    let alpha = 0.7;
+    let glow = 0;
+    if (flowT !== null) {
+      // Find distance from head (modulo 1 for wrap-around)
+      let d = t - flowT;
+      if (d < 0) d += 1;
+      d = d * steps;
+      if (d < 0.5) {
+        // Head dot
+        dotColor = '#fff0fa';
+        alpha = 1;
+        glow = 24;
+      } else if (d < tailLength) {
+        // Trailing dots
+        dotColor = '#E4D6F5';
+        alpha = 0.7 + 0.3 * (1 - d / tailLength);
+        glow = 10 * (1 - d / tailLength);
+      } else {
+        // Static dots (make all the same color)
+        dotColor = '#B3acf2';
+        alpha = 0.7;
+        glow = 0;
+      }
+    } else {
+      // Static dots (make all the same color)
+      dotColor = '#B3acf2';
+      alpha = 0.7;
+      glow = 0;
+    }
+    ctx.fillStyle = dotColor;
+    ctx.globalAlpha = alpha;
+    if (glow > 0) {
+      ctx.shadowColor = dotColor;
+      ctx.shadowBlur = glow;
+    }
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  const canvas = document.getElementById('stardust-canvas');
+  const ctx = canvas.getContext('2d');
+  const sources = [
+    document.querySelector('.stardust-source[data-source="zoom"]'),
+    document.querySelector('.stardust-source[data-source="gong"]'),
+    document.querySelector('.stardust-source[data-source="teams"]'),
+  ];
+  const starmesh = document.querySelector('.stardust-starmesh');
+  const connector = document.querySelector('.starmesh-component[data-component="connector"]');
+  const intelligence = document.querySelector('.starmesh-component[data-component="intelligence"]');
+  const gcpBigQuery = document.querySelector('.gcp-box[data-gcp="bigquery"]');
+  const gcpGCS = document.querySelector('.gcp-box[data-gcp="gcs"]');
+
+  function getBoxRect(el, canvas) {
+    const rect = el.getBoundingClientRect();
+    const canvasRect = canvas.getBoundingClientRect();
+    return {
+      x: rect.left - canvasRect.left,
+      y: rect.top - canvasRect.top,
+      width: rect.width,
+      height: rect.height
+    };
+  }
+
+  function drawStatic() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Source to Connector
+    sources.forEach(source => {
+      const srcBox = getBoxRect(source, canvas);
+      const dstBox = getBoxRect(connector, canvas);
+      const srcCenter = { x: srcBox.x + srcBox.width / 2, y: srcBox.y + srcBox.height / 2 };
+      const dstCenter = { x: dstBox.x + dstBox.width / 2, y: dstBox.y + dstBox.height / 2 };
+      // Go to left edge of connector
+      const srcEdge = getEdgePoint(dstCenter, srcCenter, srcBox);
+      const dstEdge = getEdgePoint(srcCenter, dstCenter, dstBox);
+      drawDottedLineWithFlow(ctx, srcEdge.x, srcEdge.y, dstEdge.x, dstEdge.y, 2, 6, '#B3acf2');
+    });
+    // Connector to BigQuery
+    if (connector && gcpBigQuery) {
+      const srcBox = getBoxRect(connector, canvas);
+      const dstBox = getBoxRect(gcpBigQuery, canvas);
+      const srcCenter = { x: srcBox.x + srcBox.width / 2, y: srcBox.y + srcBox.height / 2 };
+      const dstCenter = { x: dstBox.x + dstBox.width / 2, y: dstBox.y + dstBox.height / 2 };
+      const srcEdge = getEdgePoint(dstCenter, srcCenter, srcBox);
+      const dstEdge = getEdgePoint(srcCenter, dstCenter, dstBox);
+      drawDottedLineWithFlow(ctx, srcEdge.x, srcEdge.y, dstEdge.x, dstEdge.y, 2, 6, '#B3acf2');
+    }
+    // Connector to Cloud Storage
+    if (connector && gcpGCS) {
+      const srcBox = getBoxRect(connector, canvas);
+      const dstBox = getBoxRect(gcpGCS, canvas);
+      const srcCenter = { x: srcBox.x + srcBox.width / 2, y: srcBox.y + srcBox.height / 2 };
+      const dstCenter = { x: dstBox.x + dstBox.width / 2, y: dstBox.y + dstBox.height / 2 };
+      const srcEdge = getEdgePoint(dstCenter, srcCenter, srcBox);
+      const dstEdge = getEdgePoint(srcCenter, dstCenter, dstBox);
+      drawDottedLineWithFlow(ctx, srcEdge.x, srcEdge.y, dstEdge.x, dstEdge.y, 2, 6, '#B3acf2');
+    }
+    // Intelligence to BigQuery
+    if (intelligence && gcpBigQuery) {
+      const srcBox = getBoxRect(intelligence, canvas);
+      const dstBox = getBoxRect(gcpBigQuery, canvas);
+      const srcCenter = { x: srcBox.x + srcBox.width / 2, y: srcBox.y + srcBox.height / 2 };
+      const dstCenter = { x: dstBox.x + dstBox.width / 2, y: dstBox.y + dstBox.height / 2 };
+      const srcEdge = getEdgePoint(dstCenter, srcCenter, srcBox);
+      const dstEdge = getEdgePoint(srcCenter, dstCenter, dstBox);
+      drawDottedLineWithFlow(ctx, srcEdge.x, srcEdge.y, dstEdge.x, dstEdge.y, 2, 6, '#B3acf2');
+    }
+    // Cloud Storage to Intelligence (for AI flow)
+    if (gcpGCS && intelligence) {
+      const srcBox = getBoxRect(gcpGCS, canvas);
+      const dstBox = getBoxRect(intelligence, canvas);
+      const srcCenter = { x: srcBox.x + srcBox.width / 2, y: srcBox.y + srcBox.height / 2 };
+      const dstCenter = { x: dstBox.x + dstBox.width / 2, y: dstBox.y + dstBox.height / 2 };
+      const srcEdge = getEdgePoint(dstCenter, srcCenter, srcBox);
+      const dstEdge = getEdgePoint(srcCenter, dstCenter, dstBox);
+      drawDottedLineWithFlow(ctx, srcEdge.x, srcEdge.y, dstEdge.x, dstEdge.y, 2, 6, '#B3acf2');
+    }
+  }
+
+  function animateMultiple(flows) {
+    let running = true;
+    let tOffsets = flows.map(() => 0);
+    
+    function frame() {
+      if (!running) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawStatic();
+      
+      flows.forEach(([srcEl, dstEl, color], index) => {
+        const srcBox = getBoxRect(srcEl, canvas);
+        const dstBox = getBoxRect(dstEl, canvas);
+        const srcCenter = { x: srcBox.x + srcBox.width / 2, y: srcBox.y + srcBox.height / 2 };
+        const dstCenter = { x: dstBox.x + dstBox.width / 2, y: dstBox.y + dstBox.height / 2 };
+        const srcEdge = getEdgePoint(dstCenter, srcCenter, srcBox);
+        const dstEdge = getEdgePoint(srcCenter, dstCenter, dstBox);
+        drawDottedLineWithFlow(ctx, srcEdge.x, srcEdge.y, dstEdge.x, dstEdge.y, 2, 6, color, tOffsets[index], 6);
+        tOffsets[index] += 0.02;
+        if (tOffsets[index] > 1) tOffsets[index] -= 1;
+      });
+      
+      requestAnimationFrame(frame);
+    }
+    
+    frame();
+    return () => {
+      running = false;
+      drawStatic();
+    };
+  }
+
+  function resizeCanvas() {
+    const parent = canvas.parentElement;
+    canvas.width = parent.offsetWidth;
+    canvas.height = 300;
+    drawStatic();
+  }
+
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  drawStatic();
+
+  let stopAnim = null;
+  // Animate from each source to Connector on hover (individual source hover)
+  sources.forEach(source => {
+    source.addEventListener('mouseenter', () => {
+      stopAnim = animateMultiple([
+        [source, connector, '#B3acf2'],
+        [connector, gcpBigQuery, '#8B5CF6'],
+        [connector, gcpGCS, '#8B5CF6'],
+      ]);
+    });
+    source.addEventListener('mouseleave', () => {
+      if (stopAnim) stopAnim();
+    });
+  });
+  // Animate from Connector: all sources to Connector, and Connector to BigQuery/Cloud Storage
+  if (connector) {
+    connector.addEventListener('mouseenter', () => {
+      if (stopAnim) stopAnim();
+      stopAnim = animateMultiple([
+        [sources[0], connector, '#B3acf2'],
+        [sources[1], connector, '#B3acf2'],
+        [sources[2], connector, '#B3acf2'],
+        [connector, gcpBigQuery, '#8B5CF6'],
+        [connector, gcpGCS, '#8B5CF6'],
+      ]);
+    });
+    connector.addEventListener('mouseleave', () => {
+      if (stopAnim) stopAnim();
+    });
+  }
+  // Animate from Intelligence: Cloud Storage to Intelligence, Intelligence to BigQuery
+  if (intelligence) {
+    intelligence.addEventListener('mouseenter', () => {
+      if (stopAnim) stopAnim();
+      stopAnim = animateMultiple([
+        [gcpGCS, intelligence, '#E4D6F5'],
+        [intelligence, gcpBigQuery, '#E4D6F5'],
+      ]);
+    });
+    intelligence.addEventListener('mouseleave', () => {
+      if (stopAnim) stopAnim();
+    });
+  }
+
+  const metaMetadata = document.querySelector('.gcp-meta-metadata');
+  const metaTopics = document.querySelector('.gcp-meta-topics');
+  const metaSentiment = document.querySelector('.gcp-meta-sentiment');
+  const metaEntities = document.querySelector('.gcp-meta-entities');
+  const metaTranscripts = document.querySelector('.gcp-meta-transcripts');
+  const metaMedia = document.querySelector('.gcp-meta-media');
+
+  // Connector hover
+  connector.addEventListener('mouseenter', () => {
+    metaMetadata.classList.add('gcp-meta-glow');
+    metaTranscripts.classList.add('gcp-meta-glow');
+    metaMedia.classList.add('gcp-meta-glow');
+  });
+  connector.addEventListener('mouseleave', () => {
+    metaMetadata.classList.remove('gcp-meta-glow');
+    metaTranscripts.classList.remove('gcp-meta-glow');
+    metaMedia.classList.remove('gcp-meta-glow');
+  });
+
+  // Intelligence hover
+  intelligence.addEventListener('mouseenter', () => {
+    metaTopics.classList.add('gcp-meta-glow-intel');
+    metaSentiment.classList.add('gcp-meta-glow-intel');
+    metaEntities.classList.add('gcp-meta-glow-intel');
+  });
+  intelligence.addEventListener('mouseleave', () => {
+    metaTopics.classList.remove('gcp-meta-glow-intel');
+    metaSentiment.classList.remove('gcp-meta-glow-intel');
+    metaEntities.classList.remove('gcp-meta-glow-intel');
+  });
+});
+</script> 
