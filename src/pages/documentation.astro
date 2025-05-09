@@ -1,0 +1,226 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+<Layout title="Documentation">
+  <Navbar />
+  <main class="doc-page">
+    <h1>Documentation</h1>
+
+    <section>
+      <h2>What Is Starmesh?</h2>
+      <p>Starmesh is a unified analytics platform that transforms raw unstructured data — like call transcripts, meeting recordings, chats, social media posts, and documents — into structured, analyzable insights.</p>
+      <p>We support seamless ingestion from multiple platforms (Zoom, Teams, Gong, Fireflies, Reddit, Google Drive, etc.) and apply advanced AI to extract topics, sentiment, entities, and themes — all without requiring manual effort or custom code.</p>
+    </section>
+
+    <section>
+      <h2>Key Capabilities</h2>
+      <ul>
+        <li><strong>Multi-source ingestion:</strong> Connect to audio/video platforms, chat systems, forums, document storage, and more.</li>
+        <li><strong>AI-powered transforms:</strong>
+          <ul>
+            <li>Topic modeling (guided or unsupervised)</li>
+            <li>Sentiment analysis (overall, per speaker, per topic)</li>
+            <li>Entity recognition and classification</li>
+            <li>Embedding generation and semantic search</li>
+          </ul>
+        </li>
+        <li><strong>Pipeline builder:</strong> Define reusable data flows from source to transform to storage.</li>
+        <li><strong>Export to warehouse:</strong> Write output to BigQuery, GCS, or download as CSV/JSON.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Connecting a Data Source</h2>
+      <p>Starmesh supports multiple types of sources. Here's a high-level process to connect one:</p>
+      <ol>
+        <li>Go to your dashboard → Sources.</li>
+        <li>Select the source type (e.g., Zoom, Reddit, Teams, Google Drive).</li>
+        <li>Follow the prompts to authenticate (via OAuth, service account, or API token).</li>
+        <li>Choose the subset of data you want to analyze (e.g., folders, users, topics, recordings).</li>
+        <li>Starmesh will begin ingesting and preprocessing the content.</li>
+      </ol>
+      <h3>Supported source types include:</h3>
+      <table class="doc-table">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Examples</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Audio/Video platforms</td><td>Zoom, Microsoft Teams, Gong, Fireflies</td></tr>
+          <tr><td>Social & forums</td><td>Reddit, Twitter/X, LinkedIn</td></tr>
+          <tr><td>Messaging & support</td><td>Intercom, Slack, Salesforce cases</td></tr>
+          <tr><td>File & doc storage</td><td>Google Drive, Dropbox, SharePoint</td></tr>
+          <tr><td>Email (upcoming)</td><td>Gmail, Outlook</td></tr>
+        </tbody>
+      </table>
+      <p class="doc-note">Note: Not all integrations are available yet. Some source types are coming soon!</p>
+    </section>
+
+    <section>
+      <h2>Built-in Transforms</h2>
+      <table class="doc-table">
+        <thead>
+          <tr>
+            <th>Transform</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Topic Modeling</td><td>Extract structured topics from conversations or text (LLM or traditional models)</td></tr>
+          <tr><td>Sentiment Analysis</td><td>Detect sentiment per document, per speaker, or by topic</td></tr>
+          <tr><td>Entity Recognition</td><td>Identify companies, products, features, competitors, people, and intent</td></tr>
+          <tr><td>Embeddings & Search</td><td>Generate dense vector representations for semantic similarity or retrieval</td></tr>
+          <tr><td>Custom Prompt Workflows</td><td>Define prompt-based transformations with output schema enforcement</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Destinations</h2>
+      <p>Once analyzed, your data can be exported to:</p>
+      <ul>
+        <li>Google BigQuery</li>
+        <li>Google Cloud Storage</li>
+        <li>Download</li>
+        <li>Upcoming: Snowflake and PostgreSQL</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Testing and Observability</h2>
+      <ul>
+        <li>Preview mode for pipeline testing</li>
+        <li>Logs and data flow diagrams</li>
+        <li>Versioned runs to compare model configurations</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Security and Access Control</h2>
+      <ul>
+        <li>OAuth 2.0 and service account authentication</li>
+        <li>Encryption at rest and in transit</li>
+        <li>Fine-grained access control</li>
+        <li>No indefinite storage of raw content unless explicitly configured</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Disconnecting a Source or Deleting Data</h2>
+      <p>To disconnect a data source:</p>
+      <ol>
+        <li>Go to Sources tab.</li>
+        <li>Click the settings icon for the source.</li>
+        <li>Click Revoke Access or Disconnect.</li>
+      </ol>
+      <p>To delete ingested data, go to Settings → Data Management and request deletion, or email <a href="mailto:support@starmesh.ai">support@starmesh.ai</a>.</p>
+    </section>
+
+    <section>
+      <h2>Need Help?</h2>
+      <p>Email: <a href="mailto:support@starmesh.ai">support@starmesh.ai</a></p>
+      <p>Website: <a href="https://starmesh.ai" target="_blank" rel="noopener">https://starmesh.ai</a></p>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+.doc-page {
+  max-width: 900px;
+  margin: 4rem auto 2rem auto;
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  background: none;
+  border-radius: 0;
+  color: #F4F2FF;
+  font-family: 'Lato', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.doc-page h1 {
+  font-size: 2.4rem;
+  margin-bottom: 0.5rem;
+  color: #F4F2FF;
+  font-weight: 800;
+  text-align: left;
+}
+.effective-date, .last-updated {
+  color: #E4D6F5;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+.doc-page h2 {
+  font-size: 1.5rem;
+  color: #F4F2FF;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+.doc-page h3 {
+  font-size: 1.15rem;
+  color: #F4F2FF;
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+  margin-top: 2.2rem;
+  text-align: left;
+}
+.doc-page p, .doc-page ul, .doc-page ol {
+  font-size: 1.12rem;
+  color: #E4D6F5;
+  margin-bottom: 0.7rem;
+}
+.doc-page ul, .doc-page ol {
+  padding-left: 1.5rem;
+  margin-bottom: 0.7rem;
+}
+.doc-page li {
+  margin-bottom: 0.5rem;
+  line-height: 1.7;
+}
+.doc-page a {
+  color: #F4F2FF;
+  text-decoration: underline;
+}
+.doc-page a:hover {
+  color: #E4D6F5;
+}
+.doc-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 1.5rem 0;
+  background: rgba(255,255,255,0.01);
+  color: #E4D6F5;
+  font-size: 1.08rem;
+}
+.doc-table th, .doc-table td {
+  border: 1px solid #4B3A7A;
+  padding: 0.5rem 1rem;
+  text-align: left;
+}
+.doc-table th {
+  background: #3B3160;
+  color: #F4F2FF;
+  font-weight: 700;
+}
+.doc-table tr:nth-child(even) {
+  background: #32294d;
+}
+section {
+  margin-bottom: 1rem;
+}
+@media (max-width: 600px) {
+  .doc-page {
+    padding: 1.2rem 0.5rem;
+  }
+  .doc-table th, .doc-table td {
+    padding: 0.5rem 0.3rem;
+    font-size: 0.98rem;
+  }
+}
+</style> 

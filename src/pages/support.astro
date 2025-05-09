@@ -1,0 +1,161 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+<Layout title="Starmesh Support">
+  <Navbar />
+  <main class="support-page">
+    <h1>Support</h1>
+    
+    <section class="support-intro">
+      <h2>Need Help with Starmesh?</h2>
+      <p>We're here to assist you. If you have questions, encounter issues, or need support while using Starmesh - our unstructured data analytics platform - please reach out using one of the methods below.</p>
+    </section>
+  
+    <section class="support-contact">
+      <h3>Email Support</h3>
+      <p>For technical issues, onboarding help, data source configuration, or analytics questions, email us at:</p>
+      <p><a href="mailto:support@starmesh.ai">support@starmesh.ai</a></p>
+      <p>We typically respond within one (1) business day.</p>
+    </section>
+  
+    <section class="support-help">
+      <h3>What We Can Help With</h3>
+      <ul>
+        <li><strong>Source Integration:</strong> Issues with connecting to supported platforms (e.g., Zoom, Microsoft Teams, Fireflies, Gong, Reddit, CRMs, cloud storage).</li>
+        <li><strong>Authentication & Permissions:</strong> Troubleshooting OAuth, service accounts, or access scopes.</li>
+        <li><strong>Data Ingestion:</strong> Missing or delayed data from meetings, documents, chats, or social platforms.</li>
+        <li><strong>Analysis Results:</strong> Questions about topic modeling, sentiment scoring, entity extraction, or embeddings.</li>
+        <li><strong>UI or Dashboard Bugs:</strong> Something not showing up as expected? Let us know.</li>
+        <li><strong>Account & Project Setup:</strong> Help configuring pipelines or setting up new analyses.</li>
+        <li><strong>Data Security & Deletion:</strong> Request removal of ingested data or revoke access to external sources.</li>
+      </ul>
+    </section>
+  
+    <section class="support-troubleshooting">
+      <h3>Troubleshooting Tips</h3>
+      <p>Before contacting support, you may want to:</p>
+      <ul>
+        <li>Re-check your credentials or OAuth settings for connected platforms.</li>
+        <li>Ensure the appropriate roles/permissions are granted (e.g., admin or editor access).</li>
+        <li>Verify that the data source (e.g. a call or post) has completed uploading or syncing.</li>
+        <li>Use the built-in logs or "last sync" indicators in your Starmesh workspace to confirm status.</li>
+      </ul>
+    </section>
+  
+    <section class="support-protips">
+      <h3>Pro Tips for Getting the Most Out of Starmesh</h3>
+      <ul>
+        <li>Use pre-built transforms like topic detection, sentiment analysis, keyword tracking, or question classification.</li>
+        <li>Configure custom data connectors using your own API keys or service accounts for enterprise tools.</li>
+        <li>Filter by user group, department, or speaker role to focus insights (especially for call transcripts).</li>
+        <li>Export insights to BigQuery, GCS, or spreadsheets for deeper analysis.</li>
+        <li>If you're unsure how to use a feature, just ask — we're happy to walk you through it.</li>
+      </ul>
+    </section>
+  
+    <section class="support-company">
+      <h3>Company Information</h3>
+      <div class="company-info">
+        <div>Starmesh Inc.</div>
+        <div>California, USA</div>
+        <div>Website: <a href="https://www.starmesh.ai" target="_blank" rel="noopener">https://www.starmesh.ai</a></div>
+        <div>Email: <a href="mailto:support@starmesh.ai">support@starmesh.ai</a></div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+.support-page {
+  max-width: 900px;
+  margin: 4rem auto 2rem auto;
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  background: none;
+  border-radius: 0;
+  color: #F4F2FF;
+  font-family: 'Lato', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.support-page h1 {
+  font-size: 2.4rem;
+  margin-bottom: 0.5rem;
+  color: #F4F2FF;
+  font-weight: 800;
+  text-align: center;
+}
+.support-page h2 {
+  font-size: 1.5rem;
+  color: #F4F2FF;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+.support-page h3 {
+  font-size: 1.15rem;
+  color: #F4F2FF;
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+  margin-top: 2.2rem;
+}
+.support-page p, .support-page ul {
+  font-size: 1.12rem;
+  color: #E4D6F5;
+  margin-bottom: 0.7rem;
+}
+.support-page ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1.2rem;
+}
+.support-page li {
+  margin-bottom: 0.5rem;
+  line-height: 1.7;
+}
+.support-note {
+  color: #E4D6F5;
+  font-size: 0.98rem;
+  margin-top: 0.2rem;
+  display: block;
+}
+.support-email {
+  display: inline-block;
+  font-size: 1.12rem;
+  color: #2B2D3E;
+  font-weight: 700;
+  background: #F4F2FF;
+  padding: 0.4rem 1rem;
+  border-radius: 0.5rem;
+  margin: 0.5rem 0 0.5rem 0;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.support-email:hover {
+  background: #E4D6F5;
+  color: #2B2D3E;
+}
+.company-info {
+  color: #E4D6F5;
+  font-size: 1.08rem;
+  line-height: 1.7;
+  margin-top: 0.5rem;
+}
+.support-page a {
+  color: #F4F2FF;
+  text-decoration: underline;
+}
+.support-page a:hover {
+  color: #E4D6F5;
+}
+section {
+  margin-bottom: 1rem;
+}
+@media (max-width: 600px) {
+  .support-page {
+    padding: 1.2rem 0.5rem;
+  }
+}
+</style> 
