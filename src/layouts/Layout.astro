@@ -130,6 +130,10 @@ const { title, description = "StarMesh - Simplifying Data Mesh Implementation" }
 	.tab-button:hover {
 		background: rgb(147, 51, 234);
 	}
+
+	html {
+		scroll-padding-top: 60px;
+	}
 </style>
 
 <script>
@@ -157,6 +161,8 @@ const { title, description = "StarMesh - Simplifying Data Mesh Implementation" }
 
 			container.appendChild(star);
 		}
+		// Force scroll to top after stars are created
+		window.scrollTo(0, 0);
 	}
 
 	// Create stars when the document is loaded

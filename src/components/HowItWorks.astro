@@ -23,37 +23,39 @@ const steps = [
 ];
 ---
 
-<!-- Stardust Data Flow Interactive Graphic -->
-<h2 class="stardust-title">How it works</h2>
-<div class="stardust-subtext">Easily extract, load and AI transform your unstructured data such as call transcripts, video and audio files</div>
-<div id="stardust-graphic" class="stardust-graphic">
-  <div class="stardust-row">
-    <!-- Left: Source Apps -->
-    <div class="stardust-source-list">
-      <div class="stardust-source" data-source="zoom">Zoom</div>
-      <div class="stardust-source" data-source="gong">Gong</div>
-      <div class="stardust-source" data-source="teams">Teams</div>
-    </div>
-    <!-- Center: Starmesh -->
-    <div class="stardust-starmesh">
-      <div class="starmesh-label">Starmesh</div>
-      <div class="starmesh-components">
-        <div class="starmesh-component" data-component="connector">Connector</div>
-        <div class="starmesh-component" data-component="intelligence">Intelligence</div>
+<section id="how-it-works">
+  <!-- Stardust Data Flow Interactive Graphic -->
+  <h2 class="stardust-title">How it works</h2>
+  <div class="stardust-subtext">Easily extract, load and AI transform your unstructured data such as call transcripts, video and audio files</div>
+  <div id="stardust-graphic" class="stardust-graphic">
+    <div class="stardust-row">
+      <!-- Left: Source Apps -->
+      <div class="stardust-source-list">
+        <div class="stardust-source" data-source="zoom">Zoom</div>
+        <div class="stardust-source" data-source="gong">Gong</div>
+        <div class="stardust-source" data-source="teams">Teams</div>
+      </div>
+      <!-- Center: Starmesh -->
+      <div class="stardust-starmesh">
+        <div class="starmesh-label">Starmesh</div>
+        <div class="starmesh-components">
+          <div class="starmesh-component" data-component="connector">Connector</div>
+          <div class="starmesh-component" data-component="intelligence">Intelligence</div>
+        </div>
+      </div>
+      <!-- Right: GCP -->
+      <div class="stardust-gcp">
+        <div class="gcp-label">Google Cloud</div>
+        <div class="gcp-boxes">
+          <div class="gcp-box" data-gcp="bigquery">BigQuery<br/><span class="gcp-meta"><span class="gcp-meta-metadata">Metadata</span>, <span class="gcp-meta-topics">Topics</span>, <span class="gcp-meta-sentiment">Sentiments</span>, <span class="gcp-meta-entities">Entities</span></span></div>
+          <div class="gcp-box" data-gcp="gcs">Cloud Storage<br/><span class="gcp-meta"><span class="gcp-meta-transcripts">Transcripts</span>, <span class="gcp-meta-media">Video & Audio Files</span></span></div>
+        </div>
       </div>
     </div>
-    <!-- Right: GCP -->
-    <div class="stardust-gcp">
-      <div class="gcp-label">Google Cloud</div>
-      <div class="gcp-boxes">
-        <div class="gcp-box" data-gcp="bigquery">BigQuery<br/><span class="gcp-meta"><span class="gcp-meta-metadata">Metadata</span>, <span class="gcp-meta-topics">Topics</span>, <span class="gcp-meta-sentiment">Sentiments</span>, <span class="gcp-meta-entities">Entities</span></span></div>
-        <div class="gcp-box" data-gcp="gcs">Cloud Storage<br/><span class="gcp-meta"><span class="gcp-meta-transcripts">Transcripts</span>, <span class="gcp-meta-media">Video & Audio Files</span></span></div>
-      </div>
-    </div>
+    <!-- Canvas for dotted lines and stardust animation -->
+    <canvas id="stardust-canvas" width="1200" height="300" style="position:absolute; left:0; top:0; pointer-events:none;"></canvas>
   </div>
-  <!-- Canvas for dotted lines and stardust animation -->
-  <canvas id="stardust-canvas" width="1200" height="300" style="position:absolute; left:0; top:0; pointer-events:none;"></canvas>
-</div>
+</section>
 
 <style>
 .stardust-graphic {
@@ -61,6 +63,7 @@ const steps = [
   width: 100%;
   min-height: 340px;
   margin: 4.5rem 0 4.5rem 0;
+  z-index: 1;
 }
 .stardust-row {
   display: flex;
@@ -223,9 +226,13 @@ const steps = [
   pointer-events: none;
 }
 #stardust-canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
   width: 100%;
   height: 300px;
-  z-index: 2;
+  pointer-events: none;
+  z-index: 1;
 }
 .stardust-title {
   color: #E4D6F5;
