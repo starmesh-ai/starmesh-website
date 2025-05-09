@@ -126,6 +126,10 @@ const { title, description = "Starmesh - Simplifying unstructured data analytics
 </style>
 
 <script>
+	if ('scrollRestoration' in history) {
+		history.scrollRestoration = 'manual';
+	}
+
 	function createStars(container: Element, numberOfStars: number) {
 		container.innerHTML = '';
 		for (let i = 0; i < numberOfStars; i++) {
