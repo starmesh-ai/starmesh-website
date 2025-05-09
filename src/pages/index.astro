@@ -27,15 +27,10 @@ import PainPoints from '../components/PainPoints.astro';
 				Start Free Trial
 			</button>
 		</div>
-
 		<HowItWorks />
-
 		<PainPoints />
-
 		<UseCases />
-
 		<Pricing />
-
 		<div id="contact" class="contact-section">
 			<!-- We'll add contact content later -->
 		</div>
@@ -71,6 +66,16 @@ import PainPoints from '../components/PainPoints.astro';
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		overflow: hidden;
+	}
+
+	.hero-section .stars-container {
+		position: absolute;
+		top: 0; left: 0; right: 0; bottom: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+		pointer-events: none;
 		overflow: hidden;
 	}
 
