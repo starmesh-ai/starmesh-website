@@ -50,7 +50,10 @@ const useCases = [
 <section id="use-cases" class="use-cases-section">
   <div class="container">
     <h2>USE CASES</h2>
-    <h3>Built for analysts. Loved by ops, product, and revenue teams.</h3>
+    <h3>
+      Built for analysts.<br/>
+      Loved by ops, product, and revenue teams.
+    </h3>
 
     <div class="use-cases-accordion">
       {useCases.map((useCase) => {
@@ -82,6 +85,7 @@ const useCases = [
     padding: 4rem 2rem;
     background: #1a1b26;
     color: #E4D6F5;
+    text-align: center;
   }
 
   .container {
@@ -93,15 +97,21 @@ const useCases = [
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 1rem;
-    color: #E4D6F5;
+    color: rgba(228, 214, 245, 0.6);
+    letter-spacing: 0.02em;
+    text-align: center;
   }
 
   h3 {
     font-size: 2.5rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
     line-height: 1.2;
     color: #E4D6F5;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
   }
 
   .use-cases-accordion {
@@ -109,7 +119,7 @@ const useCases = [
     flex-direction: column;
     gap: 1rem;
     max-width: 700px;
-    margin: 0 auto;
+    margin: 2rem auto 0;
   }
 
   .use-case-item {
@@ -140,7 +150,7 @@ const useCases = [
   .use-case-header-content h4 {
     margin: 0;
     font-size: 1.35rem;
-    font-weight: 500;
+    font-weight: 700;
     color: #E4D6F5;
   }
 
@@ -149,6 +159,7 @@ const useCases = [
     font-size: 1.08rem;
     margin-top: 0.25rem;
     font-weight: 400;
+    opacity: 0.8;
   }
 
   .accordion-icon {
@@ -164,31 +175,42 @@ const useCases = [
     padding: 0;
     overflow: hidden;
     transition: all 0.3s ease;
+    text-align: left;
   }
 
   .use-case-header[aria-expanded="true"] + .use-case-content {
-    padding: 1.5rem;
+    padding: 1.5rem 2rem 2rem 2rem;
   }
 
   .value-props-list {
     list-style: none;
     padding: 0;
     margin: 0;
+    text-align: left;
   }
 
   .value-props-list li {
     color: #B3acf2;
-    opacity: 0.7;
-    margin-bottom: 1rem;
-    padding-left: 1.5rem;
+    opacity: 0.8;
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
     position: relative;
+    font-size: 1.15rem;
+    line-height: 1.5;
+    text-align: left;
+  }
+
+  .value-props-list li:last-child {
+    margin-bottom: 0;
   }
 
   .value-props-list li:before {
     content: "•";
     position: absolute;
-    left: 0;
-    color: #E4D6F5;
+    left: 0.75rem;
+    color: #B3acf2;
+    opacity: 0.8;
+    font-size: 1.2rem;
   }
 
   @media (max-width: 768px) {
