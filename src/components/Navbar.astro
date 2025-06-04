@@ -1,20 +1,24 @@
 <nav>
   <div class="stars-container"></div>
-  <div class="container mx-auto px-6 flex items-center justify-between">
+  <div class="container mx-auto">
     <a href="/" class="logo" id="logo-link">
       <img src="/images/starmesh-logo.png" alt="Starmesh" />
     </a>
     
-    <div class="nav-links">
-      <a href="/#how-it-works" class="nav-link">How It Works</a>
-      <a href="/#pain-points" class="nav-link">Pain Points</a>
-      <a href="/#use-cases" class="nav-link">Use Cases</a>
-      <a href="/#pricing" class="nav-link">Pricing</a>
+    <div class="nav-group">
+      <div class="nav-links">
+        <a href="/#how-it-works" class="nav-link">How It Works</a>
+        <a href="/#pain-points" class="nav-link">Pain Points</a>
+        <a href="/#use-cases" class="nav-link">Use Cases</a>
+        <a href="/#pricing" class="nav-link">Pricing</a>
+      </div>
+
+      <div class="nav-buttons">
+        <a href="#" class="cta-button">Schedule Demo</a>
+      </div>
     </div>
 
-    <div class="nav-buttons">
-      <a href="#" class="cta-button">Schedule Demo</a>
-    </div>
+    <button class="menu-button" aria-label="Toggle menu">☰</button>
   </div>
 </nav>
 
@@ -27,6 +31,15 @@
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
+    });
+
+    // Mobile menu functionality
+    const menuButton = document.querySelector('.menu-button');
+    const navGroup = document.querySelector('.nav-group');
+    
+    menuButton?.addEventListener('click', () => {
+      navGroup?.classList.toggle('active');
+      menuButton.textContent = navGroup?.classList.contains('active') ? '×' : '☰';
     });
   });
 </script>
@@ -41,36 +54,50 @@
     left: 50%;
     transform: translateX(-50%);
     max-width: 1200px;
-    width: calc(100% - 96px);
+    width: calc(100% - 48px);
     background-color: rgba(43, 45, 62, 0.95);
     backdrop-filter: blur(8px);
     border-radius: 18px;
     box-shadow: 0 4px 24px 0 rgba(0,0,0,0.08), 0 1.5px 8px 0 rgba(0,0,0,0.04);
     border: 1px solid rgba(255,255,255,0.10);
     z-index: 1000;
-    padding: 0.25rem 2rem;
+    padding: 0.25rem 0.75rem;
   }
 
   .container {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
+    display: flex;
+    align-items: center;
   }
 
   .logo {
     position: relative;
     z-index: 1;
+    flex-shrink: 0;
   }
 
   .logo img {
-    height: 40px;
+    height: 32px;
     width: auto;
+  }
+
+  .nav-group {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-left: auto;
+    flex: 1;
+    min-width: 0;
   }
 
   .nav-links {
     display: flex;
-    gap: 2rem;
-    margin: 0 2rem;
+    gap: 1.5rem;
+    justify-content: center;
+    flex: 1;
+    min-width: 0;
   }
 
   .nav-link {
@@ -81,6 +108,7 @@
     transition: all 0.2s ease;
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
+    white-space: nowrap;
   }
 
   .nav-link:hover {
@@ -92,6 +120,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+    flex-shrink: 0;
   }
 
   .cta-button {
@@ -102,6 +131,7 @@
     font-weight: 500;
     transition: all 0.2s ease;
     text-decoration: none;
+    white-space: nowrap;
   }
 
   .cta-button:hover {
@@ -109,33 +139,77 @@
     transform: translateY(-1px);
   }
 
-  @media (max-width: 768px) {
+  .menu-button {
+    display: none;
+    background: none;
+    border: none;
+    color: #E4D6F5;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 2;
+    margin-left: auto;
+  }
+
+  @media (max-width: 900px) {
     nav {
       height: auto;
-      padding: 1rem;
+      min-height: 44px;
     }
 
-    .container {
+    .menu-button {
+      display: block;
+    }
+
+    .nav-group {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 1rem;
+      right: 1rem;
+      background: rgba(43, 45, 62, 0.98);
+      backdrop-filter: blur(8px);
+      padding: 1rem;
       flex-direction: column;
+      align-items: center;
       gap: 1rem;
+      border-bottom-left-radius: 18px;
+      border-bottom-right-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-top: none;
+    }
+
+    .nav-group.active {
+      display: flex;
     }
 
     .nav-links {
       flex-direction: column;
       align-items: center;
-      margin: 1rem 0;
-      gap: 1rem;
+      width: 100%;
+      gap: 0.5rem;
     }
 
     .nav-buttons {
-      flex-direction: column;
       width: 100%;
     }
 
-    .nav-buttons .nav-link,
-    .nav-buttons .cta-button {
+    .nav-link, 
+    .cta-button {
       width: 100%;
       text-align: center;
+      padding: 0.75rem 1rem;
+    }
+
+    .logo img {
+      height: 28px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    nav {
+      width: calc(100% - 32px);
+      top: 8px;
     }
   }
 
