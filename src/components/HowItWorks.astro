@@ -64,6 +64,7 @@ const steps = [
   min-height: 340px;
   margin: 4.5rem 0 4.5rem 0;
   z-index: 1;
+  overflow: visible;
 }
 .stardust-row {
   display: flex;
@@ -71,6 +72,9 @@ const steps = [
   justify-content: space-between;
   position: relative;
   z-index: 1;
+  padding: 0 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 .stardust-source-list {
   display: flex;
@@ -195,14 +199,66 @@ const steps = [
   font-weight: 700;
   transition: color 0.2s, text-shadow 0.2s;
 }
+@media (max-width: 1200px) {
+  .stardust-row {
+    padding: 0;
+    width: 95%;
+    margin: 0 auto;
+  }
+}
 @media (max-width: 900px) {
   .stardust-row {
-    flex-direction: column;
-    gap: 2rem;
+    width: 100%;
+    transform-origin: center;
+    transform: scale(0.9);
   }
-  .stardust-starmesh, .stardust-gcp {
-    min-width: 160px;
-    padding: 1rem 1.2rem;
+  
+  .stardust-source-list {
+    margin-left: 0;
+  }
+  
+  .stardust-gcp {
+    margin-right: 0;
+  }
+}
+@media (max-width: 768px) {
+  .stardust-row {
+    transform: scale(0.85);
+    width: 110%;
+    margin: 0 -5%;
+  }
+}
+@media (max-width: 640px) {
+  .stardust-row {
+    transform: scale(0.8);
+    width: 120%;
+    margin: 0 -10%;
+  }
+  
+  .stardust-graphic {
+    min-height: 280px;
+    margin: 3rem 0;
+  }
+}
+@media (max-width: 480px) {
+  .stardust-row {
+    transform: scale(0.75);
+    width: 130%;
+    margin: 0 -15%;
+  }
+  
+  .stardust-graphic {
+    min-height: 240px;
+    margin: 2.5rem 0;
+    overflow: hidden;
+  }
+  
+  .stardust-title {
+    font-size: 1.8rem;
+  }
+  
+  .stardust-subtext {
+    font-size: 1rem;
   }
 }
 .stardust-dot {
