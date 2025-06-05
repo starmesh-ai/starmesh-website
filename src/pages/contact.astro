@@ -16,36 +16,42 @@ import Footer from '../components/Footer.astro';
 				<div class="form-row">
 					<div class="form-group">
 						<label for="name">Full Name *</label>
-						<input type="text" id="name" name="name" required>
+						<input type="text" id="name" name="Full Name" required>
 					</div>
 
 					<div class="form-group">
 						<label for="email">Work Email *</label>
-						<input type="email" id="email" name="email" required>
+						<input type="email" id="email" name="Work Email" required>
 						<span class="error-message" id="emailError"></span>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<label for="useCase">What are you hoping to use Starmesh for? *</label>
-					<textarea id="useCase" name="useCase" rows="3" required></textarea>
+					<textarea id="useCase" name="Use Case" rows="3" required></textarea>
 				</div>
 
 				<div class="form-group">
 					<label class="checkbox-label">
-						<input type="checkbox" id="liveChat" name="liveChat">
+						<input type="checkbox" id="liveChat" name="Live Chat?">
 						<span class="checkbox-text">Would you like to schedule a live chat with us?</span>
 					</label>
 				</div>
 
 				<div class="button-container">
-					<button type="submit" class="submit-button">Submit</button>
+					<button type="submit" class="submit-button">
+						<span class="button-text">Submit</span>
+						<div class="button-loader hidden"></div>
+					</button>
+				</div>
+
+				<div id="formError" class="error-message form-error hidden">
+					An error occurred. Please try again later.
 				</div>
 			</form>
 
 			<div id="thankYouMessage" class="thank-you-message hidden">
 				<h3>Thank you for your interest!</h3>
-				<p>We'd love to learn more about your needs.</p>
 				<a href="https://calendly.com/YOUR-LINK" class="calendly-button" target="_blank">Schedule a Call</a>
 			</div>
 		</div>
@@ -317,14 +323,48 @@ import Footer from '../components/Footer.astro';
 			margin-bottom: 0.5rem;
 		}
 	}
+
+	.button-loader {
+		width: 20px;
+		height: 20px;
+		border: 2px solid #ffffff;
+		border-radius: 50%;
+		border-top-color: transparent;
+		animation: spin 1s linear infinite;
+		margin: 0 auto;
+	}
+
+	@keyframes spin {
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
+	.form-error {
+		text-align: center;
+		margin-top: 1rem;
+		padding: 0.75rem;
+		background: rgba(239, 68, 68, 0.1);
+		border-radius: 0.5rem;
+	}
+
+	.hidden {
+		display: none !important;
+	}
 </style>
 
 <script>
+	const FORM_URL = 'https://script.google.com/macros/s/AKfycbyvAeaQnN-yvtE95NP1_z_Uiz_0t4_6g66hof8px3tFGytLwZyTdN0IUbsenJh0lOucUA/exec';
+	
 	const form = document.getElementById('contactForm') as HTMLFormElement;
 	const thankYouMessage = document.getElementById('thankYouMessage');
 	const emailInput = document.getElementById('email') as HTMLInputElement;
 	const emailError = document.getElementById('emailError');
 	const liveChatCheckbox = document.getElementById('liveChat') as HTMLInputElement;
+	const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+	const buttonText = submitButton.querySelector('.button-text') as HTMLElement;
+	const buttonLoader = submitButton.querySelector('.button-loader') as HTMLElement;
+	const formError = document.getElementById('formError');
 
 	function isWorkEmail(email: string): boolean {
 		const personalDomains = [
@@ -347,47 +387,63 @@ import Footer from '../components/Footer.astro';
 		}
 	});
 
+	function setSubmitting(isSubmitting: boolean) {
+		submitButton.disabled = isSubmitting;
+		buttonText.style.display = isSubmitting ? 'none' : 'inline';
+		buttonLoader.classList.toggle('hidden', !isSubmitting);
+	}
+
+	function showError(show: boolean) {
+		if (formError) {
+			formError.classList.toggle('hidden', !show);
+		}
+	}
+
 	form?.addEventListener('submit', async (e) => {
 		e.preventDefault();
-
-		const formData = new FormData(form);
-		const data = Object.fromEntries(formData.entries());
+		showError(false);
+		setSubmitting(true);
 
 		try {
-			// Send to Google Sheets via Google Apps Script
-			const response = await fetch('YOUR_GOOGLE_APPS_SCRIPT_URL', {
+			const formData = new FormData(form);
+			const data = {
+				name: formData.get('Full Name'),
+				email: formData.get('Work Email'),
+				useCase: formData.get('Use Case'),
+				liveChat: formData.get('Live Chat?') === 'on',
+				timestamp: new Date().toISOString()
+			};
+			
+			// Store in localStorage as backup
+			const submissions = JSON.parse(localStorage.getItem('formSubmissions') || '[]');
+			submissions.push(data);
+			localStorage.setItem('formSubmissions', JSON.stringify(submissions));
+
+			// Submit to Google Apps Script
+			const response = await fetch(FORM_URL, {
 				method: 'POST',
+				mode: 'no-cors',
 				headers: {
-					'Content-Type': 'application/json',
+					'Content-Type': 'application/x-www-form-urlencoded',
 				},
-				body: JSON.stringify(data),
+				body: new URLSearchParams(formData as any),
 			});
 
-			if (response.ok) {
-				// Hide form and show thank you message
-				form.style.display = 'none';
-				if (thankYouMessage) {
-					thankYouMessage.classList.remove('hidden');
-					// Only show Calendly link if they checked live chat
-					const calendlyButton = thankYouMessage.querySelector('.calendly-button');
-					if (calendlyButton) {
-						calendlyButton.style.display = liveChatCheckbox.checked ? 'inline-block' : 'none';
-					}
+			// Since we're using no-cors, we won't get a proper response
+			// So we'll assume success if there's no error
+			form.style.display = 'none';
+			if (thankYouMessage) {
+				thankYouMessage.classList.remove('hidden');
+				// Only show Calendly link if they checked live chat
+				const calendlyButton = thankYouMessage.querySelector('.calendly-button');
+				if (calendlyButton) {
+					calendlyButton.style.display = liveChatCheckbox.checked ? 'inline-block' : 'none';
 				}
-
-				// Store locally as backup
-				const submissions = JSON.parse(localStorage.getItem('formSubmissions') || '[]');
-				submissions.push({
-					...data,
-					timestamp: new Date().toISOString()
-				});
-				localStorage.setItem('formSubmissions', JSON.stringify(submissions));
-			} else {
-				throw new Error('Submission failed');
 			}
 		} catch (error) {
-			console.error('Error:', error);
-			alert('There was an error submitting the form. Please try again.');
+			console.error('Form submission error:', error);
+			showError(true);
+			setSubmitting(false);
 		}
 	});
 </script> 
