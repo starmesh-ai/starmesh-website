@@ -187,6 +187,7 @@ const useCases = [
     padding: 0;
     margin: 0;
     text-align: left;
+    word-wrap: break-word;
   }
 
   .value-props-list li {
@@ -231,7 +232,12 @@ const useCases = [
         // Toggle the content visibility
         const content = button.nextElementSibling;
         if (content) {
-          content.style.maxHeight = expanded ? '0' : content.scrollHeight + 'px';
+          if (expanded) {
+            content.style.maxHeight = '0';
+          } else {
+            content.style.maxHeight = 'none';
+            const height = content.offsetHeight;
+          }
         }
       });
     });
