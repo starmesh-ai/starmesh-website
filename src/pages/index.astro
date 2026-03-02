@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
+import ProductHowItWorks from '../components/ProductHowItWorks.astro';
 import UseCases from '../components/UseCases.astro';
 import HowItWorks from '../components/HowItWorks.astro';
 import PainPoints from '../components/PainPoints.astro';
@@ -16,16 +17,16 @@ import Footer from '../components/Footer.astro';
 		<div class="hero-section">
 			<div class="stars-container"></div>
 			<h1>
-				Calls to customer insights<br/>
-				<span class="highlight">in under 5 minutes.</span>
+				Drive Revenue & Retention with AI That Learns from Every Customer Interaction
 			</h1>
 			<p>
-				Extract Zoom, Gong or Teams calls into your data warehouse to analyze and uncover customer insights.
+				Unify all customer data from CRM, email, support, call, product usage in your own warehouse — not inside a single app — to define flexible customer signals.
 			</p>
 			<a href="/contact" class="cta-button">
 				Schedule Demo
 			</a>
 		</div>
+		<ProductHowItWorks />
 		<HowItWorks />
 		<PainPoints />
 		<UseCases />
@@ -80,7 +81,7 @@ import Footer from '../components/Footer.astro';
 	}
 
 	.hero-section h1 {
-		font-size: clamp(3em, 6vw, 4.5em);
+		font-size: clamp(2.3em, 4.8vw, 3.8em);
 		font-weight: 600;
 		margin: 1.25rem 0;
 		position: relative;
@@ -97,9 +98,9 @@ import Footer from '../components/Footer.astro';
 	}
 
 	.hero-section p {
-		font-size: clamp(1.4em, 2.4vw, 1.6em);
+		font-size: clamp(1.05em, 1.8vw, 1.25em);
 		color: #B3acf2;
-		max-width: 800px;
+		max-width: 1020px;
 		margin: 1.5rem auto;
 		position: relative;
 		z-index: 1;
