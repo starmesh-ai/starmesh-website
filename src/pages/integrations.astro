@@ -1,0 +1,144 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/nav/Navbar.astro';
+import Footer from '../components/ui/Footer.astro';
+
+const categories = [
+  {
+    label: "Meetings & Calls",
+    icon: `<path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z"/>`,
+    integrations: [
+      { name: "Zoom", description: "Sync call recordings, transcripts, and metadata from Zoom meetings and webinars.", badge: "Source" },
+      { name: "Microsoft Teams", description: "Connect Teams meetings and call recordings as a continuous data source.", badge: "Source" },
+      { name: "Google Meet", description: "Pull transcripts and meeting data from Google Meet sessions.", badge: "Source" },
+      { name: "Gong", description: "Ingest Gong call recordings and existing metadata alongside Starmesh AI analysis.", badge: "Source" },
+      { name: "Chorus (ZoomInfo)", description: "Connect Chorus conversation data as a source for Starmesh topic and sentiment analysis.", badge: "Source" },
+    ],
+  },
+  {
+    label: "CRM & Sales",
+    icon: `<path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z"/>`,
+    integrations: [
+      { name: "Salesforce", description: "Link every conversation analysis back to the right Opportunity, Account, and Contact in Salesforce.", badge: "Source + Link" },
+      { name: "HubSpot", description: "Connect HubSpot deals and contacts for automatic deal linking and pipeline enrichment.", badge: "Source + Link" },
+    ],
+  },
+  {
+    label: "Email & Calendar",
+    icon: `<path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/>`,
+    integrations: [
+      { name: "Gmail", description: "Extract topics, intent, and sentiment from customer email threads for a complete conversation picture.", badge: "Source" },
+      { name: "Google Calendar", description: "Sync meeting metadata and schedules to correlate conversations with calendar events.", badge: "Source" },
+      { name: "Microsoft Outlook", description: "Connect Outlook email and calendar data as a conversation data source.", badge: "Source" },
+    ],
+  },
+  {
+    label: "Data Warehouses & Storage",
+    icon: `<path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"/>`,
+    integrations: [
+      { name: "BigQuery", description: "Land structured conversation tables directly in Google BigQuery, ready for SQL queries and BI tools.", badge: "Destination" },
+      { name: "Snowflake", description: "Deliver analyzed conversation data as clean, queryable tables in your Snowflake data warehouse.", badge: "Destination" },
+      { name: "Databricks", description: "Send enriched conversation datasets to Databricks for advanced analytics and ML workflows.", badge: "Destination" },
+      { name: "Google Cloud Storage", description: "Stage raw and processed conversation data in GCS for flexible downstream use.", badge: "Destination" },
+    ],
+  },
+];
+
+const TOKEN = "pk_DJKjA6gBT_2eZzZT6CXz-w";
+const logoDomains: Record<string, string> = {
+  "Zoom":               "zoom.us",
+  "Microsoft Teams":    "microsoft.com",
+  "Google Meet":        "meet.google.com",
+  "Gong":               "gong.io",
+  "Chorus (ZoomInfo)":  "chorus.ai",
+  "Salesforce":         "salesforce.com",
+  "HubSpot":            "hubspot.com",
+  "Gmail":              "gmail.com",
+  "Google Calendar":    "calendar.google.com",
+  "Microsoft Outlook":  "outlook.com",
+  "BigQuery":           "cloud.google.com",
+  "Snowflake":          "snowflake.com",
+  "Databricks":         "databricks.com",
+  "Google Cloud Storage": "cloud.google.com",
+};
+
+const badgeColors: Record<string, string> = {
+  "Source": "bg-blue-500/10 border-blue-500/20 text-blue-400",
+  "Source + Link": "bg-violet-500/10 border-violet-500/20 text-violet-400",
+  "Destination": "bg-green-500/10 border-green-500/20 text-green-400",
+};
+---
+<BaseLayout title="Integrations — Starmesh" description="Connect Zoom, Salesforce, Gmail, Teams, HubSpot and more. Deliver to BigQuery, Snowflake, or Databricks.">
+  <Navbar />
+
+  <!-- Hero -->
+  <section class="relative pt-32 pb-16 px-6 overflow-hidden">
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
+      <div class="w-[500px] h-[300px] rounded-full" style="background: radial-gradient(ellipse, rgba(99,102,241,0.12) 0%, transparent 70%);"></div>
+    </div>
+    <div class="relative max-w-3xl mx-auto text-center">
+      <p class="text-xs text-[#52525B] uppercase tracking-widest mb-4">Integrations</p>
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-5">
+        Connects with everything <span class="gradient-text">your team already uses</span>
+      </h1>
+      <p class="text-lg text-[#A1A1AA] max-w-xl mx-auto">
+        Pull conversation data from any source. Deliver structured intelligence to any warehouse. Zero custom pipelines.
+      </p>
+    </div>
+  </section>
+
+  <!-- Integration grid -->
+  <section class="pb-24 px-6">
+    <div class="max-w-5xl mx-auto space-y-12">
+      {categories.map((cat) => (
+        <div>
+          <!-- Category header -->
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.2);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#818CF8" stroke-width="1.5">
+                <Fragment set:html={cat.icon} />
+              </svg>
+            </div>
+            <h2 class="text-lg font-semibold text-[#FAFAFA]">{cat.label}</h2>
+            <div class="flex-1 h-px bg-white/[0.05]"></div>
+          </div>
+
+          <!-- Integration cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {cat.integrations.map((int) => (
+              <div class="card p-5 flex flex-col gap-3 hover:border-indigo-500/30">
+                <div class="flex items-start justify-between">
+                  <div class="flex items-center gap-3">
+                    <img
+                      src={`https://img.logo.dev/${logoDomains[int.name] ?? 'example.com'}?token=${TOKEN}&size=64`}
+                      width="36"
+                      height="36"
+                      alt={int.name}
+                      class="rounded-lg flex-shrink-0"
+                    />
+                    <p class="font-semibold text-sm text-[#FAFAFA]">{int.name}</p>
+                  </div>
+                  <span class={`px-2 py-0.5 rounded-full text-[10px] font-medium border flex-shrink-0 ${badgeColors[int.badge] || ''}`}>
+                    {int.badge}
+                  </span>
+                </div>
+                <p class="text-xs text-[#A1A1AA] leading-relaxed">{int.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 px-6 border-t border-white/[0.06]">
+    <div class="max-w-2xl mx-auto text-center">
+      <h2 class="text-2xl font-bold mb-3">Don't see your tool?</h2>
+      <p class="text-[#A1A1AA] mb-8">We're adding new integrations regularly. Get in touch and we'll prioritize yours.</p>
+      <a href="/contact" class="btn-primary px-6 py-3">Request an integration</a>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>

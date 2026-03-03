@@ -1,0 +1,37 @@
+---
+const TOKEN = "pk_DJKjA6gBT_2eZzZT6CXz-w";
+const integrations = [
+  { name: "Zoom",                 domain: "zoom.us" },
+  { name: "Salesforce",           domain: "salesforce.com" },
+  { name: "HubSpot",              domain: "hubspot.com" },
+  { name: "Gmail",                domain: "gmail.com" },
+  { name: "Google Calendar",      domain: "calendar.google.com" },
+  { name: "Microsoft Teams",      domain: "microsoft.com" },
+  { name: "Gong",                 domain: "gong.io" },
+  { name: "Chorus",               domain: "chorus.ai" },
+  { name: "Snowflake",            domain: "snowflake.com" },
+  { name: "BigQuery",             domain: "cloud.google.com" },
+  { name: "Google Cloud Storage", domain: "cloud.google.com" },
+];
+// Duplicate for seamless marquee loop
+const items = [...integrations, ...integrations];
+---
+<section class="py-12 border-y border-white/[0.06] overflow-hidden">
+  <p class="text-xs text-[#71717A] uppercase tracking-widest text-center mb-8">Works with your existing stack</p>
+  <div class="flex overflow-hidden">
+    <div class="marquee-track flex gap-4 flex-shrink-0">
+      {items.map((item) => (
+        <span class="px-4 py-2 rounded-full border border-white/[0.08] bg-[#111114] text-sm text-[#A1A1AA] whitespace-nowrap flex-shrink-0 flex items-center gap-2">
+          <img
+            src={`https://img.logo.dev/${item.domain}?token=${TOKEN}&size=40`}
+            width="16"
+            height="16"
+            alt={item.name}
+            class="rounded-lg flex-shrink-0"
+          />
+          {item.name}
+        </span>
+      ))}
+    </div>
+  </div>
+</section>
