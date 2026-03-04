@@ -45,6 +45,20 @@ const categories = [
 ];
 
 const TOKEN = "pk_DJKjA6gBT_2eZzZT6CXz-w";
+const logoPaths: Record<string, string> = {
+  "Zoom": "/zoom-logo.svg",
+  "Salesforce": "/salesforce-logo.svg",
+  "Gmail": "/gmail-logo.svg",
+  "Microsoft Teams": "/microsoft-teams-logo.svg",
+  "BigQuery": "/google-cloud-logo.svg",
+  "Google Cloud Storage": "/google-cloud-logo.svg",
+  "Google Calendar": "/google-calendar-logo.svg",
+  "Microsoft Outlook": "/outlook-logo.svg",
+  "Google Meet": "/google-meet-logo.svg",
+  "HubSpot": "/hubspot-logo.svg",
+  "Snowflake": "/snowflake-logo.svg",
+  "Databricks": "/databricks-logo.svg",
+};
 const logoDomains: Record<string, string> = {
   "Zoom":               "zoom.us",
   "Microsoft Teams":    "microsoft.com",
@@ -61,6 +75,9 @@ const logoDomains: Record<string, string> = {
   "Databricks":         "databricks.com",
   "Google Cloud Storage": "cloud.google.com",
 };
+function logoSrc(name: string) {
+  return logoPaths[name] ?? `https://img.logo.dev/${logoDomains[name] ?? 'example.com'}?token=${TOKEN}&size=64`;
+}
 
 const badgeColors: Record<string, string> = {
   "Source": "bg-blue-500/10 border-blue-500/20 text-blue-400",
@@ -110,11 +127,11 @@ const badgeColors: Record<string, string> = {
                 <div class="flex items-start justify-between">
                   <div class="flex items-center gap-3">
                     <img
-                      src={`https://img.logo.dev/${logoDomains[int.name] ?? 'example.com'}?token=${TOKEN}&size=64`}
+                      src={logoSrc(int.name)}
                       width="36"
                       height="36"
                       alt={int.name}
-                      class="rounded-lg flex-shrink-0"
+                      class="rounded-lg flex-shrink-0 w-9 h-9 object-contain"
                     />
                     <p class="font-semibold text-sm text-[#FAFAFA]">{int.name}</p>
                   </div>
