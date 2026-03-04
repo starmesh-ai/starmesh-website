@@ -1,0 +1,542 @@
+---
+type SourceCard = {
+  app: string;
+  snippet: string;
+  badge: string;
+};
+
+type TabData = {
+  id: string;
+  label: string;
+  sources: SourceCard[];
+  outcomes: string[];
+};
+
+const STYLE_VARIANT = "glass"; // Switch to "flat" to preview alternate styling.
+
+const tabs: TabData[] = [
+  {
+    id: "sales",
+    label: "Sales",
+    sources: [
+      {
+        app: "Zoom",
+        badge: "ZO",
+        snippet: "Prospect asks for pricing flexibility and earlier onboarding support."
+      },
+      {
+        app: "Gong",
+        badge: "GO",
+        snippet: "Champion is engaged, but procurement concern appears for the first time."
+      },
+      {
+        app: "Salesforce",
+        badge: "SF",
+        snippet: "Opportunity moved to Commit with expanded stakeholders in security review."
+      },
+      {
+        app: "HubSpot",
+        badge: "HS",
+        snippet: "Email response slowed after legal questionnaire was shared."
+      }
+    ],
+    outcomes: [
+      "AI Forecast Confidence",
+      "Deal / Account Health Score",
+      "AE Performance Signals",
+      "Qualification Criteria Coverage",
+      "Ask AI About Any Account",
+      "Buyer Timeline & Next Best Action",
+      "Write-Back to CRM"
+    ]
+  },
+  {
+    id: "cx",
+    label: "CX",
+    sources: [
+      {
+        app: "Intercom",
+        badge: "IC",
+        snippet: "Customer reports repeated export failures right before month-end close."
+      },
+      {
+        app: "Zendesk",
+        badge: "ZD",
+        snippet: "Ticket severity spikes after API timeout issue in enterprise workspace."
+      },
+      {
+        app: "Gainsight",
+        badge: "GS",
+        snippet: "CSM notes reduced usage and executive sponsor change in key account."
+      },
+      {
+        app: "Email",
+        badge: "EM",
+        snippet: "Renewal thread includes concern about response time consistency."
+      }
+    ],
+    outcomes: [
+      "Churn Risk Early Warning",
+      "Renewal / Expansion Opportunities",
+      "Escalation Detection",
+      "CSM Performance Signals",
+      "Theme & Root-Cause Clustering",
+      "Suggested Playbooks / Next Actions",
+      "Account Timeline with Risk Drivers"
+    ]
+  },
+  {
+    id: "product",
+    label: "Product",
+    sources: [
+      {
+        app: "Pendo",
+        badge: "PE",
+        snippet: "High drop-off on onboarding step where users configure first integration."
+      },
+      {
+        app: "Mixpanel",
+        badge: "MX",
+        snippet: "Activation improves when users connect two sources within first 48 hours."
+      },
+      {
+        app: "Jira",
+        badge: "JI",
+        snippet: "Bug cluster tied to permission flow appears across three enterprise tenants."
+      },
+      {
+        app: "Canny",
+        badge: "CA",
+        snippet: "Top request: cohort-level reporting and cross-team dashboard sharing."
+      }
+    ],
+    outcomes: [
+      "Feature Request Prioritization",
+      "Friction Point Detection",
+      "Sentiment by Feature / Segment",
+      "Product-Market Fit Signals",
+      "Usage + Voice-of-Customer Correlation",
+      "AI Summaries for PM Reviews",
+      "Roadmap Evidence Feed"
+    ]
+  },
+  {
+    id: "leaders",
+    label: "Leaders",
+    sources: [
+      {
+        app: "Salesforce",
+        badge: "SF",
+        snippet: "Pipeline conversion shifts by segment after pricing package update."
+      },
+      {
+        app: "Stripe",
+        badge: "ST",
+        snippet: "Expansion revenue rises in accounts with strong onboarding completion."
+      },
+      {
+        app: "NPS / CSAT",
+        badge: "NP",
+        snippet: "Sentiment dips in mid-market accounts citing integration complexity."
+      },
+      {
+        app: "Exec Notes",
+        badge: "EX",
+        snippet: "Leadership asks for weekly narrative on risk, growth, and product feedback."
+      }
+    ],
+    outcomes: [
+      "Unified Revenue + Experience Dashboard",
+      "Leading Indicators (not lagging only)",
+      "Segment Health at a Glance",
+      "Org Performance Trends",
+      "Strategic Risk / Opportunity Radar",
+      "Weekly AI Executive Brief",
+      "Source-of-Truth in Warehouse"
+    ]
+  }
+];
+---
+
+<section class={`product-how-it-works theme-${STYLE_VARIANT}`} id="product-how-it-works">
+  <div class="container">
+    <div class="section-header">
+      <h2>How It Works for Every Team</h2>
+      <p>Pull customer signals from every source, process them with AI workflows, and deliver outcomes your teams can trust.</p>
+    </div>
+
+    <div class="tab-controls" role="tablist" aria-label="How it works by team">
+      {tabs.map((tab, idx) => (
+        <button
+          class={`tab-btn ${idx === 0 ? "active" : ""}`}
+          role="tab"
+          aria-selected={idx === 0 ? "true" : "false"}
+          aria-controls={`panel-${tab.id}`}
+          id={`tab-${tab.id}`}
+          data-tab={tab.id}
+          type="button"
+        >
+          {tab.label}
+        </button>
+      ))}
+    </div>
+
+    <div class="tab-panels">
+      {tabs.map((tab, idx) => (
+        <article
+          class={`tab-panel ${idx === 0 ? "active" : ""}`}
+          role="tabpanel"
+          id={`panel-${tab.id}`}
+          aria-labelledby={`tab-${tab.id}`}
+          data-panel={tab.id}
+        >
+          <div class="left-column">
+            <h3>Source Signals</h3>
+            <div class="source-list">
+              {tab.sources.map((source) => (
+                <div class="source-card">
+                  <div class="app-meta">
+                    <span class="app-badge">{source.badge}</span>
+                    <span class="app-name">{source.app}</span>
+                  </div>
+                  <p>{source.snippet}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div class="middle-column">
+            <h3>Signal Processing</h3>
+            <div class="pipeline">
+              <div class="step">
+                <span class="dot"></span>
+                <span>Ingest events, transcripts, and notes</span>
+              </div>
+              <div class="step">
+                <span class="dot"></span>
+                <span>Normalize and unify into warehouse models</span>
+              </div>
+              <div class="step">
+                <span class="dot"></span>
+                <span>Apply sentiment, intent, and topic extraction</span>
+              </div>
+              <div class="step">
+                <span class="dot"></span>
+                <span>Generate scores, timelines, and AI summaries</span>
+              </div>
+              <div class="step">
+                <span class="dot"></span>
+                <span>Automate alerts, playbooks, and write-backs</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="right-column">
+            <h3>Outcomes</h3>
+            <div class="outcome-grid">
+              {tab.outcomes.map((outcome) => (
+                <div class="outcome-card">{outcome}</div>
+              ))}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const tabButtons = document.querySelectorAll(".tab-btn");
+  const tabPanels = document.querySelectorAll(".tab-panel");
+
+  tabButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const tabId = button.getAttribute("data-tab");
+      if (!tabId) return;
+
+      tabButtons.forEach((btn) => {
+        btn.classList.remove("active");
+        btn.setAttribute("aria-selected", "false");
+      });
+
+      tabPanels.forEach((panel) => {
+        panel.classList.remove("active");
+      });
+
+      button.classList.add("active");
+      button.setAttribute("aria-selected", "true");
+      const target = document.querySelector(`.tab-panel[data-panel="${tabId}"]`);
+      target?.classList.add("active");
+    });
+  });
+</script>
+
+<style>
+  .product-how-it-works {
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .container {
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 1.75rem;
+  }
+
+  .section-header h2 {
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    color: #f4f2ff;
+    margin-bottom: 0.6rem;
+  }
+
+  .section-header p {
+    color: #b3acf2;
+    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .tab-controls {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.65rem;
+    margin-bottom: 1rem;
+  }
+
+  .tab-btn {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #d5d0ff;
+    border-radius: 0.8rem;
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .tab-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .tab-btn.active {
+    border-color: rgba(139, 92, 246, 0.85);
+    box-shadow: 0 8px 20px rgba(139, 92, 246, 0.2);
+    color: #ffffff;
+  }
+
+  .tab-panels {
+    position: relative;
+  }
+
+  .tab-panel {
+    display: none;
+    grid-template-columns: minmax(0, 1fr) 320px minmax(0, 1fr);
+    gap: 1rem;
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  .tab-panel.active {
+    display: grid;
+    opacity: 1;
+    transform: translateY(0);
+    animation: panelIn 0.25s ease;
+  }
+
+  .left-column,
+  .middle-column,
+  .right-column {
+    border-radius: 1rem;
+    padding: 1rem;
+  }
+
+  .left-column h3,
+  .middle-column h3,
+  .right-column h3 {
+    margin: 0 0 0.7rem;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #d8d2ff;
+  }
+
+  .source-list {
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .source-card {
+    border-radius: 0.8rem;
+    padding: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .source-card:hover {
+    transform: translateY(-1px);
+    border-color: rgba(139, 92, 246, 0.45);
+  }
+
+  .app-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .app-badge {
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 0.45rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.62rem;
+    font-weight: 800;
+    color: #fff;
+    background: linear-gradient(145deg, #7c3aed, #4c1d95);
+  }
+
+  .app-name {
+    font-weight: 700;
+    color: #f4f2ff;
+    font-size: 0.92rem;
+  }
+
+  .source-card p {
+    margin: 0;
+    color: #cbc5ff;
+    font-size: 0.86rem;
+    line-height: 1.4;
+  }
+
+  .pipeline {
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 0.75rem;
+    padding: 0.65rem 0.7rem;
+    font-size: 0.83rem;
+    color: #d8d2ff;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .step:hover {
+    border-color: rgba(139, 92, 246, 0.45);
+    transform: translateY(-1px);
+  }
+
+  .dot {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 999px;
+    margin-top: 0.3rem;
+    background: #8b5cf6;
+    box-shadow: 0 0 0 rgba(139, 92, 246, 0.6);
+    animation: pulse 2.1s infinite;
+    flex-shrink: 0;
+  }
+
+  .outcome-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+
+  .outcome-card {
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 0.8rem;
+    padding: 0.72rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: #e8e4ff;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .outcome-card:hover {
+    transform: translateY(-1px);
+    border-color: rgba(139, 92, 246, 0.45);
+  }
+
+  .theme-glass .tab-btn,
+  .theme-glass .left-column,
+  .theme-glass .middle-column,
+  .theme-glass .right-column,
+  .theme-glass .source-card,
+  .theme-glass .step,
+  .theme-glass .outcome-card {
+    background: rgba(255, 255, 255, 0.035);
+    backdrop-filter: blur(4px);
+  }
+
+  .theme-flat .tab-btn,
+  .theme-flat .left-column,
+  .theme-flat .middle-column,
+  .theme-flat .right-column,
+  .theme-flat .source-card,
+  .theme-flat .step,
+  .theme-flat .outcome-card {
+    background: #2f2948;
+  }
+
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.45);
+    }
+    70% {
+      box-shadow: 0 0 0 6px rgba(139, 92, 246, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
+    }
+  }
+
+  @keyframes panelIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 1100px) {
+    .tab-panel {
+      grid-template-columns: 1fr;
+    }
+
+    .middle-column {
+      order: 2;
+    }
+
+    .right-column {
+      order: 3;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .product-how-it-works {
+      padding: 1.5rem 1rem 3rem;
+    }
+
+    .tab-controls {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .outcome-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

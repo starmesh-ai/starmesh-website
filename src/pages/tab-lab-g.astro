@@ -1,0 +1,1168 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+type TeamData = {
+  id: string;
+  label: string;
+  sources: { app: string; title: string; sample: string; logoUrl: string }[];
+  outcomes: string[];
+};
+
+const teams: TeamData[] = [
+  {
+    id: 'sales',
+    label: 'Sales',
+    sources: [
+      { app: 'Zoom', logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain=zoom.us', title: 'Call recording', sample: '"Budget is approved, but procurement timeline moved to next week."' },
+      { app: 'Gong', logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain=gong.io', title: 'Deal call notes', sample: '"Champion is strong. Security review is now the primary blocker."' },
+      { app: 'Gmail', logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain=mail.google.com', title: 'Email thread', sample: '"Can you confirm SOC2 controls and migration support before signature?"' },
+      { app: 'Salesforce', logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain=salesforce.com', title: 'Opportunity update', sample: '"Stage changed to Commit with expanded buying committee."' },
+      { app: 'Intercom', logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain=intercom.com', title: 'Support ticket', sample: '"Trial user asks for integration setup before conversion decision."' }
+    ],
+    outcomes: [
+      'AI forecast confidence',
+      'Deal and account health',
+      'Qualification score coverage',
+      'Next-best action timeline'
+    ]
+  },
+  {
+    id: 'cx',
+    label: 'CX',
+    sources: [
+      { app: 'Intercom', logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain=intercom.com', title: 'Support tickets', sample: '"Export issue repeats after every billing cycle close."' },
+      { app: 'Zendesk', logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain=zendesk.com', title: 'Escalation case', sample: '"P1 raised by enterprise account due to missing webhook retries."' },
+      { app: 'Gmail', logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain=mail.google.com', title: 'Renewal email', sample: '"Team is happy overall, but onboarding still felt slow."' },
+      { app: 'Zoom', logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain=zoom.us', title: 'QBR call recording', sample: '"Need better visibility into account-level health trends."' },
+      { app: 'Slack', logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain=slack.com', title: 'Customer channel', sample: '"Any ETA on the permission bug affecting our admins?"' }
+    ],
+    outcomes: [
+      'Early churn risk signals',
+      'Escalation trend detection',
+      'CSM performance insights',
+      'Renewal playbook suggestions'
+    ]
+  },
+  {
+    id: 'product',
+    label: 'Product',
+    sources: [
+      { app: 'Pendo', logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain=pendo.io', title: 'Usage events', sample: '"Drop-off spikes when users reach integration settings screen."' },
+      { app: 'Mixpanel', logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain=mixpanel.com', title: 'Behavior cohorts', sample: '"Users with two data sources connected retain 2.1x better."' },
+      { app: 'Jira', logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain=atlassian.com', title: 'Issue backlog', sample: '"Permission-related tickets increased after latest release."' },
+      { app: 'Gong', logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain=gong.io', title: 'Call transcripts', sample: '"Feature request frequency rising for cohort-level analytics."' },
+      { app: 'Notion', logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain=notion.so', title: 'Research notes', sample: '"PM interviews highlight dashboard clarity as top theme."' }
+    ],
+    outcomes: [
+      'Feature demand ranking',
+      'Friction point hotspots',
+      'Sentiment by feature',
+      'Roadmap evidence feed'
+    ]
+  },
+  {
+    id: 'leaders',
+    label: 'Leaders',
+    sources: [
+      { app: 'Salesforce', logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain=salesforce.com', title: 'Pipeline report', sample: '"Conversion down in mid-market segment this month."' },
+      { app: 'Stripe', logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain=stripe.com', title: 'Revenue events', sample: '"Expansion growth strongest in accounts with high onboarding completion."' },
+      { app: 'NPS', logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain=surveymonkey.com', title: 'Survey responses', sample: '"Satisfaction drops tied to delayed implementation cycles."' },
+      { app: 'Zoom', logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain=zoom.us', title: 'Leadership calls', sample: '"Top concern: improve forecasting trust across GTM teams."' },
+      { app: 'Intercom', logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain=intercom.com', title: 'Theme digest', sample: '"Most frequent request: clearer customer health visibility."' }
+    ],
+    outcomes: [
+      'Unified exec dashboard',
+      'Leading indicator tracking',
+      'Strategic risk radar',
+      'Weekly AI briefing'
+    ]
+  }
+];
+---
+
+<Layout title="Tab Lab G">
+  <Navbar />
+  <main class="g-lab-page">
+    <section class="g-lab-head">
+      <h1>G Concepts (Focused)</h1>
+    </section>
+
+    <section class="g-stage">
+      <div class="top-pills team-tabs" role="tablist" aria-label="Team tabs">
+        {teams.map((team, index) => (
+          <button class={`tab-btn ${index === 0 ? 'active' : ''}`} data-team={team.id}>{team.label}</button>
+        ))}
+      </div>
+      <p class="stage-note">Focused G1 concept with the same top-tab style from Option F (other concepts remain in `/tab-lab`).</p>
+
+      {teams.map((team, teamIndex) => (
+        <section class={`team-panel ${teamIndex === 0 ? 'active' : ''}`} data-team-panel={team.id}>
+          <article class="variant-panel g1">
+            <div class="left-col">
+              {team.sources.slice(0, 4).map((source) => (
+                <div class="source-card">
+                  <div class="source-layout">
+                    <div class="source-meta">
+                      <div class="source-top">
+                        <span class="logo-badge">
+                          <img src={source.logoUrl} alt={`${source.app} logo`} loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                          <span class="logo-fallback">{source.app.replace(/[^A-Za-z]/g, '').slice(0, 2).toUpperCase()}</span>
+                        </span>
+                      </div>
+                      <p class="source-title">{source.title}</p>
+                    </div>
+                    <p class="source-sample">
+                      {source.sample.replace(/^"|"$/g, '')} This signal keeps showing up across related conversations and is becoming a clear pattern.
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div class="middle-col g1-center">
+              <div class="middle-variant-tabs" role="tablist" aria-label="Middle visualization options">
+                <button class="middle-variant-btn active" data-middle-view-btn="g1" type="button">G1</button>
+                <button class="middle-variant-btn" data-middle-view-btn="g2" type="button">G2</button>
+                <button class="middle-variant-btn" data-middle-view-btn="g3" type="button">G3</button>
+              </div>
+
+              <div class="middle-view middle-g1 active" data-middle-view="g1">
+                <div class="orbital-area ingest-target">
+                  <div class="core-label">Unified Data Layer</div>
+                  <div class="signal-bubble b1">Cross-deal analysis</div>
+                  <div class="signal-bubble b2">AI sentiment / qualification</div>
+                  <div class="signal-bubble b3">Real-time risk signals</div>
+                  <div class="signal-bubble b4">Account-level confidence</div>
+                </div>
+              </div>
+
+              <div class="middle-view middle-g2" data-middle-view="g2">
+                <div class="pipeline-view ingest-target">
+                  <div class="pipeline-step">Unified data</div>
+                  <div class="pipeline-step">Cross-deal analysis</div>
+                  <div class="pipeline-step">AI signals</div>
+                  <div class="pipeline-step">Real-time updates</div>
+                </div>
+              </div>
+
+              <div class="middle-view middle-g3" data-middle-view="g3">
+                <div class="signals-dashboard ingest-target">
+                  <div class="signal-tile">
+                    <span>Unified Data</span>
+                    <strong>24 sources live</strong>
+                  </div>
+                  <div class="signal-tile">
+                    <span>Cross-Deal</span>
+                    <strong>132 accounts compared</strong>
+                  </div>
+                  <div class="signal-tile">
+                    <span>AI Signals</span>
+                    <strong>Sentiment + Qualification</strong>
+                  </div>
+                  <div class="signal-tile realtime">
+                    <span>Real-time</span>
+                    <strong>Sync every 45s</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="right-col">
+              <div class="feature-stack">
+                <div class="mini-outcome forecast-card">
+                  <div class="mini-head">
+                    <strong><span class="mini-icon" aria-hidden="true">📈</span>AI Forecast</strong>
+                    <span>Q4 target: 100%</span>
+                  </div>
+                  <div class="line-chart" aria-hidden="true">
+                    <svg viewBox="0 0 160 64" preserveAspectRatio="none">
+                      <polyline points="4,48 26,44 48,46 70,33 92,39 114,27 136,31 156,20"></polyline>
+                    </svg>
+                  </div>
+                  <p>Projected close confidence: <strong>87%</strong> · risk-adjusted.</p>
+                  <div class="feature-preview">
+                    <h4>Forecast Workspace</h4>
+                    <div class="preview-chart" aria-hidden="true">
+                      <svg viewBox="0 0 240 110" preserveAspectRatio="none">
+                        <polyline points="6,96 38,82 72,86 104,62 136,70 168,46 202,54 234,28"></polyline>
+                      </svg>
+                    </div>
+                    <div class="preview-kpis">
+                      <span>Win probability: <strong>87%</strong></span>
+                      <span>Q4 target attainment: <strong>+14%</strong></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mini-outcome chat-card">
+                  <div class="mini-head">
+                    <strong><span class="mini-icon" aria-hidden="true">💬</span>Account Health Chat</strong>
+                  </div>
+                  <div class="chat-bubble user">How healthy is Acme this week?</div>
+                  <div class="chat-bubble ai">Health: <strong>Medium+</strong>. Pricing risk down, integration confidence up after latest call.</div>
+                  <div class="feature-preview">
+                    <h4>Account Copilot</h4>
+                    <div class="preview-chat user">Give me risk summary for Acme in one minute.</div>
+                    <div class="preview-chat ai">3 key updates: churn risk down, timeline confidence up, procurement blocker resolved by legal sync.</div>
+                  </div>
+                </div>
+
+                <div class="mini-outcome timeline-card">
+                  <div class="mini-head">
+                    <strong><span class="mini-icon" aria-hidden="true">🕒</span>Interaction Timeline</strong>
+                  </div>
+                  <div class="timeline-row">
+                    <span class="dot"></span>
+                    <div><strong>Feb 24</strong> Zoom call synced</div>
+                  </div>
+                  <div class="timeline-row">
+                    <span class="dot"></span>
+                    <div><strong>Feb 23</strong> Intercom escalation resolved</div>
+                  </div>
+                  <div class="timeline-row">
+                    <span class="dot"></span>
+                    <div><strong>Feb 21</strong> CRM stage moved to Commit</div>
+                  </div>
+                  <div class="feature-preview">
+                    <h4>Unified Timeline</h4>
+                    <div class="preview-timeline-row"><span>Feb 24</span><p>Zoom: objection handled, budget confirmed</p></div>
+                    <div class="preview-timeline-row"><span>Feb 23</span><p>Intercom: escalation closed with RCA shared</p></div>
+                    <div class="preview-timeline-row"><span>Feb 22</span><p>Gmail: legal checklist approved</p></div>
+                    <div class="preview-timeline-row"><span>Feb 21</span><p>CRM: stage advanced to Commit</p></div>
+                  </div>
+                </div>
+
+                <div class="mini-outcome crm-card">
+                  <div class="mini-head">
+                    <strong><span class="mini-icon" aria-hidden="true">⇄</span>CRM Write-back</strong>
+                  </div>
+                  <p>Qualified outcomes and timeline notes are synced back to Salesforce and HubSpot automatically.</p>
+                  <div class="feature-preview">
+                    <h4>Write-back Console</h4>
+                    <div class="sync-pill">Sentiment score → Salesforce field</div>
+                    <div class="sync-pill">Qualification status → Opportunity stage notes</div>
+                    <div class="sync-pill">Timeline events → Activity feed</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </section>
+      ))}
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  const teamButtons = document.querySelectorAll('[data-team]');
+  const teamPanels = document.querySelectorAll('[data-team-panel]');
+  const middleVariantButtons = document.querySelectorAll('[data-middle-view-btn]');
+  let ingestFromTop = true;
+  let lastOutgoingIndex = -1;
+
+  function setTeam(teamId) {
+    teamButtons.forEach((button) => {
+      button.classList.toggle('active', button.getAttribute('data-team') === teamId);
+    });
+    teamPanels.forEach((panel) => {
+      panel.classList.toggle('active', panel.getAttribute('data-team-panel') === teamId);
+    });
+  }
+
+  teamButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const teamId = button.getAttribute('data-team');
+      if (teamId) setTeam(teamId);
+    });
+  });
+
+  function setMiddleView(viewId) {
+    middleVariantButtons.forEach((button) => {
+      button.classList.toggle('active', button.getAttribute('data-middle-view-btn') === viewId);
+    });
+    const middleViews = document.querySelectorAll('[data-middle-view]');
+    middleViews.forEach((view) => {
+      view.classList.toggle('active', view.getAttribute('data-middle-view') === viewId);
+    });
+  }
+
+  middleVariantButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const viewId = button.getAttribute('data-middle-view-btn');
+      if (viewId) setMiddleView(viewId);
+    });
+  });
+
+  function runIngestionTick() {
+    const activePanel = document.querySelector('.team-panel.active');
+    if (!activePanel) return;
+
+    const sourceColumn = activePanel.querySelector('.g1 .left-col');
+    const middleColumn = activePanel.querySelector('.g1 .middle-view.active .ingest-target');
+    if (!sourceColumn) return;
+    if (!middleColumn) return;
+    if (sourceColumn.getAttribute('data-animating') === '1') return;
+
+    const cards = sourceColumn.querySelectorAll('.source-card');
+    if (cards.length < 2) return;
+
+    const maxSelectableIndex = Math.min(3, cards.length - 1);
+    const candidates = [];
+    for (let i = 0; i <= maxSelectableIndex; i += 1) {
+      if (i !== lastOutgoingIndex) candidates.push(i);
+    }
+    if (candidates.length === 0) candidates.push(0);
+    const outgoingIndex = candidates[Math.floor(Math.random() * candidates.length)];
+    lastOutgoingIndex = outgoingIndex;
+
+    const outgoingCard = cards[outgoingIndex];
+    const incomingCard = cards[outgoingIndex + 1] || cards[0];
+    const incomingClass = ingestFromTop ? 'replace-from-top' : 'replace-from-bottom';
+    const incomingGhost = outgoingCard.cloneNode(true);
+
+    const outgoingRect = outgoingCard.getBoundingClientRect();
+    const middleRect = middleColumn.getBoundingClientRect();
+    const targetX = middleRect.left + middleRect.width * 0.35;
+    const targetY = middleRect.top + middleRect.height * 0.5;
+    const fromX = outgoingRect.left + outgoingRect.width * 0.5;
+    const fromY = outgoingRect.top + outgoingRect.height * 0.5;
+    const shiftX = Math.round(targetX - fromX);
+    const shiftY = Math.round(targetY - fromY);
+
+    const cardsBeforeLift = Array.from(sourceColumn.querySelectorAll('.source-card'));
+    const firstPositions = new Map(
+      cardsBeforeLift
+        .filter((card) => card !== outgoingCard)
+        .map((card) => [card, card.getBoundingClientRect()])
+    );
+
+    outgoingCard.style.setProperty('--ingest-x', `${shiftX}px`);
+    outgoingCard.style.setProperty('--ingest-y', `${shiftY}px`);
+
+    sourceColumn.setAttribute('data-animating', '1');
+    const flyTop = outgoingCard.offsetTop;
+    const flyLeft = outgoingCard.offsetLeft;
+    const flyWidth = outgoingCard.offsetWidth;
+    outgoingCard.classList.add('is-flying');
+    outgoingCard.style.top = `${flyTop}px`;
+    outgoingCard.style.left = `${flyLeft}px`;
+    outgoingCard.style.width = `${flyWidth}px`;
+
+    const cardsAfterLift = Array.from(sourceColumn.querySelectorAll('.source-card')).filter(
+      (card) => card !== outgoingCard
+    );
+
+    cardsAfterLift.forEach((card) => {
+      const firstRect = firstPositions.get(card);
+      if (!firstRect) return;
+      const lastRect = card.getBoundingClientRect();
+      const deltaY = firstRect.top - lastRect.top;
+      if (Math.abs(deltaY) < 1) return;
+
+      card.style.transition = 'none';
+      card.style.transform = `translateY(${deltaY}px)`;
+    });
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        cardsAfterLift.forEach((card) => {
+          card.style.transition = 'transform 420ms cubic-bezier(0.22, 0.61, 0.36, 1)';
+          card.style.transform = '';
+        });
+      });
+    });
+
+    window.setTimeout(() => {
+      cardsAfterLift.forEach((card) => {
+        card.style.removeProperty('transition');
+        card.style.removeProperty('transform');
+      });
+    }, 460);
+
+    incomingGhost.classList.add('incoming-soft', 'incoming-ghost');
+    sourceColumn.appendChild(incomingGhost);
+
+    // Start both motions together: outgoing leaves while incoming appears.
+    outgoingCard.classList.add('is-ingesting');
+    incomingCard.classList.add(incomingClass);
+
+    window.setTimeout(() => {
+      incomingCard.classList.remove(incomingClass);
+    }, 760);
+
+    window.setTimeout(() => {
+      outgoingCard.classList.remove('is-ingesting');
+      outgoingCard.classList.remove('is-flying');
+      outgoingCard.style.removeProperty('--ingest-x');
+      outgoingCard.style.removeProperty('--ingest-y');
+      outgoingCard.style.removeProperty('top');
+      outgoingCard.style.removeProperty('left');
+      outgoingCard.style.removeProperty('width');
+      if (incomingGhost.isConnected) {
+        sourceColumn.replaceChild(outgoingCard, incomingGhost);
+      } else {
+        sourceColumn.appendChild(outgoingCard);
+      }
+
+      sourceColumn.setAttribute('data-animating', '0');
+      ingestFromTop = !ingestFromTop;
+    }, 720);
+  }
+
+  if (!window.__gIngestionLoop) {
+    window.__gIngestionLoop = window.setInterval(runIngestionTick, 2600);
+  }
+</script>
+
+<style>
+  .g-lab-page {
+    max-width: 1180px;
+    margin: 4.8rem auto 2rem;
+    padding: 0 1rem 2rem;
+  }
+
+  .g-lab-head {
+    text-align: center;
+    margin-bottom: 0.35rem;
+  }
+
+  .g-lab-head h1 {
+    margin: 0 0 0.35rem;
+    font-size: clamp(2rem, 3.8vw, 2.7rem);
+  }
+
+  .g-lab-head p {
+    margin: 0;
+    color: #b9b2f7;
+    font-size: 0.95rem;
+  }
+
+  .g-stage {
+    margin-top: 0.2rem;
+  }
+
+  .top-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 0.7rem;
+    padding: 0.15rem;
+    width: fit-content;
+    margin: 0 auto;
+    justify-content: center;
+  }
+
+  .top-pills .tab-btn {
+    border-radius: 0.5rem;
+    border: 1px solid transparent;
+    padding: 0.3rem 0.74rem;
+    background: transparent;
+    color: #f0ebff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    line-height: 1.1;
+  }
+
+  .top-pills .tab-btn.active {
+    background: rgba(139, 92, 246, 0.24);
+    color: #f4f2ff;
+    box-shadow: 0 4px 14px rgba(139, 92, 246, 0.3);
+  }
+
+  .top-pills .tab-btn:hover {
+    background: rgba(139, 92, 246, 0.08);
+  }
+
+  .stage-note {
+    margin: 0.45rem auto 0.4rem;
+    text-align: center;
+    color: #b9b2f7;
+    font-size: 0.9rem;
+    max-width: 880px;
+  }
+
+  .team-panel {
+    display: none;
+  }
+
+  .team-panel.active {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .team-panel.active .variant-panel {
+    display: grid;
+    animation: fadeIn 0.2s ease;
+    width: min(100%, 1040px);
+    margin: 0 auto;
+  }
+
+  .g1 {
+    grid-template-columns: minmax(300px, 1.08fr) minmax(280px, 1fr) minmax(260px, 0.9fr);
+    gap: 0.9rem;
+    min-height: min(55vh, 500px);
+    align-items: start;
+  }
+
+  .g-col {
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 0.72rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .left-col {
+    padding: 0;
+    overflow: visible;
+    position: relative;
+  }
+
+  .source-card {
+    margin-top: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.58rem;
+    padding: 0.56rem 0.58rem;
+    background: rgba(255, 255, 255, 0.02);
+    transition: transform 0.58s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.58s ease, filter 0.58s ease;
+    position: relative;
+    z-index: 1;
+    will-change: transform, opacity;
+  }
+
+  .source-card.is-ingesting {
+    transform: translate(var(--ingest-x, 125%), var(--ingest-y, 0)) scale(0.5);
+    opacity: 0;
+    filter: blur(1px);
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  .source-card.is-flying {
+    position: absolute;
+    margin-top: 0;
+    z-index: 6;
+  }
+
+  .source-card.replace-from-top {
+    animation: replaceFromTop 0.72s cubic-bezier(0.16, 0.84, 0.2, 1);
+  }
+
+  .source-card.replace-from-bottom {
+    animation: replaceFromBottom 0.72s cubic-bezier(0.16, 0.84, 0.2, 1);
+  }
+
+  .source-card.incoming-soft {
+    animation: incomingSoft 0.72s cubic-bezier(0.16, 0.84, 0.2, 1);
+  }
+
+  .source-card.incoming-ghost {
+    pointer-events: none;
+  }
+
+  .source-layout {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    gap: 0.6rem;
+    align-items: center;
+  }
+
+  .source-meta {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .source-top {
+    margin-bottom: 0.2rem;
+  }
+
+  .logo-badge {
+    width: 2.15rem;
+    height: 2.15rem;
+    border-radius: 0.4rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    flex-shrink: 0;
+    overflow: hidden;
+    padding: 0.14rem;
+    box-sizing: border-box;
+  }
+
+  .logo-badge img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .logo-fallback {
+    display: none;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.32rem;
+    background: linear-gradient(145deg, #7c3aed, #4c1d95);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+  }
+
+  .source-title {
+    margin: 0;
+    color: #a8a2d8;
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
+
+  .source-sample {
+    margin: 0;
+    color: #e3ddff;
+    font-size: 0.75rem;
+    line-height: 1.45;
+    font-weight: 400;
+    max-height: calc(1.45em * 4);
+    overflow-y: auto;
+    padding-right: 0.2rem;
+  }
+
+  .g1-center {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 0.45rem;
+  }
+
+  .middle-variant-tabs {
+    display: flex;
+    gap: 0.35rem;
+    margin-bottom: 0.1rem;
+  }
+
+  .middle-variant-btn {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.03);
+    color: #d8d2ff;
+    border-radius: 0.4rem;
+    padding: 0.22rem 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .middle-variant-btn.active {
+    border-color: rgba(139, 92, 246, 0.52);
+    background: rgba(139, 92, 246, 0.16);
+    color: #f5f2ff;
+  }
+
+  .middle-view {
+    display: none;
+  }
+
+  .middle-view.active {
+    display: block;
+  }
+
+  .orbital-area {
+    position: relative;
+    min-height: min(43vh, 360px);
+    overflow: hidden;
+  }
+
+  .pipeline-view {
+    min-height: min(43vh, 360px);
+    display: grid;
+    align-content: center;
+    gap: 0.55rem;
+  }
+
+  .pipeline-step {
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 0.48rem;
+    padding: 0.46rem 0.6rem;
+    font-size: 0.82rem;
+    color: #ebe6ff;
+    position: relative;
+  }
+
+  .pipeline-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0.85rem;
+    bottom: -0.44rem;
+    width: 1px;
+    height: 0.44rem;
+    background: rgba(139, 92, 246, 0.55);
+  }
+
+  .signals-dashboard {
+    min-height: min(43vh, 360px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    align-content: center;
+  }
+
+  .signal-tile {
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 0.5rem;
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .signal-tile span {
+    font-size: 0.7rem;
+    color: #bfb7f5;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .signal-tile strong {
+    font-size: 0.8rem;
+    line-height: 1.25;
+    color: #ede8ff;
+  }
+
+  .signal-tile.realtime strong::before {
+    content: '● ';
+    color: #2dd4bf;
+    animation: pulseDot 1.2s ease-in-out infinite;
+  }
+
+  .core-label {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.45rem 0.7rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  .signal-bubble {
+    position: absolute;
+    width: 132px;
+    height: 132px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.78rem;
+    line-height: 1.2;
+    padding: 0.4rem;
+  }
+
+  .b1 { left: 8%; top: 8%; background: rgba(34, 211, 238, 0.1); }
+  .b2 { right: 8%; top: 9%; background: rgba(249, 115, 22, 0.1); }
+  .b3 { left: 15%; bottom: 7%; background: rgba(236, 72, 153, 0.1); }
+  .b4 { right: 13%; bottom: 7%; background: rgba(52, 211, 153, 0.1); }
+
+  .right-col {
+    display: grid;
+    align-content: start;
+    gap: 0.35rem;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    position: relative;
+    z-index: 20;
+  }
+
+  .feature-stack {
+    position: relative;
+    min-height: 448px;
+    overflow: visible;
+  }
+
+  .mini-outcome {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.5rem 0.55rem;
+    box-shadow: 0 12px 24px rgba(15, 8, 30, 0.25);
+    backdrop-filter: blur(3px);
+    position: relative;
+  }
+
+  .feature-stack .mini-outcome {
+    position: absolute;
+    width: 92%;
+  }
+
+  .feature-stack .forecast-card {
+    top: 0;
+    left: 0;
+    z-index: 3;
+  }
+
+  .feature-stack .chat-card {
+    top: 108px;
+    right: 0;
+    z-index: 2;
+  }
+
+  .feature-stack .timeline-card {
+    top: 215px;
+    left: 14px;
+    z-index: 1;
+  }
+
+  .feature-stack .crm-card {
+    top: 320px;
+    right: 6px;
+    z-index: 0;
+    width: 86%;
+  }
+
+  .mini-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.35rem;
+    font-size: 0.75rem;
+    color: #d4ccff;
+  }
+
+  .mini-head strong {
+    font-size: 0.78rem;
+    color: #f0ebff;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .line-chart {
+    width: 48%;
+    height: 48px;
+    margin-bottom: 0.3rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .line-chart svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .line-chart polyline {
+    fill: none;
+    stroke: #67d4ff;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 4px rgba(103, 212, 255, 0.35));
+  }
+
+  .forecast-card p {
+    margin: 0;
+    font-size: 0.73rem;
+    color: #dcd6ff;
+  }
+
+  .mini-icon {
+    font-size: 0.78rem;
+    line-height: 1;
+    color: #8fd9ff;
+  }
+
+  .chat-bubble {
+    font-size: 0.73rem;
+    line-height: 1.35;
+    border-radius: 0.42rem;
+    padding: 0.34rem 0.42rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .chat-bubble.user {
+    background: rgba(255, 255, 255, 0.06);
+    color: #ece7ff;
+  }
+
+  .chat-bubble.ai {
+    background: rgba(139, 92, 246, 0.18);
+    color: #efe9ff;
+    margin-bottom: 0;
+  }
+
+  .timeline-row {
+    display: grid;
+    grid-template-columns: 0.55rem 1fr;
+    gap: 0.35rem;
+    align-items: start;
+    margin-bottom: 0.28rem;
+    font-size: 0.73rem;
+    color: #dfdaff;
+  }
+
+  .timeline-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .timeline-row .dot {
+    width: 0.36rem;
+    height: 0.36rem;
+    margin-top: 0.25rem;
+    border-radius: 999px;
+    background: #8b5cf6;
+  }
+
+  .crm-card p {
+    margin: 0;
+    font-size: 0.72rem;
+    color: #d9d3ff;
+    line-height: 1.35;
+  }
+
+  .feature-preview {
+    position: absolute;
+    right: calc(100% + 12px);
+    top: 50%;
+    transform: translateY(-50%) scale(0.96);
+    width: 270px;
+    border: 1px solid rgba(139, 92, 246, 0.35);
+    border-radius: 0.62rem;
+    background: rgba(25, 20, 47, 0.96);
+    box-shadow: 0 20px 36px rgba(9, 5, 22, 0.45);
+    padding: 0.55rem 0.6rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+    z-index: 60;
+  }
+
+  .mini-outcome:hover .feature-preview,
+  .mini-outcome:focus-within .feature-preview {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+
+  .feature-preview h4 {
+    margin: 0 0 0.38rem;
+    font-size: 0.78rem;
+    color: #f0ebff;
+    letter-spacing: 0.02em;
+  }
+
+  .preview-chart {
+    height: 88px;
+    border-left: 1px solid rgba(255, 255, 255, 0.16);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 0.45rem;
+  }
+
+  .preview-chart svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .preview-chart polyline {
+    fill: none;
+    stroke: #67d4ff;
+    stroke-width: 3.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .preview-kpis {
+    display: grid;
+    gap: 0.24rem;
+    font-size: 0.72rem;
+    color: #d7d0ff;
+  }
+
+  .preview-kpis strong {
+    color: #f0eaff;
+  }
+
+  .preview-chat {
+    font-size: 0.72rem;
+    line-height: 1.35;
+    border-radius: 0.44rem;
+    padding: 0.35rem 0.42rem;
+    margin-bottom: 0.26rem;
+  }
+
+  .preview-chat.user {
+    background: rgba(255, 255, 255, 0.08);
+    color: #efebff;
+  }
+
+  .preview-chat.ai {
+    background: rgba(139, 92, 246, 0.2);
+    color: #f2eeff;
+    margin-bottom: 0;
+  }
+
+  .preview-timeline-row {
+    display: grid;
+    grid-template-columns: 54px 1fr;
+    gap: 0.32rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .preview-timeline-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .preview-timeline-row span {
+    font-size: 0.68rem;
+    color: #b8b0ec;
+    font-weight: 700;
+  }
+
+  .preview-timeline-row p {
+    margin: 0;
+    font-size: 0.71rem;
+    color: #e4deff;
+    line-height: 1.3;
+  }
+
+  .sync-pill {
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 0.4rem;
+    padding: 0.33rem 0.4rem;
+    margin-bottom: 0.24rem;
+    background: rgba(255, 255, 255, 0.04);
+    font-size: 0.7rem;
+    color: #e6e0ff;
+  }
+
+  .sync-pill:last-child {
+    margin-bottom: 0;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #c8c0ff;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes replaceFromTop {
+    from {
+      opacity: 0.2;
+      transform: translateY(-14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes replaceFromBottom {
+    from {
+      opacity: 0.2;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes incomingSoft {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes pulseDot {
+    0%, 100% { opacity: 0.35; }
+    50% { opacity: 1; }
+  }
+
+  @media (max-width: 980px) {
+    .g1 {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+
+    .signal-bubble {
+      position: static;
+      width: 100%;
+      height: auto;
+      border-radius: 0.55rem;
+      min-height: 56px;
+      margin-top: 0.45rem;
+    }
+
+    .orbital-area {
+      min-height: auto;
+    }
+
+    .pipeline-view,
+    .signals-dashboard {
+      min-height: auto;
+    }
+
+    .core-label {
+      position: static;
+      transform: none;
+      display: inline-block;
+      margin: 0.2rem 0;
+    }
+
+    .g1 {
+      min-height: auto;
+    }
+
+    .source-layout {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+
+    .feature-stack {
+      min-height: 0;
+      overflow: visible;
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    .feature-stack .mini-outcome {
+      position: static;
+      width: 100%;
+    }
+
+    .feature-preview {
+      display: none;
+    }
+  }
+</style>
