@@ -1,0 +1,579 @@
+---
+const teams = [
+  {
+    id: 'sales', label: 'Sales',
+    sources: [
+      { app:'Zoom',       logo:'zoom.us',        title:'Call recording',     sample:'Budget approved, but procurement timeline moved to next week.' },
+      { app:'Gong',       logo:'gong.io',         title:'Deal call notes',    sample:'Champion is strong. Security review is the primary blocker.' },
+      { app:'Gmail',      logo:'mail.google.com', title:'Email thread',       sample:'Can you confirm SOC2 controls and migration support before signature?' },
+      { app:'Salesforce', logo:'salesforce.com',  title:'Opportunity update', sample:'Stage changed to Commit with expanded buying committee.' },
+      { app:'HubSpot',    logo:'hubspot.com',     title:'Contact activity',   sample:'VP of Engineering joined — asking about data residency.' },
+    ],
+    steps: [
+      'Transcribing 847 minutes of call recordings',
+      'Extracting deal signals across 23 conversations',
+      'Running MEDDIC qualification templates',
+      'Cross-referencing CRM and email signals',
+      'Detecting risk patterns across the pipeline',
+    ],
+    rows: [
+      { key:'pwin_score',    val:'0.74',               color:'green'  },
+      { key:'slip_risk',     val:'elevated',            color:'red'    },
+      { key:'competitor',    val:'Gong · 3×',           color:'orange' },
+      { key:'pricing_pres.', val:'moderate',            color:'yellow' },
+      { key:'champion',      val:'Sarah Kim · active',  color:'green'  },
+      { key:'next_steps',    val:'not defined',         color:'red'    },
+    ],
+    alert: 'Deal at risk of slip · D-2847',
+    outcomes: [
+      { icon:'📈', title:'AI Forecast',          meta:'Q4: 100% target', chart:[48,44,46,33,39,27,31,20], body:'Close confidence: 87% · risk-adjusted.' },
+      { icon:'💬', title:'Account Copilot',      meta:null, chat:{ user:'How healthy is Acme?', ai:'Health: Medium+. Pricing risk down, confidence up after latest call.' } },
+      { icon:'🕒', title:'Interaction Timeline', meta:null, tl:[{d:'Feb 24',t:'Zoom call synced'},{d:'Feb 23',t:'Escalation resolved'},{d:'Feb 21',t:'CRM → Commit'}] },
+      { icon:'⇄',  title:'CRM Write-back',       meta:null, body:'Outcomes and notes synced to Salesforce & HubSpot automatically.' },
+    ],
+  },
+  {
+    id: 'product', label: 'Product',
+    sources: [
+      { app:'Gong',     logo:'gong.io',         title:'Call transcripts',  sample:'Feature request frequency rising for cohort-level analytics across enterprise calls.' },
+      { app:'Zoom',     logo:'zoom.us',          title:'Customer calls',    sample:'Dashboard clarity cited as the top pain point in PM interviews this quarter.' },
+      { app:'Pendo',    logo:'pendo.io',         title:'Usage events',      sample:'Drop-off spikes when users reach the integration settings screen at step 3.' },
+      { app:'Mixpanel', logo:'mixpanel.com',     title:'Behavior cohorts',  sample:'Users with two data sources connected retain 2.1× better at 30 days.' },
+      { app:'Jira',     logo:'atlassian.com',    title:'Issue backlog',     sample:'Permission-related tickets increased 40% after the latest release.' },
+    ],
+    steps: [
+      'Scanning call transcripts for feature themes',
+      'Analyzing usage drop-off and retention patterns',
+      'Processing issue backlog for recurring themes',
+      'Ranking feature demand by frequency and revenue',
+      'Quantifying revenue impact of roadmap gaps',
+    ],
+    rows: [
+      { key:'top_theme',    val:'cohort analytics',  color:'green'  },
+      { key:'theme_freq',   val:'12 · rising ↑',     color:'yellow' },
+      { key:'friction',     val:'step 3 drop-off',   color:'orange' },
+      { key:'retention',    val:'2.1× with 2 src',   color:'green'  },
+      { key:'themes_found', val:'8',                  color:'green'  },
+      { key:'revenue_risk', val:'$180K blocked',      color:'red'    },
+    ],
+    alert: 'Roadmap gap · $180K revenue at risk across 4 accounts',
+    outcomes: [
+      { icon:'📊', title:'Feature Demand',  meta:'8 themes · 3 rising', chart:[52,48,44,38,32,24,20,14], body:'Cohort analytics rising — linked to $180K in blocked pipeline.' },
+      { icon:'💬', title:'PM Copilot',      meta:null, chat:{ user:'What should we build next?', ai:'Cohort analytics: 12 mentions, 2 churned accounts, $180K in blocked deals.' } },
+      { icon:'🕒', title:'Signal Timeline', meta:null, tl:[{d:'Mar 1',t:'Gong: cohort ×3 mentions'},{d:'Feb 27',t:'Pendo: step 3 drop-off'},{d:'Feb 24',t:'Jira: perms tickets ↑'}] },
+      { icon:'⇄',  title:'Data Write-back', meta:null, body:'Feature signals and theme rankings exported to Snowflake, Jira, and your roadmap tool.' },
+    ],
+  },
+  {
+    id: 'cx', label: 'CX',
+    sources: [
+      { app:'Intercom', logo:'intercom.com',    title:'Support tickets',  sample:'Export issue repeats after every billing cycle close.' },
+      { app:'Zendesk',  logo:'zendesk.com',     title:'Escalation case',  sample:'P1 raised by enterprise account — webhook retries missing.' },
+      { app:'Zoom',     logo:'zoom.us',          title:'QBR recording',    sample:'Team is happy overall, but onboarding still felt slow.' },
+      { app:'Gmail',    logo:'mail.google.com',  title:'Renewal email',    sample:'Need better visibility into account-level health trends.' },
+      { app:'Slack',    logo:'slack.com',        title:'Customer channel', sample:'Any ETA on the permission bug affecting our admin users?' },
+    ],
+    steps: [
+      'Processing 234 open support tickets',
+      'Analyzing QBR and renewal call recordings',
+      'Computing account-level health scores',
+      'Detecting early churn and escalation signals',
+      'Mapping renewal risk by account tier',
+    ],
+    rows: [
+      { key:'escalations',  val:'2 open · P1',    color:'red'    },
+      { key:'health_score', val:'44 / 100',        color:'red'    },
+      { key:'sentiment',    val:'declining −18',   color:'red'    },
+      { key:'champion',     val:'cold · 6 weeks',  color:'yellow' },
+      { key:'renewal_days', val:'47 days',         color:'orange' },
+      { key:'churn_risk',   val:'high',            color:'red'    },
+    ],
+    alert: 'Account at churn risk · Meridian Inc',
+    outcomes: [
+      { icon:'❤️', title:'Account Health',   meta:'At risk', chart:[20,22,25,30,38,44,50,58], body:'Score: 44/100 · Declining −18 pts. Renewal in 47 days.' },
+      { icon:'💬', title:'CSM Copilot',      meta:null, chat:{ user:'What needs urgent attention?', ai:'Meridian at high churn risk — 2 P1s open, 47 days to renewal, champion cold.' } },
+      { icon:'🕒', title:'Account Timeline', meta:null, tl:[{d:'Feb 26',t:'P1 raised — webhook'},{d:'Feb 24',t:'QBR: NPS declined'},{d:'Feb 20',t:'Champion role changed'}] },
+      { icon:'⇄',  title:'CRM Write-back',   meta:null, body:'Health scores and escalation signals synced to Salesforce & Gainsight.' },
+    ],
+  },
+];
+---
+
+<section id="overview" class="py-24 px-6">
+  <div class="max-w-[1200px] mx-auto">
+
+    <div class="text-center mb-12">
+      <p class="text-xs text-[#71717A] uppercase tracking-widest mb-3">Overview</p>
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+        One platform for every <span class="gradient-text">customer-facing team</span>
+      </h2>
+      <p class="text-[#A1A1AA] text-lg max-w-2xl mx-auto">See how Starmesh turns raw conversations into structured intelligence — for Sales, RevOps, CX, and leadership.</p>
+    </div>
+
+    <div class="ov-pills" role="tablist">
+      {teams.map((team, i) => (
+        <button class={`ov-tab ${i === 0 ? 'active' : ''}`} data-tab={team.id}>{team.label}</button>
+      ))}
+    </div>
+
+    <div class="ov-board" id="ov-board">
+      <div class="ov-dotgrid"></div>
+
+      <!-- SVG overlay for animated connection lines -->
+      <svg class="ov-svg" id="ov-svg" xmlns="http://www.w3.org/2000/svg" overflow="visible">
+        <defs>
+          <linearGradient id="ovLgIn" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#6366F1" stop-opacity="0.18"/>
+            <stop offset="100%" stop-color="#6366F1" stop-opacity="0.75"/>
+          </linearGradient>
+          <linearGradient id="ovLgOut" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.75"/>
+            <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0.18"/>
+          </linearGradient>
+          <filter id="ovGlow" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="2.5" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+      </svg>
+
+      {teams.map((team, ti) => (
+        <div class={`ov-panel ${ti === 0 ? 'active' : ''}`} data-panel={team.id}>
+          <div class="ov-grid">
+
+            <!-- ── LEFT: source cards ── -->
+            <div class="ov-src-col">
+              {team.sources.map(src => (
+                <div class="ov-src-card">
+                  <div class="ov-src-layout">
+                    <div class="ov-src-meta">
+                      <span class="ov-logo">
+                        <img src={`https://www.google.com/s2/favicons?sz=64&domain=${src.logo}`} alt={src.app} loading="lazy"
+                          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/>
+                        <span class="ov-logo-fb">{src.app.slice(0,2).toUpperCase()}</span>
+                      </span>
+                      <p class="ov-src-type">{src.title}</p>
+                    </div>
+                    <p class="ov-src-sample">{src.sample}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <!-- ── CENTER: real-time AI analysis card ── -->
+            <div class="ov-ai-col">
+              <div class="ov-ai-card">
+                <div class="ov-ai-head">
+                  <span class="ov-ai-dot"></span>
+                  <span class="ov-ai-title">Starmesh AI · Analyzing</span>
+                  <span class="ov-ai-badge">Live</span>
+                </div>
+
+                <!-- Analysis steps -->
+                <div class="ov-steps-area">
+                  {team.steps.map((step, si) => (
+                    <div class="ov-step" data-team={team.id} data-si={si}>
+                      <span class="ov-step-icon"></span>
+                      <span class="ov-step-lbl">{step}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <!-- Result rows -->
+                <div class="ov-rows-area">
+                  <div class="ov-rows-label">Results</div>
+                  {team.rows.map((r, ri) => (
+                    <div class="ov-row" data-team={team.id} data-ri={ri}>
+                      <span class="ov-rk">{r.key}</span>
+                      <span class={`ov-rv ov-${r.color}`}>{r.val}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <!-- Alert -->
+                <div class="ov-ai-alert">
+                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+                    <circle cx="4" cy="4" r="3" stroke="#F87171" stroke-opacity=".7" stroke-width="1"/>
+                    <path d="M4 2v2.5" stroke="#F87171" stroke-width="1" stroke-linecap="round"/>
+                  </svg>
+                  {team.alert}
+                </div>
+              </div>
+            </div>
+
+            <!-- ── RIGHT: outcome cards ── -->
+            <div class="ov-out-col">
+              {team.outcomes.map(out => (
+                <div class="ov-out-card">
+                  <div class="ov-out-head">
+                    <span class="ov-out-icon">{out.icon}</span>
+                    <span class="ov-out-name">{out.title}</span>
+                    {out.meta && <span class="ov-out-meta">{out.meta}</span>}
+                  </div>
+                  {out.chart && (
+                    <div class="ov-spark">
+                      <svg viewBox={`0 0 ${(out.chart.length-1)*20} 48`} preserveAspectRatio="none">
+                        <polyline points={out.chart.map((v,i)=>`${i*20},${v}`).join(' ')}/>
+                      </svg>
+                    </div>
+                  )}
+                  {out.body && <p class="ov-out-body">{out.body}</p>}
+                  {out.chat && (
+                    <>
+                      <div class="ov-bbl-u">{out.chat.user}</div>
+                      <div class="ov-bbl-a">{out.chat.ai}</div>
+                    </>
+                  )}
+                  {out.tl && out.tl.map(row => (
+                    <div class="ov-tl">
+                      <span class="ov-tl-dot"></span>
+                      <span class="ov-tl-d">{row.d}</span>
+                      <span class="ov-tl-t">{row.t}</span>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+
+          </div>
+        </div>
+      ))}
+
+      <!-- Bottom status bar -->
+      <div class="ov-statusbar">
+        <span class="ov-status-live">
+          <span class="ov-status-dot"></span>
+          Pipeline active
+        </span>
+        <span class="ov-status-sep">|</span>
+        <span>2,841 conversations processed today</span>
+        <span class="ov-status-right">Salesforce · HubSpot · Snowflake · BigQuery</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // ── Tab switching ──
+  const tabs   = document.querySelectorAll<HTMLElement>('[data-tab]');
+  const panels = document.querySelectorAll<HTMLElement>('[data-panel]');
+
+  function activateTab(id: string) {
+    tabs.forEach(t   => t.classList.toggle('active', t.getAttribute('data-tab')   === id));
+    panels.forEach(p => p.classList.toggle('active', p.getAttribute('data-panel') === id));
+    restartAnimation(id);
+    requestAnimationFrame(() => requestAnimationFrame(drawConnections));
+  }
+
+  tabs.forEach(tab => tab.addEventListener('click', () => activateTab(tab.getAttribute('data-tab')!)));
+
+  // Handle ?team= URL param (from navbar links like /?team=sales#overview)
+  function applyTeamParam() {
+    const teamParam = new URLSearchParams(window.location.search).get('team');
+    if (teamParam && Array.from(tabs).some(t => t.getAttribute('data-tab') === teamParam)) {
+      activateTab(teamParam);
+      requestAnimationFrame(() =>
+        document.getElementById('overview')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      );
+    }
+  }
+
+  // Also handle navbar clicks on the same page (popstate / same-origin navigation)
+  window.addEventListener('popstate', applyTeamParam);
+
+  // ── Real-time step animation ──
+  const STEP_DUR    = 920;   // ms each step stays "active"
+  const ROW_DELAY   = 270;   // ms between result rows
+  const CYCLE_PAUSE = 2400;  // ms pause after all rows shown before reset
+  const timers: Record<string, ReturnType<typeof setTimeout>[]> = {};
+
+  function restartAnimation(teamId: string) {
+    (timers[teamId] || []).forEach(t => clearTimeout(t));
+    timers[teamId] = [];
+
+    document.querySelectorAll<HTMLElement>(`.ov-step[data-team="${teamId}"]`).forEach(s => {
+      s.classList.remove('step-active', 'step-done');
+    });
+    document.querySelectorAll<HTMLElement>(`.ov-row[data-team="${teamId}"]`).forEach(r => {
+      r.classList.remove('vis');
+    });
+
+    const steps = Array.from(document.querySelectorAll<HTMLElement>(`.ov-step[data-team="${teamId}"]`));
+    const rows  = Array.from(document.querySelectorAll<HTMLElement>(`.ov-row[data-team="${teamId}"]`));
+
+    let t = 300;
+
+    // Animate steps sequentially
+    steps.forEach((step) => {
+      timers[teamId].push(setTimeout(() => step.classList.add('step-active'), t));
+      t += STEP_DUR;
+      timers[teamId].push(setTimeout(() => {
+        step.classList.remove('step-active');
+        step.classList.add('step-done');
+      }, t));
+    });
+
+    // Animate result rows after all steps complete
+    rows.forEach((row, ri) => {
+      timers[teamId].push(setTimeout(() => row.classList.add('vis'), t + ri * ROW_DELAY));
+    });
+
+    // Schedule loop
+    const total = t + rows.length * ROW_DELAY + CYCLE_PAUSE;
+    timers[teamId].push(setTimeout(() => restartAnimation(teamId), total));
+  }
+
+  // ── SVG connection paths (Hero-style fan-in / fan-out) ──
+  const svg = document.getElementById('ov-svg') as SVGSVGElement | null;
+  let uid = 0;
+
+  function drawConnections() {
+    if (!svg) return;
+    svg.querySelectorAll('.ov-dyn').forEach(el => el.remove());
+
+    const board = document.getElementById('ov-board');
+    if (!board) return;
+    const br = board.getBoundingClientRect();
+    svg.setAttribute('width',  String(br.width));
+    svg.setAttribute('height', String(br.height));
+
+    const panel = document.querySelector<HTMLElement>('.ov-panel.active');
+    if (!panel) return;
+
+    const aiCard = panel.querySelector<HTMLElement>('.ov-ai-card');
+    if (!aiCard) return;
+    const ar = aiCard.getBoundingClientRect();
+    const aiLeft  = ar.left  - br.left;
+    const aiRight = ar.right - br.left;
+    const aiTop   = ar.top   - br.top;
+    const aiH     = ar.height;
+
+    const sources  = Array.from(panel.querySelectorAll<HTMLElement>('.ov-src-card'));
+    const outcomes = Array.from(panel.querySelectorAll<HTMLElement>('.ov-out-card'));
+
+    // Source card right edge → AI card left edge (fan in)
+    sources.forEach((src, i) => {
+      const sr = src.getBoundingClientRect();
+      const x1 = sr.right - br.left;
+      const y1 = sr.top + sr.height / 2 - br.top;
+      const frac = (i + 0.5) / sources.length;
+      const y2 = aiTop + aiH * frac;
+      addPath(x1, y1, aiLeft, y2, 'ovLgIn', '#6366F1', i * 0.18);
+    });
+
+    // AI card right edge → outcome card left edge (fan out)
+    outcomes.forEach((out, i) => {
+      const or_ = out.getBoundingClientRect();
+      const x2  = or_.left  - br.left;
+      const y2  = or_.top + or_.height / 2 - br.top;
+      const frac = (i + 0.5) / outcomes.length;
+      const y1  = aiTop + aiH * frac;
+      addPath(aiRight, y1, x2, y2, 'ovLgOut', '#8B5CF6', i * 0.18 + 0.35);
+    });
+  }
+
+  function addPath(x1:number, y1:number, x2:number, y2:number, grad:string, dotColor:string, delay:number) {
+    const mid = (x1 + x2) / 2;
+    const d   = `M${x1},${y1} C${mid},${y1} ${mid},${y2} ${x2},${y2}`;
+    const g   = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.classList.add('ov-dyn');
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', d);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', `url(#${grad})`);
+    path.setAttribute('stroke-width', '1.5');
+    path.setAttribute('stroke-dasharray', '5 5');
+    const pid = `ovp${uid++}`;
+    path.setAttribute('id', pid);
+    g.appendChild(path);
+
+    // Two waves of animated dots per path
+    [0, 1.15].forEach((extra, wi) => {
+      const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      dot.setAttribute('r', wi === 0 ? '3.5' : '2.5');
+      dot.setAttribute('fill', dotColor);
+      dot.setAttribute('filter', 'url(#ovGlow)');
+      dot.setAttribute('opacity', wi === 0 ? '0.9' : '0.5');
+      const am = document.createElementNS('http://www.w3.org/2000/svg', 'animateMotion');
+      am.setAttribute('dur', '2.2s');
+      am.setAttribute('repeatCount', 'indefinite');
+      am.setAttribute('begin', `${delay + extra}s`);
+      const mp = document.createElementNS('http://www.w3.org/2000/svg', 'mpath');
+      mp.setAttributeNS('http://www.w3.org/1999/xlink', 'href', `#${pid}`);
+      am.appendChild(mp);
+      dot.appendChild(am);
+      g.appendChild(dot);
+    });
+
+    svg!.appendChild(g);
+  }
+
+  // Init on load
+  window.addEventListener('load', () => {
+    // Check for ?team= param first, then fall back to default active tab
+    const teamParam = new URLSearchParams(window.location.search).get('team');
+    const validTeam = teamParam && Array.from(tabs).some(t => t.getAttribute('data-tab') === teamParam);
+    if (validTeam) {
+      applyTeamParam();
+    }
+    const initial = document.querySelector<HTMLElement>('.ov-tab.active')?.getAttribute('data-tab') || 'sales';
+    setTimeout(() => {
+      restartAnimation(initial);
+      drawConnections();
+    }, 250);
+  });
+  window.addEventListener('resize', drawConnections);
+</script>
+
+<style>
+  /* ── Pills / tabs ── */
+  .ov-pills { display:flex; gap:.25rem; background:rgba(255,255,255,.03); border-radius:.7rem; padding:.2rem; width:fit-content; margin:0 auto 1.75rem; }
+  .ov-tab { border-radius:.5rem; border:1px solid transparent; padding:.35rem 1.1rem; background:transparent; color:#A1A1AA; font-weight:600; font-size:.875rem; cursor:pointer; transition:all .18s ease; }
+  .ov-tab.active { background:rgba(139,92,246,.22); color:#f4f2ff; box-shadow:0 4px 14px rgba(139,92,246,.25); border-color:rgba(139,92,246,.25); }
+  .ov-tab:hover:not(.active) { background:rgba(139,92,246,.08); color:#E4E4E7; }
+
+  /* ── Board ── */
+  .ov-board { position:relative; border-radius:1.25rem; border:1px solid rgba(255,255,255,.07); background:#0a0a0d; overflow:hidden; box-shadow:0 0 80px rgba(99,102,241,.06), inset 0 1px 0 rgba(255,255,255,.04); }
+  .ov-dotgrid { position:absolute; inset:0; pointer-events:none; background-image:radial-gradient(rgba(255,255,255,.022) 1px,transparent 1px); background-size:22px 22px; }
+  .ov-svg { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible; }
+
+  /* ── Panel ── */
+  .ov-panel { display:none; }
+  .ov-panel.active { display:block; animation:ovFade .22s ease; }
+  @keyframes ovFade { from{opacity:0} to{opacity:1} }
+
+  /* ── 3-column grid ── */
+  .ov-grid { display:grid; grid-template-columns:1fr 0.85fr 0.85fr; position:relative; z-index:1; min-height:490px; }
+
+  /* ── LEFT: source cards ── */
+  .ov-src-col { padding:18px 8px 18px 18px; display:flex; flex-direction:column; gap:6px; }
+  .ov-src-card {
+    padding:9px 10px; border-radius:9px;
+    border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.025);
+  }
+  .ov-src-layout { display:grid; grid-template-columns:28% 72%; gap:8px; align-items:center; }
+  .ov-src-meta { display:flex; flex-direction:column; align-items:flex-start; gap:4px; }
+  .ov-logo { width:34px; height:34px; border-radius:6px; background:#fff; overflow:hidden; flex-shrink:0; display:flex; align-items:center; justify-content:center; padding:3px; box-sizing:border-box; }
+  .ov-logo img { width:100%; height:100%; object-fit:contain; display:block; }
+  .ov-logo-fb { display:none; font-size:.6rem; font-weight:800; color:#fff; background:#7c3aed; width:100%; height:100%; align-items:center; justify-content:center; border-radius:4px; }
+  .ov-src-type { font-size:.65rem; color:#a8a2d8; margin:0; line-height:1.25; }
+  .ov-src-sample { font-size:.71rem; color:#d4cef5; line-height:1.45; margin:0; }
+
+  /* ── CENTER: AI analysis card ── */
+  .ov-ai-col { padding:18px 28px; display:flex; align-items:stretch; }
+  .ov-ai-card {
+    flex:1; border-radius:9px; background:#0f0f12;
+    border:1px solid rgba(99,102,241,.45);
+    box-shadow:0 0 28px rgba(99,102,241,.12), inset 0 1px 0 rgba(255,255,255,.04);
+    display:flex; flex-direction:column; overflow:hidden;
+  }
+  .ov-ai-head {
+    display:flex; align-items:center; gap:6px; padding:8px 10px;
+    background:#111118; border-bottom:1px solid rgba(99,102,241,.2); flex-shrink:0;
+  }
+  .ov-ai-dot { width:6px; height:6px; border-radius:50%; background:#34D399; flex-shrink:0; animation:aiPulse 2s ease-in-out infinite; }
+  @keyframes aiPulse { 0%,100%{box-shadow:0 0 0 0 rgba(52,211,153,.4)} 50%{box-shadow:0 0 0 4px rgba(52,211,153,0)} }
+  .ov-ai-title { font-size:.68rem; font-weight:600; color:#A1A1AA; flex:1; }
+  .ov-ai-badge { font-size:.56rem; font-weight:700; color:#4ADE80; background:rgba(74,222,128,.1); border:1px solid rgba(74,222,128,.25); border-radius:999px; padding:.06rem .38rem; letter-spacing:.05em; }
+
+  /* Steps */
+  .ov-steps-area { padding:6px 0; border-bottom:1px solid rgba(255,255,255,.045); flex-shrink:0; }
+  .ov-step {
+    display:flex; align-items:center; gap:7px; padding:3.5px 10px;
+    font-size:.6rem; color:#3F3F46; line-height:1.35;
+    opacity:0; transform:translateX(-3px);
+    transition:opacity .32s ease, transform .32s ease, color .32s ease;
+  }
+  .ov-step.step-active { opacity:1; transform:translateX(0); color:#E4E4E7; }
+  .ov-step.step-done   { opacity:.55; transform:translateX(0); color:#71717A; }
+  .ov-step-icon {
+    width:8px; height:8px; border-radius:50%; flex-shrink:0;
+    border:1px solid rgba(255,255,255,.12); background:transparent;
+    transition:background .3s ease, border-color .3s ease, box-shadow .3s ease;
+  }
+  .ov-step.step-active .ov-step-icon {
+    background:#6366F1; border-color:#6366F1;
+    animation:stepPulse 1s ease-in-out infinite;
+  }
+  .ov-step.step-done .ov-step-icon { background:#34D399; border-color:#34D399; animation:none; }
+  @keyframes stepPulse { 0%,100%{box-shadow:0 0 0 0 rgba(99,102,241,.55)} 50%{box-shadow:0 0 0 3px rgba(99,102,241,0)} }
+
+  /* Result rows */
+  .ov-rows-area { flex:1; display:flex; flex-direction:column; }
+  .ov-rows-label { font-size:.52rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#3F3F46; padding:5px 10px 2px; flex-shrink:0; }
+  .ov-row {
+    display:flex; align-items:baseline; justify-content:space-between;
+    padding:4px 10px; border-bottom:1px solid rgba(255,255,255,.035);
+    opacity:0; transform:translateX(-4px);
+    transition:opacity .28s ease, transform .28s ease;
+  }
+  .ov-row:last-child { border-bottom:none; }
+  .ov-row.vis { opacity:1; transform:translateX(0); }
+  .ov-rk { font-size:.6rem; font-family:ui-monospace,monospace; color:#52525B; }
+  .ov-rv { font-size:.63rem; font-family:ui-monospace,monospace; font-weight:700; }
+  .ov-green  { color:#34D399; }
+  .ov-red    { color:#F87171; }
+  .ov-yellow { color:#FACC15; }
+  .ov-orange { color:#FB923C; }
+  .ov-neutral{ color:#A1A1AA; }
+
+  .ov-ai-alert {
+    display:flex; align-items:center; gap:6px; padding:7px 10px;
+    background:rgba(239,68,68,.04); border-top:1px solid rgba(239,68,68,.15);
+    font-size:.6rem; color:#F87171; font-weight:500; flex-shrink:0;
+  }
+
+  /* ── RIGHT: outcome cards ── */
+  .ov-out-col { padding:18px 18px 18px 8px; display:flex; flex-direction:column; gap:7px; }
+  .ov-out-card { border:1px solid rgba(255,255,255,.07); border-radius:9px; background:rgba(255,255,255,.025); padding:9px 11px; flex:1; min-height:0; }
+  .ov-out-head { display:flex; align-items:center; gap:5px; margin-bottom:5px; }
+  .ov-out-icon { font-size:.7rem; line-height:1; }
+  .ov-out-name { font-size:.7rem; font-weight:700; color:#E4E4E7; flex:1; }
+  .ov-out-meta { font-size:.58rem; color:#52525B; white-space:nowrap; }
+  .ov-out-body { font-size:.63rem; color:#A1A1AA; line-height:1.4; margin:0; }
+
+  .ov-spark { width:100%; height:24px; margin-bottom:4px; border-left:1px solid rgba(255,255,255,.08); border-bottom:1px solid rgba(255,255,255,.08); }
+  .ov-spark svg { width:100%; height:100%; overflow:visible; }
+  .ov-spark polyline { fill:none; stroke:#818CF8; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; filter:drop-shadow(0 0 3px rgba(129,140,248,.4)); }
+
+  .ov-bbl-u,.ov-bbl-a { font-size:.62rem; line-height:1.4; border-radius:5px; padding:3px 6px; margin-bottom:2px; }
+  .ov-bbl-a { margin-bottom:0; }
+  .ov-bbl-u { background:rgba(255,255,255,.05); color:#D4D4D8; }
+  .ov-bbl-a { background:rgba(139,92,246,.15); color:#E4E4E7; }
+
+  .ov-tl { display:flex; align-items:center; gap:5px; font-size:.62rem; margin-bottom:2px; }
+  .ov-tl:last-child { margin-bottom:0; }
+  .ov-tl-dot { width:4px; height:4px; border-radius:50%; background:#6366F1; flex-shrink:0; }
+  .ov-tl-d { color:#52525B; font-weight:600; flex-shrink:0; width:36px; }
+  .ov-tl-t { color:#A1A1AA; }
+
+  /* ── Status bar ── */
+  .ov-statusbar {
+    border-top:1px solid rgba(255,255,255,.04); padding:8px 18px;
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    font-size:.72rem; color:#52525B;
+  }
+  .ov-status-live { display:flex; align-items:center; gap:6px; color:#A1A1AA; }
+  .ov-status-dot { position:relative; display:inline-flex; width:7px; height:7px; }
+  .ov-status-dot::before {
+    content:''; position:absolute; inset:0; border-radius:50%; background:#4ADE80;
+    animation:statusPing 1.5s ease-in-out infinite; opacity:.5;
+  }
+  .ov-status-dot::after { content:''; position:absolute; inset:1px; border-radius:50%; background:#4ADE80; }
+  @keyframes statusPing { 0%,100%{transform:scale(1);opacity:.5} 50%{transform:scale(1.8);opacity:0} }
+  .ov-status-sep { color:#3F3F46; }
+  .ov-status-right { margin-left:auto; display:none; }
+  @media (min-width:640px) { .ov-status-right { display:block; } }
+
+  /* ── Mobile ── */
+  @media (max-width:900px) {
+    .ov-grid { grid-template-columns:1fr; min-height:auto; }
+    .ov-svg { display:none; }
+    .ov-src-col { padding:16px; border-bottom:1px solid rgba(255,255,255,.05); }
+    .ov-ai-col { padding:16px; border-bottom:1px solid rgba(255,255,255,.05); }
+    .ov-out-col { padding:16px; }
+    .ov-ai-col { align-items:stretch; }
+  }
+</style>

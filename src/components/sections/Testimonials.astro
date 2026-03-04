@@ -1,25 +1,39 @@
 ---
 const testimonials = [
   {
-    quote: "Managing 150+ SMB accounts means I can't listen to every call. Starmesh automatically flags which conversations show disengagement or frustration — I only step in where it matters. My retention numbers have never been cleaner.",
+    quote: "Starmesh flags disengagement across my 150+ accounts automatically — I only step in where it matters. Retention has never been cleaner.",
     name: "Shabib",
     role: "CSM",
     company: "BirdEye",
     initial: "S",
   },
   {
-    quote: "We were guessing which messages actually resonated with enterprise buyers. Starmesh gives us a structured view of what comes up in every discovery call — objections by segment, competitor mentions, themes that land. It's changed how we brief campaigns.",
-    name: "Steve",
-    role: "Head of Marketing",
-    company: "Open Text Corp",
-    initial: "S",
-  },
-  {
-    quote: "Rep notes are inconsistent and CRM hygiene was a constant battle. Starmesh standardized our call data automatically — now our pipeline reports actually reflect what's happening in deals, not just what reps remembered to log.",
+    quote: "Rep notes were always inconsistent. Starmesh standardized our call data so pipeline reports finally reflect reality, not what reps remembered to log.",
     name: "Richard",
     role: "Sales Operations",
     company: "Eltropy",
     initial: "R",
+  },
+  {
+    quote: "Enterprise deals stall quietly. Starmesh surfaces pricing pressure and champion silence weeks before we'd normally catch it.",
+    name: "David",
+    role: "VP of Sales",
+    company: "Vectra",
+    initial: "D",
+  },
+  {
+    quote: "We were losing deals we thought were won. Starmesh surfaced the signals we missed — win rate improved significantly within two quarters.",
+    name: "Priya",
+    role: "Director of Revenue Operations",
+    company: "CommerceIQ",
+    initial: "P",
+  },
+  {
+    quote: "We used to guess what resonated with enterprise buyers. Now we have a structured view of every objection and competitor mention across every discovery call.",
+    name: "Steve",
+    role: "Head of Marketing",
+    company: "OpenText",
+    initial: "S",
   },
 ];
 ---
@@ -28,13 +42,19 @@ const testimonials = [
     <div class="text-center mb-14">
       <p class="text-xs text-[#71717A] uppercase tracking-widest mb-3">What teams are saying</p>
       <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-        Trusted by revenue and data teams
+        Trusted by revenue teams at
       </h2>
+      <!-- Company name pills -->
+      <div class="flex items-center justify-center gap-3 flex-wrap mt-4">
+        {["BirdEye", "Eltropy", "Vectra", "CommerceIQ", "OpenText"].map(c => (
+          <span class="px-3 py-1 rounded-full border border-white/[0.08] bg-white/[0.03] text-sm text-[#A1A1AA] font-medium">{c}</span>
+        ))}
+      </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="flex gap-5 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-hide">
       {testimonials.map((t) => (
-        <div class="card p-6 flex flex-col">
+        <div class="card p-6 flex flex-col flex-none w-80 snap-start">
           <!-- Stars -->
           <div class="flex gap-0.5 mb-4">
             {[...Array(5)].map(() => (

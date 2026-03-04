@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/nav/Navbar.astro';
+import CTASection from '../components/sections/CTASection.astro';
+import Footer from '../components/ui/Footer.astro';
+
+const professional = [
+  'Up to 20 data sources',
+  'Advanced data transformation',
+  'Priority support',
+  'Team collaboration',
+  'Custom integrations',
+];
+
+const enterprise = [
+  'Unlimited data sources',
+  'Custom data transformation',
+  '24/7 dedicated support',
+  'Advanced security & SSO',
+  'Custom integrations',
+  'Dedicated account manager',
+];
+---
+<BaseLayout
+  title="Pricing — Starmesh"
+  description="Simple, transparent pricing for conversation intelligence. Built for revenue and data teams."
+>
+  <Navbar />
+  <main class="pt-16">
+    <section class="py-24 px-6">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-16">
+          <p class="text-xs text-[#71717A] uppercase tracking-widest mb-3">Pricing</p>
+          <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">
+            Simple, <span class="gradient-text">transparent pricing</span>
+          </h1>
+          <p class="text-[#A1A1AA] text-lg max-w-xl mx-auto">Choose the plan that fits your team. No surprise fees, no lock-in.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+          <!-- Professional -->
+          <div class="card p-8 flex flex-col">
+            <p class="text-xs text-[#71717A] uppercase tracking-widest mb-3">Professional</p>
+            <div class="mb-4">
+              <span class="text-4xl font-bold text-[#FAFAFA]">$249</span>
+              <span class="text-[#71717A] ml-1">/mo</span>
+            </div>
+            <p class="text-sm text-[#A1A1AA] mb-6 leading-relaxed">Perfect for growing teams getting started with conversation intelligence.</p>
+            <ul class="space-y-3 flex-1 mb-8">
+              {professional.map(f => (
+                <li class="flex items-center gap-2.5 text-sm text-[#A1A1AA]">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                    <circle cx="8" cy="8" r="7" stroke="rgba(99,102,241,0.4)" stroke-width="1"/>
+                    <path d="M5 8l2 2 4-4" stroke="#818CF8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <a href="/contact" class="btn-primary text-sm text-center">Get started</a>
+          </div>
+
+          <!-- Enterprise -->
+          <div class="card p-8 flex flex-col" style="border-color: rgba(139,92,246,0.35); background: rgba(139,92,246,0.04);">
+            <p class="text-xs text-[#71717A] uppercase tracking-widest mb-3">Enterprise</p>
+            <div class="mb-4">
+              <span class="text-4xl font-bold text-[#FAFAFA]">Custom</span>
+            </div>
+            <p class="text-sm text-[#A1A1AA] mb-6 leading-relaxed">For large organizations with complex data needs and security requirements.</p>
+            <ul class="space-y-3 flex-1 mb-8">
+              {enterprise.map(f => (
+                <li class="flex items-center gap-2.5 text-sm text-[#A1A1AA]">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                    <circle cx="8" cy="8" r="7" stroke="rgba(139,92,246,0.4)" stroke-width="1"/>
+                    <path d="M5 8l2 2 4-4" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <a href="/contact" class="btn-primary text-sm text-center">Talk to sales</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <CTASection />
+  </main>
+  <Footer />
+</BaseLayout>
