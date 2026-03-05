@@ -16,9 +16,9 @@ const teamsRaw = [
         srcIdx:[0,1],
         finding:'Security review is the only blocker · Chorus raised as alternative 3×',
         rows:[
-          { key:'win probability', val:'74%',          color:'green'  },
-          { key:'slip risk',       val:'high',          color:'red'    },
-          { key:'competitor',      val:'Chorus · 3×',   color:'orange' },
+          { key:'win probability', val:'74% · falling', color:'orange' },
+          { key:'slip risk',       val:'high',           color:'red'    },
+          { key:'competitor',      val:'Chorus · 3×',    color:'orange' },
         ],
         outIdx:[0],
       },
@@ -28,8 +28,8 @@ const teamsRaw = [
         srcIdx:[2],
         finding:'SOC2 confirmation is blocking signature · pricing pressure is low',
         rows:[
-          { key:'pricing pressure', val:'low',               color:'green' },
-          { key:'champion',         val:'Sarah Kim · warm',   color:'green' },
+          { key:'pricing pressure', val:'low — hold firm',   color:'green' },
+          { key:'champion',         val:'Sarah Kim · warm',  color:'green' },
         ],
         outIdx:[1],
       },
@@ -39,12 +39,13 @@ const teamsRaw = [
         srcIdx:[3,4],
         finding:'New VP Eng in buying committee · next steps not logged · Q4 close at risk',
         rows:[
-          { key:'next steps', val:'not logged', color:'red'     },
-          { key:'deal stage', val:'commit',     color:'neutral' },
+          { key:'next steps', val:'auto-logged ✓', color:'green'   },
+          { key:'close risk', val:'Q4 · 5 days',   color:'red'     },
         ],
         outIdx:[2,3],
       },
     ],
+    conclusion: '3 sources, one root cause. Fix the security review — champion is warm, pricing is solid, everything else is already in place.',
     alert: 'Q4 close at risk · Acme Corp · act by Friday',
     outcomes: [
       { icon:'📈', title:'Win Probability',  meta:'74% · trending down', chart:[20,23,27,31,35,39,42,45], body:'Down 12pts in 2 weeks. Security review still open and next steps are missing. Close the blocker this week or this deal moves to Q1.' },
@@ -80,8 +81,8 @@ const teamsRaw = [
         srcIdx:[2],
         finding:'Onboarding friction is the #1 complaint · champion disengaged for 6 weeks',
         rows:[
-          { key:'sentiment', val:'declining −18pts', color:'red'    },
-          { key:'champion',  val:'cold · 6 weeks',   color:'yellow' },
+          { key:'sentiment', val:'declining −18pts', color:'red' },
+          { key:'champion',  val:'cold · 6 weeks',   color:'red' },
         ],
         outIdx:[1],
       },
@@ -91,12 +92,13 @@ const teamsRaw = [
         srcIdx:[3],
         finding:'Account won\'t renew without health visibility · 47 days to contract end',
         rows:[
-          { key:'days to renewal', val:'47 days', color:'orange' },
-          { key:'churn risk',      val:'high',    color:'red'    },
+          { key:'days to renewal', val:'47 · no exec call booked', color:'red' },
+          { key:'churn risk',      val:'high · 3 signals',         color:'red' },
         ],
         outIdx:[2,3],
       },
     ],
+    conclusion: 'Tickets, calls, and email all point the same way. This is a pattern, not a one-off — intervene now or you will lose this account.',
     alert: 'Churn risk · Meridian Inc · renewal in 47 days',
     outcomes: [
       { icon:'❤️', title:'Account Health',   meta:'44/100 · falling fast', chart:[20,22,25,30,38,44,50,54], body:'Down 18pts in 30 days. Two P1s open, champion gone cold, renewal in 47 days. Without intervention this account is on a fast track to churn.' },
@@ -121,8 +123,8 @@ const teamsRaw = [
         srcIdx:[0,1],
         finding:'Cohort analytics requested 12× · accelerating across enterprise segment',
         rows:[
-          { key:'top request',    val:'cohort analytics',   color:'green'  },
-          { key:'mention trend',  val:'12× · accelerating', color:'yellow' },
+          { key:'#1 feature request', val:'cohort analytics',  color:'green'  },
+          { key:'demand signal',       val:'12× in 60 days',   color:'yellow' },
         ],
         outIdx:[0],
       },
@@ -143,12 +145,13 @@ const teamsRaw = [
         srcIdx:[4],
         finding:'8 themes clustered · permission bugs up 40% · $180K in pipeline blocked',
         rows:[
-          { key:'themes found',    val:'8 clustered',    color:'green' },
-          { key:'revenue at risk', val:'$180K blocked',  color:'red'   },
+          { key:'top bug theme',   val:'permissions · +40%', color:'orange' },
+          { key:'revenue at risk', val:'$180K blocked',      color:'red'    },
         ],
         outIdx:[2,3],
       },
     ],
+    conclusion: 'Calls, usage data, and backlog all agree. Ship cohort analytics first — it is your highest-ROI item and $180K is already waiting.',
     alert: 'Roadmap gap · $180K revenue blocked across 4 enterprise accounts',
     outcomes: [
       { icon:'📊', title:'Feature Demand',  meta:'8 themes · 3 accelerating', chart:[44,40,36,31,25,20,16,12], body:'Cohort analytics up 3× in 60 days — 12 enterprise mentions, $180K in deals blocked. Highest-ROI item in your backlog right now.' },
@@ -268,6 +271,10 @@ const phaseStepLabel: Record<string, string> = {
                       ))}
                     </div>
                   ))}
+                  <div class="ov-conclusion" data-concl-team={team.id}>
+                    <span class="ov-concl-icon">✦</span>
+                    <p class="ov-concl-text">{team.conclusion}</p>
+                  </div>
                 </div>
 
                 <div class="ov-ai-alert">
@@ -401,9 +408,13 @@ const phaseStepLabel: Record<string, string> = {
     const teamParam = new URLSearchParams(window.location.search).get('team');
     if (teamParam && Array.from(tabs).some(t => t.getAttribute('data-tab') === teamParam)) {
       activateTab(teamParam);
-      requestAnimationFrame(() =>
-        document.getElementById('overview')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      );
+      requestAnimationFrame(() => {
+        const pills = document.querySelector('.ov-pills');
+        if (pills) {
+          const y = pills.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      });
     }
   }
   window.addEventListener('popstate', applyTeamParam);
@@ -434,6 +445,9 @@ const phaseStepLabel: Record<string, string> = {
     });
     document.querySelectorAll<HTMLElement>(`.ov-row[data-team="${teamId}"]`).forEach(r => {
       r.classList.remove('vis');
+    });
+    document.querySelectorAll<HTMLElement>(`.ov-conclusion[data-concl-team="${teamId}"]`).forEach(c => {
+      c.classList.remove('concl-vis');
     });
     // Source cards — reset to dim
     document.querySelectorAll<HTMLElement>(`[data-src-team="${teamId}"]`).forEach(c => {
@@ -558,6 +572,12 @@ const phaseStepLabel: Record<string, string> = {
 
       t += outCards.length * OUT_STAGGER + BETWEEN_GROUPS;
     });
+
+    addTimer(teamId, () => {
+      document.querySelector<HTMLElement>(`.ov-conclusion[data-concl-team="${teamId}"]`)?.classList.add('concl-vis');
+    }, t);
+
+    t += 600;
 
     addTimer(teamId, () => {
       if (badge) { badge.textContent = 'Live'; badge.className = 'ov-ai-badge'; }
@@ -729,7 +749,7 @@ const phaseStepLabel: Record<string, string> = {
 
 <style>
   /* ── Pills ── */
-  .ov-pills { display:flex; gap:.25rem; background:rgba(255,255,255,.03); border-radius:.7rem; padding:.2rem; width:fit-content; margin:0 auto 1.75rem; }
+  .ov-pills { display:flex; gap:.25rem; background:rgba(255,255,255,.03); border-radius:.7rem; padding:.2rem; width:fit-content; margin:0 auto .9rem; }
   .ov-tab { border-radius:.5rem; border:1px solid transparent; padding:.35rem 1.1rem; background:transparent; color:#A1A1AA; font-weight:600; font-size:.875rem; cursor:pointer; transition:all .18s ease; }
   .ov-tab.active { background:rgba(139,92,246,.22); color:#f4f2ff; box-shadow:0 4px 14px rgba(139,92,246,.25); border-color:rgba(139,92,246,.25); }
   .ov-tab:hover:not(.active) { background:rgba(139,92,246,.08); color:#E4E4E7; }
@@ -826,7 +846,7 @@ const phaseStepLabel: Record<string, string> = {
   .ov-synth-divider.synth-vis { opacity:1; }
   .ov-synth-label { font-size:.56rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#71717A; white-space:nowrap; }
 
-  .ov-synth-stage { flex:1; padding:0 8px 6px; display:flex; flex-direction:column; }
+  .ov-synth-stage { flex:1; padding:0 8px 8px; display:flex; flex-direction:column; gap:0; }
   .ov-synth-group { padding:3px 0; border-bottom:1px solid rgba(255,255,255,.04); }
   .ov-synth-group:last-child { border-bottom:none; }
 
@@ -838,12 +858,27 @@ const phaseStepLabel: Record<string, string> = {
   }
   .ov-row.vis { opacity:1; transform:translateX(0); }
   .ov-rk { font-size:.65rem; font-family:ui-monospace,monospace; color:#71717A; }
-  .ov-rv { font-size:.68rem; font-family:ui-monospace,monospace; font-weight:700; }
-  .ov-green  { color:#34D399; }
-  .ov-red    { color:#F87171; }
-  .ov-yellow { color:#FACC15; }
-  .ov-orange { color:#FB923C; }
-  .ov-neutral{ color:#A1A1AA; }
+  .ov-rv { font-size:.67rem; font-family:ui-monospace,monospace; font-weight:700; padding:.08rem .4rem; border-radius:4px; }
+  .ov-green  { color:#34D399; background:rgba(52,211,153,.1); }
+  .ov-red    { color:#F87171; background:rgba(248,113,113,.1); }
+  .ov-yellow { color:#FACC15; background:rgba(250,204,21,.1); }
+  .ov-orange { color:#FB923C; background:rgba(251,146,60,.1); }
+  .ov-neutral{ color:#A1A1AA; background:rgba(161,161,170,.07); }
+
+  /* AI conclusion */
+  .ov-conclusion {
+    margin:auto 4px 0;
+    padding:7px 10px;
+    border-radius:6px;
+    background:rgba(99,102,241,.07);
+    border:1px solid rgba(99,102,241,.2);
+    display:flex; gap:7px; align-items:flex-start;
+    opacity:0; transform:translateY(5px);
+    transition:opacity .45s ease, transform .45s ease;
+  }
+  .ov-conclusion.concl-vis { opacity:1; transform:translateY(0); }
+  .ov-concl-icon { font-size:.58rem; color:#818CF8; flex-shrink:0; margin-top:.18rem; line-height:1; }
+  .ov-concl-text { font-size:.66rem; color:#C4B5FD; line-height:1.5; margin:0; font-style:italic; }
 
   .ov-ai-alert { display:flex; align-items:center; gap:6px; padding:7px 12px; background:rgba(239,68,68,.04); border-top:1px solid rgba(239,68,68,.15); font-size:.65rem; color:#F87171; font-weight:500; flex-shrink:0; margin-top:auto; }
 
@@ -877,7 +912,7 @@ const phaseStepLabel: Record<string, string> = {
   .ov-tl { display:flex; align-items:center; gap:5px; font-size:.71rem; margin-bottom:2px; }
   .ov-tl:last-child { margin-bottom:0; }
   .ov-tl-dot { width:4px; height:4px; border-radius:50%; background:#6366F1; flex-shrink:0; }
-  .ov-tl-d { color:#52525B; font-weight:600; flex-shrink:0; width:44px; }
+  .ov-tl-d { color:#A1A1AA; font-weight:600; flex-shrink:0; width:44px; }
   .ov-tl-t { color:#A1A1AA; }
 
   /* ── Status bar ── */
