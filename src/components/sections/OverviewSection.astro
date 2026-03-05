@@ -334,6 +334,12 @@ const phaseStepLabel: Record<string, string> = {
                 <path d="M1 1.2l8 4.3-8 4.3V1.2z"/>
               </svg>
             </button>
+            <button class="ov-restart" data-restart-team={team.id} aria-label="Restart animation">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+              </svg>
+            </button>
 
             <div class="ov-stepper">
               {team.phases.map((phase, pi) => (
@@ -738,6 +744,15 @@ const phaseStepLabel: Record<string, string> = {
     btn.addEventListener('click', () => togglePause(btn.getAttribute('data-ctrl-team')!));
   });
 
+  document.querySelectorAll<HTMLElement>('[data-restart-team]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const teamId = btn.getAttribute('data-restart-team')!;
+      isPaused[teamId] = false;
+      document.querySelector<HTMLElement>(`[data-ctrl-team="${teamId}"]`)?.classList.remove('is-paused');
+      restartAnimation(teamId);
+    });
+  });
+
   window.addEventListener('load', () => {
     const teamParam = new URLSearchParams(window.location.search).get('team');
     const validTeam = teamParam && Array.from(tabs).some(t => t.getAttribute('data-tab') === teamParam);
@@ -954,6 +969,15 @@ const phaseStepLabel: Record<string, string> = {
   .ov-playpause.is-paused:hover { border-color:rgba(99,102,241,.8); background:rgba(99,102,241,.25); color:#a5b4fc; }
   .ov-playpause.is-paused .ov-icon-pause { display:none; }
   .ov-playpause.is-paused .ov-icon-play  { display:block; }
+
+  /* Restart button */
+  .ov-restart {
+    width:32px; height:32px; border-radius:50%; flex-shrink:0;
+    border:1.5px solid rgba(255,255,255,.15); background:rgba(255,255,255,.05);
+    color:#71717A; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:all .2s ease;
+  }
+  .ov-restart:hover { border-color:rgba(255,255,255,.35); background:rgba(255,255,255,.1); color:#E4E4E7; transform:rotate(-30deg); }
 
   /* Stepper */
   .ov-stepper { display:flex; align-items:flex-start; gap:0; }
