@@ -168,6 +168,11 @@ const teams = teamsRaw.map(team => {
   });
   return { ...team, srcPhaseMap, outPhaseMap };
 });
+
+const phaseStepLabel: Record<string, string> = {
+  calls:'Calls', email:'Email', crm:'CRM',
+  support:'Tickets', transcripts:'Transcripts', usage:'Usage', issues:'Issues',
+};
 ---
 
 <section id="overview" class="py-24 px-6">
@@ -310,6 +315,39 @@ const teams = teamsRaw.map(team => {
             </div>
 
           </div>
+
+          <!-- ── Controls bar ── -->
+          <div class="ov-controls" data-ctrl={team.id}>
+            <button class="ov-playpause" data-ctrl-team={team.id} aria-label="Toggle animation">
+              <svg class="ov-icon-pause" width="9" height="11" viewBox="0 0 9 11" fill="currentColor">
+                <rect x="0" y="0" width="3" height="11" rx="1"/>
+                <rect x="6" y="0" width="3" height="11" rx="1"/>
+              </svg>
+              <svg class="ov-icon-play" width="10" height="11" viewBox="0 0 10 11" fill="currentColor">
+                <path d="M1 1.2l8 4.3-8 4.3V1.2z"/>
+              </svg>
+            </button>
+
+            <div class="ov-stepper">
+              {team.phases.map((phase, pi) => (
+                <>
+                  <div class="ov-step-item" data-step-team={team.id} data-step-idx={pi}>
+                    <div class="ov-step-node">
+                      <div class="ov-step-ring"></div>
+                      <div class="ov-step-dot"></div>
+                    </div>
+                    <span class="ov-step-lbl">{phaseStepLabel[phase.id] ?? phase.id}</span>
+                  </div>
+                  {pi < team.phases.length - 1 && (
+                    <div class="ov-step-track" data-track-team={team.id} data-track-idx={pi}></div>
+                  )}
+                </>
+              ))}
+            </div>
+
+            <span class="ov-ctrl-status" data-ctrl-status={team.id}>Ready</span>
+          </div>
+
         </div>
       ))}
 
@@ -319,6 +357,24 @@ const teams = teamsRaw.map(team => {
 </section>
 
 <script>
+  // ── Shared state ──
+  interface ScheduledTimer { id: ReturnType<typeof setTimeout>; fireAt: number; callback: () => void; }
+  const timers:   Record<string, ScheduledTimer[]> = {};
+  const isPaused: Record<string, boolean> = {};
+  const pausedAt: Record<string, number>  = {};
+
+  function addTimer(teamId: string, cb: () => void, delay: number) {
+    const fireAt = Date.now() + delay;
+    const id = setTimeout(cb, delay);
+    if (!timers[teamId]) timers[teamId] = [];
+    timers[teamId].push({ id, fireAt, callback: cb });
+  }
+
+  function clearTimers(teamId: string) {
+    (timers[teamId] || []).forEach(t => clearTimeout(t.id));
+    timers[teamId] = [];
+  }
+
   // ── Tabs ──
   const tabs   = document.querySelectorAll<HTMLElement>('[data-tab]');
   const panels = document.querySelectorAll<HTMLElement>('[data-panel]');
@@ -333,6 +389,9 @@ const teams = teamsRaw.map(team => {
       svg.setAttribute('width', String(br.width));
       svg.setAttribute('height', String(br.height));
     }
+    // Reset pause state when switching tabs
+    isPaused[id] = false;
+    document.querySelector<HTMLElement>(`[data-ctrl-team="${id}"]`)?.classList.remove('is-paused');
     restartAnimation(id);
   }
 
@@ -352,16 +411,14 @@ const teams = teamsRaw.map(team => {
   // ── Timing constants ──
   const INGEST_ACTIVE   = 1200; // ms source stays lit during ingestion
   const FINDING_DELAY   = 700;  // ms after step appears before finding shows
-  const STEP_DONE_AFTER = 5000; // ms after step appears before checkmark
+  const STEP_DONE_AFTER = 4000; // ms after step appears before checkmark
   const GAP_STEPS       = 800;  // ms gap between ingestion steps
   const SYNTH_GAP       = 1500; // ms after last ingest step before synthesis begins
   const ROW_DELAY       = 800;  // ms between result rows in synthesis
   const OUT_DELAY       = 900;  // ms after last row before outcome card appears
   const OUT_STAGGER     = 500;  // ms between multiple outcome cards from same phase
   const BETWEEN_GROUPS  = 1200; // ms between synthesis groups
-  const CYCLE_PAUSE     = 12000; // ms after all done before reset
-
-  const timers: Record<string, ReturnType<typeof setTimeout>[]> = {};
+  const CYCLE_PAUSE     = 8000; // ms after all done before reset
 
   function resetTeamState(teamId: string) {
     // Ingest steps
@@ -386,6 +443,7 @@ const teams = teamsRaw.map(team => {
     // Outcome cards
     document.querySelectorAll<HTMLElement>(`[data-out-team="${teamId}"]`).forEach(c => {
       c.classList.remove('out-lit');
+      c.removeAttribute('data-line-drawn');
     });
     // Badge
     const badge = document.getElementById(`badge-${teamId}`);
@@ -394,11 +452,18 @@ const teams = teamsRaw.map(team => {
     const svg_ = document.getElementById('ov-svg');
     svg_?.querySelectorAll('.ov-in-path').forEach(el => el.remove());
     svg_?.querySelectorAll('.ov-out-path').forEach(el => el.remove());
+    // Step dots + tracks
+    document.querySelectorAll<HTMLElement>(`[data-step-team="${teamId}"]`).forEach(s => {
+      s.classList.remove('step-active', 'step-done');
+    });
+    document.querySelectorAll<HTMLElement>(`[data-track-team="${teamId}"]`).forEach(t => {
+      t.classList.remove('track-done');
+    });
+    setCtrlStatus(teamId, 'Starting…');
   }
 
   function restartAnimation(teamId: string) {
-    (timers[teamId] || []).forEach(t => clearTimeout(t));
-    timers[teamId] = [];
+    clearTimers(teamId);
     resetTeamState(teamId);
 
     const badge = document.getElementById(`badge-${teamId}`);
@@ -410,38 +475,41 @@ const teams = teamsRaw.map(team => {
     let t = 400;
 
     // ── Stage 1: Sequential ingestion ──
-    if (badge) timers[teamId].push(setTimeout(() => {
+    if (badge) addTimer(teamId, () => {
       badge.textContent = 'Processing'; badge.className = 'ov-ai-badge badge-processing';
-    }, t));
+    }, t);
 
-    ingestSteps.forEach((step) => {
+    ingestSteps.forEach((step, phaseIdx) => {
       const phaseId = step.getAttribute('data-phase-id')!;
       const finding = step.querySelector<HTMLElement>('.ov-ingest-finding');
 
       // Activate step + source cards + draw input lines for this phase
-      timers[teamId].push(setTimeout(() => {
+      addTimer(teamId, () => {
         step.classList.add('ingest-active');
+        setStepState(teamId, phaseIdx, 'active');
+        setCtrlStatus(teamId, phaseStatusText[phaseId] ?? 'Processing…', 'status-active');
         document.querySelectorAll<HTMLElement>(
           `[data-src-team="${teamId}"][data-src-phase="${phaseId}"]`
         ).forEach(c => { c.classList.remove('src-dim'); c.classList.add('src-active'); });
         drawPhaseInputConnections(teamId, phaseId, step);
-      }, t));
+      }, t);
 
       // Show finding text
-      timers[teamId].push(setTimeout(() => {
+      addTimer(teamId, () => {
         finding?.classList.add('finding-vis');
-      }, t + FINDING_DELAY));
+      }, t + FINDING_DELAY);
 
       t += STEP_DONE_AFTER;
 
       // Mark done + transition sources to done state
-      timers[teamId].push(setTimeout(() => {
+      addTimer(teamId, () => {
         step.classList.remove('ingest-active');
         step.classList.add('ingest-done');
+        setStepState(teamId, phaseIdx, 'done');
         document.querySelectorAll<HTMLElement>(
           `[data-src-team="${teamId}"][data-src-phase="${phaseId}"]`
         ).forEach(c => { c.classList.remove('src-active'); c.classList.add('src-done'); });
-      }, t));
+      }, t);
 
       t += GAP_STEPS;
     });
@@ -449,13 +517,14 @@ const teams = teamsRaw.map(team => {
     // ── Stage 2: Synthesis ──
     t += SYNTH_GAP;
 
-    if (badge) timers[teamId].push(setTimeout(() => {
+    if (badge) addTimer(teamId, () => {
       badge.textContent = 'Synthesizing'; badge.className = 'ov-ai-badge badge-synth';
-    }, t));
+      setCtrlStatus(teamId, 'Synthesizing insights…', 'status-synth');
+    }, t);
 
-    timers[teamId].push(setTimeout(() => {
+    addTimer(teamId, () => {
       document.querySelector<HTMLElement>(`.ov-synth-divider[data-team="${teamId}"]`)?.classList.add('synth-vis');
-    }, t));
+    }, t);
 
     const synthGroups = Array.from(
       document.querySelectorAll<HTMLElement>(`.ov-synth-group[data-team="${teamId}"]`)
@@ -469,7 +538,7 @@ const teams = teamsRaw.map(team => {
 
       // Rows appear one by one
       rows.forEach((row, ri) => {
-        timers[teamId].push(setTimeout(() => row.classList.add('vis'), t + ri * ROW_DELAY));
+        addTimer(teamId, () => row.classList.add('vis'), t + ri * ROW_DELAY);
       });
 
       t += rows.length * ROW_DELAY + OUT_DELAY;
@@ -481,20 +550,23 @@ const teams = teamsRaw.map(team => {
         )
       );
       outCards.forEach((card, oi) => {
-        timers[teamId].push(setTimeout(() => {
+        addTimer(teamId, () => {
           card.classList.add('out-lit');
           drawOutputConnection(card, group);
-        }, t + oi * OUT_STAGGER));
+        }, t + oi * OUT_STAGGER);
       });
 
       t += outCards.length * OUT_STAGGER + BETWEEN_GROUPS;
     });
 
-    if (badge) timers[teamId].push(setTimeout(() => {
-      badge.textContent = 'Live'; badge.className = 'ov-ai-badge';
-    }, t));
+    addTimer(teamId, () => {
+      if (badge) { badge.textContent = 'Live'; badge.className = 'ov-ai-badge'; }
+      setCtrlStatus(teamId, 'Analysis complete ✓', 'status-done');
+    }, t);
 
-    timers[teamId].push(setTimeout(() => restartAnimation(teamId), t + CYCLE_PAUSE));
+    addTimer(teamId, () => {
+      if (!isPaused[teamId]) restartAnimation(teamId);
+    }, t + CYCLE_PAUSE);
   }
 
   // ── SVG connections ──
@@ -504,6 +576,10 @@ const teams = teamsRaw.map(team => {
   // Input connections: drawn per-phase when that phase activates
   function drawPhaseInputConnections(teamId: string, phaseId: string, step: HTMLElement) {
     if (!svg) return;
+
+    // Skip if already drawn for this phase (prevents duplicates on resume)
+    if (svg.querySelector(`[data-in-phase="${teamId}-${phaseId}"]`)) return;
+
     const board = document.getElementById('ov-board');
     if (!board) return;
     const br  = board.getBoundingClientRect();
@@ -529,11 +605,17 @@ const teams = teamsRaw.map(team => {
       const x1 = sr.right - br.left - 4;
       const y1 = sr.top + sr.height / 2 - br.top;
       addPath(x1, y1, aLX + 4, y2, 'ovLgIn', '#6366F1', i * 0.18, 'ov-in-path');
+      // Tag so we can guard against redrawing on resume
+      svg!.lastElementChild?.setAttribute('data-in-phase', `${teamId}-${phaseId}`);
     });
   }
 
   // Output connections: AI synth group → outcome card (drawn on demand)
   function drawOutputConnection(outCard: HTMLElement, synthGroup: HTMLElement) {
+    // Skip if this card's line was already drawn (prevents duplicates on resume)
+    if (outCard.hasAttribute('data-line-drawn')) return;
+    outCard.setAttribute('data-line-drawn', '1');
+
     if (!svg) return;
     const board = document.getElementById('ov-board');
     if (!board) return;
@@ -574,6 +656,67 @@ const teams = teamsRaw.map(team => {
 
     svg!.appendChild(g);
   }
+
+  // ── Play / Pause ──
+
+  const phaseStatusText: Record<string, string> = {
+    calls:       'Analyzing calls…',
+    email:       'Reading emails…',
+    crm:         'Checking CRM records…',
+    support:     'Scanning support tickets…',
+    transcripts: 'Analyzing transcripts…',
+    usage:       'Checking usage data…',
+    issues:      'Scanning issue backlog…',
+  };
+
+  function setStepState(teamId: string, idx: number, state: 'active' | 'done') {
+    const item = document.querySelector<HTMLElement>(
+      `[data-step-team="${teamId}"][data-step-idx="${idx}"]`
+    );
+    if (!item) return;
+    item.classList.remove('step-active', 'step-done');
+    item.classList.add(`step-${state}`);
+    // Light up the connecting track when a step activates or completes
+    if (idx > 0) {
+      document.querySelector<HTMLElement>(
+        `[data-track-team="${teamId}"][data-track-idx="${idx - 1}"]`
+      )?.classList.add('track-done');
+    }
+  }
+
+  function setCtrlStatus(teamId: string, text: string, cls?: string) {
+    const el = document.querySelector<HTMLElement>(`[data-ctrl-status="${teamId}"]`);
+    if (!el) return;
+    el.textContent = text;
+    el.className = 'ov-ctrl-status' + (cls ? ` ${cls}` : '');
+  }
+
+  function togglePause(teamId: string) {
+    const btn = document.querySelector<HTMLElement>(`[data-ctrl-team="${teamId}"]`);
+    if (isPaused[teamId]) {
+      // ── Resume: re-schedule each remaining callback with its original remaining delay ──
+      isPaused[teamId] = false;
+      btn?.classList.remove('is-paused');
+      const pAt    = pausedAt[teamId] ?? Date.now();
+      const entries = [...(timers[teamId] || [])];
+      timers[teamId] = [];
+      entries.forEach(entry => {
+        addTimer(teamId, entry.callback, Math.max(0, entry.fireAt - pAt));
+      });
+    } else {
+      // ── Pause: cancel pending timers but keep their entries so resume can reschedule ──
+      isPaused[teamId] = true;
+      pausedAt[teamId] = Date.now();
+      btn?.classList.add('is-paused');
+      (timers[teamId] || []).forEach(t => clearTimeout(t.id));
+      // intentionally NOT clearing timers[teamId] — entries are needed for resume
+      setCtrlStatus(teamId, 'Paused', 'status-paused');
+    }
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-ctrl-team]').forEach(btn => {
+    btn.addEventListener('click', () => togglePause(btn.getAttribute('data-ctrl-team')!));
+  });
 
   window.addEventListener('load', () => {
     const teamParam = new URLSearchParams(window.location.search).get('team');
@@ -679,9 +822,9 @@ const teams = teamsRaw.map(team => {
     display:flex; align-items:center; gap:8px; padding:5px 12px;
     opacity:0; transition:opacity .4s ease; flex-shrink:0;
   }
-  .ov-synth-divider::before,.ov-synth-divider::after { content:''; flex:1; height:1px; background:rgba(255,255,255,.06); }
+  .ov-synth-divider::before,.ov-synth-divider::after { content:''; flex:1; height:1px; background:rgba(255,255,255,.1); }
   .ov-synth-divider.synth-vis { opacity:1; }
-  .ov-synth-label { font-size:.56rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#3F3F46; white-space:nowrap; }
+  .ov-synth-label { font-size:.56rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#71717A; white-space:nowrap; }
 
   .ov-synth-stage { flex:1; padding:0 8px 6px; display:flex; flex-direction:column; }
   .ov-synth-group { padding:3px 0; border-bottom:1px solid rgba(255,255,255,.04); }
@@ -694,7 +837,7 @@ const teams = teamsRaw.map(team => {
     transition:opacity .28s ease, transform .28s ease;
   }
   .ov-row.vis { opacity:1; transform:translateX(0); }
-  .ov-rk { font-size:.65rem; font-family:ui-monospace,monospace; color:#52525B; }
+  .ov-rk { font-size:.65rem; font-family:ui-monospace,monospace; color:#71717A; }
   .ov-rv { font-size:.68rem; font-family:ui-monospace,monospace; font-weight:700; }
   .ov-green  { color:#34D399; }
   .ov-red    { color:#F87171; }
@@ -747,6 +890,88 @@ const teams = teamsRaw.map(team => {
   .ov-status-sep { color:#3F3F46; }
   .ov-status-right { margin-left:auto; display:none; }
   @media (min-width:640px) { .ov-status-right { display:block; } }
+
+  /* ── Controls bar ── */
+  .ov-controls {
+    display:flex; align-items:center; gap:14px;
+    padding:10px 18px;
+    border-top:1px solid rgba(255,255,255,.06);
+    background:rgba(0,0,0,.18);
+    position:relative; z-index:2;
+  }
+
+  /* Play/Pause button */
+  .ov-playpause {
+    width:32px; height:32px; border-radius:50%; flex-shrink:0;
+    border:1.5px solid rgba(139,92,246,.4); background:rgba(139,92,246,.12);
+    color:#A78BFA; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:all .2s ease;
+    box-shadow:0 0 10px rgba(139,92,246,.2);
+    animation:playPulse 2.5s ease-in-out infinite;
+  }
+  @keyframes playPulse {
+    0%,100% { box-shadow:0 0 8px rgba(139,92,246,.2); }
+    50%      { box-shadow:0 0 16px rgba(139,92,246,.45); }
+  }
+  .ov-playpause:hover { border-color:rgba(139,92,246,.8); background:rgba(139,92,246,.25); color:#c4b5fd; box-shadow:0 0 20px rgba(139,92,246,.4); animation:none; }
+  .ov-playpause .ov-icon-play  { display:none; }
+  .ov-playpause.is-paused { border-color:rgba(99,102,241,.5); background:rgba(99,102,241,.15); color:#818CF8; box-shadow:none; animation:none; }
+  .ov-playpause.is-paused:hover { border-color:rgba(99,102,241,.8); background:rgba(99,102,241,.25); color:#a5b4fc; }
+  .ov-playpause.is-paused .ov-icon-pause { display:none; }
+  .ov-playpause.is-paused .ov-icon-play  { display:block; }
+
+  /* Stepper */
+  .ov-stepper { display:flex; align-items:flex-start; gap:0; }
+
+  .ov-step-item { display:flex; flex-direction:column; align-items:center; gap:4px; }
+
+  .ov-step-node {
+    position:relative; width:10px; height:10px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .ov-step-dot {
+    width:8px; height:8px; border-radius:50%;
+    background:#16161c; border:1.5px solid rgba(255,255,255,.1);
+    transition:background .35s ease, border-color .35s ease;
+    position:relative; z-index:1;
+  }
+  .ov-step-ring {
+    position:absolute; inset:-3px; border-radius:50%;
+    border:1.5px solid rgba(99,102,241,.5);
+    opacity:0; transition:opacity .3s ease;
+  }
+  .ov-step-item.step-active .ov-step-ring { opacity:1; animation:stepRingPulse 1.3s ease-in-out infinite; }
+  .ov-step-item.step-active .ov-step-dot  { background:#6366F1; border-color:#6366F1; }
+  .ov-step-item.step-done   .ov-step-dot  { background:#34D399; border-color:#34D399; }
+  @keyframes stepRingPulse {
+    0%,100% { transform:scale(1); opacity:.75; }
+    60%     { transform:scale(1.8); opacity:0; }
+  }
+
+  .ov-step-lbl {
+    font-size:.54rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+    color:#3F3F46; white-space:nowrap; transition:color .35s ease;
+  }
+  .ov-step-item.step-active .ov-step-lbl { color:#818CF8; }
+  .ov-step-item.step-done   .ov-step-lbl { color:rgba(52,211,153,.75); }
+
+  .ov-step-track {
+    width:40px; height:1.5px; flex-shrink:0;
+    background:rgba(255,255,255,.07);
+    align-self:flex-start; margin-top:4px;
+    transition:background .5s ease;
+  }
+  .ov-step-track.track-done { background:rgba(52,211,153,.4); }
+
+  /* Status text */
+  .ov-ctrl-status {
+    margin-left:auto; font-size:.65rem; color:#3F3F46;
+    white-space:nowrap; transition:color .3s ease;
+  }
+  .ov-ctrl-status.status-active { color:#818CF8; }
+  .ov-ctrl-status.status-synth  { color:#FACC15; }
+  .ov-ctrl-status.status-done   { color:#34D399; }
+  .ov-ctrl-status.status-paused { color:#A1A1AA; }
 
   /* ── Mobile ── */
   @media (max-width:900px) {
