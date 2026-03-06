@@ -1,0 +1,103 @@
+---
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+<!-- Exact copy of Features.astro Write-back to Any System / Destinations design -->
+<div class="rounded-xl overflow-hidden w-[520px] flex-shrink-0" style="background:#0c0c10; border:1px solid rgba(255,255,255,0.1); box-shadow:0 16px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03), 0 0 80px rgba(251,191,36,.03);">
+  <div class="flex items-center px-4 py-3 border-b border-white/[0.06]" style="background:#111118;">
+    <div class="flex gap-1.5 flex-shrink-0">
+      <span class="w-3 h-3 rounded-full" style="background:#FF5F56;"></span>
+      <span class="w-3 h-3 rounded-full" style="background:#FFBD2E;"></span>
+      <span class="w-3 h-3 rounded-full" style="background:#27C93F;"></span>
+    </div>
+    <span class="text-[12px] text-[#71717A] flex-1 text-center font-medium">Starmesh · {title}</span>
+    <div style="width:54px;" class="flex-shrink-0"></div>
+  </div>
+  <div class="flex" style="height:360px;">
+    <div class="flex flex-col flex-shrink-0" style="width:160px; background:#0a0a0d; border-right:1px solid rgba(255,255,255,0.05);">
+      <div class="px-3 py-2.5 border-b border-white/[0.04]"><p class="text-[10px] text-[#3F3F46] uppercase tracking-wider font-bold">Pipeline runs</p></div>
+      <div class="px-3 py-3 border-b border-white/[0.03] bg-amber-500/[0.06] border-l-2 border-l-amber-500/50">
+        <p class="text-[12px] text-[#E4E4E7] font-semibold">Just now</p>
+        <p class="text-[10px] mt-0.5 text-amber-400">running</p>
+      </div>
+      <div class="px-3 py-3 border-b border-white/[0.03]">
+        <p class="text-[12px] text-[#52525B]">5m ago</p>
+        <p class="text-[10px] mt-0.5 text-green-400">done</p>
+      </div>
+      <div class="px-3 py-3 border-b border-white/[0.03]">
+        <p class="text-[12px] text-[#52525B]">1h ago</p>
+        <p class="text-[10px] mt-0.5 text-green-400">done</p>
+      </div>
+      <div class="px-3 py-3 border-b border-white/[0.03]">
+        <p class="text-[12px] text-[#52525B]">3h ago</p>
+        <p class="text-[10px] mt-0.5 text-green-400">done</p>
+      </div>
+      <div class="px-3 py-3 border-b border-white/[0.03]">
+        <p class="text-[12px] text-[#52525B]">6h ago</p>
+        <p class="text-[10px] mt-0.5 text-green-400">done</p>
+      </div>
+      <div class="px-3 py-3 mt-auto border-t border-white/[0.04]">
+        <p class="text-[10px] text-[#52525B] mb-0.5">124 rows written</p>
+        <p class="text-[10px] text-green-400">0 errors</p>
+      </div>
+    </div>
+    <div class="flex-1 flex flex-col overflow-hidden">
+      <div class="flex items-center justify-between px-4 py-2 border-b border-white/[0.05]" style="background:rgba(255,255,255,0.01);">
+        <span class="text-[13px] font-semibold text-[#FAFAFA]">Active destinations</span>
+        <span class="text-[11px] text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-0.5 rounded-full font-semibold">5 active</span>
+      </div>
+      <div class="flex-1 divide-y divide-white/[0.04] overflow-hidden">
+        <div class="flex items-center px-4 py-3 gap-3">
+          <span class="text-[12px] font-semibold text-[#E4E4E7] w-20 flex-shrink-0">BigQuery</span>
+          <svg width="12" height="8" viewBox="0 0 12 8"><path d="M0 4H10M7 1.5l3 2.5-3 2.5" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="flex-1 min-w-0">
+            <p class="text-[11px] font-mono text-[#71717A] truncate">deal_intelligence</p>
+            <p class="text-[10px] text-[#3F3F46]">48 rows</p>
+          </div>
+          <span class="text-[11px] px-1.5 py-0.5 rounded border font-medium flex-shrink-0 text-green-400 bg-green-500/10 border-green-500/20">live</span>
+        </div>
+        <div class="flex items-center px-4 py-3 gap-3">
+          <span class="text-[12px] font-semibold text-[#E4E4E7] w-20 flex-shrink-0">Snowflake</span>
+          <svg width="12" height="8" viewBox="0 0 12 8"><path d="M0 4H10M7 1.5l3 2.5-3 2.5" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="flex-1 min-w-0">
+            <p class="text-[11px] font-mono text-[#71717A] truncate">pipeline_signals</p>
+            <p class="text-[10px] text-[#3F3F46]">31 rows</p>
+          </div>
+          <span class="text-[11px] px-1.5 py-0.5 rounded border font-medium flex-shrink-0 text-green-400 bg-green-500/10 border-green-500/20">live</span>
+        </div>
+        <div class="flex items-center px-4 py-3 gap-3">
+          <span class="text-[12px] font-semibold text-[#E4E4E7] w-20 flex-shrink-0">Salesforce</span>
+          <svg width="12" height="8" viewBox="0 0 12 8"><path d="M0 4H10M7 1.5l3 2.5-3 2.5" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="flex-1 min-w-0">
+            <p class="text-[11px] font-mono text-[#71717A] truncate">opportunity_fields</p>
+            <p class="text-[10px] text-[#3F3F46]">18 opps</p>
+          </div>
+          <span class="text-[11px] px-1.5 py-0.5 rounded border font-medium flex-shrink-0 text-blue-400 bg-blue-500/10 border-blue-500/20">synced</span>
+        </div>
+        <div class="flex items-center px-4 py-3 gap-3">
+          <span class="text-[12px] font-semibold text-[#E4E4E7] w-20 flex-shrink-0">Slack</span>
+          <svg width="12" height="8" viewBox="0 0 12 8"><path d="M0 4H10M7 1.5l3 2.5-3 2.5" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="flex-1 min-w-0">
+            <p class="text-[11px] font-mono text-[#71717A] truncate">#revenue-alerts</p>
+            <p class="text-[10px] text-[#3F3F46]">3 alerts</p>
+          </div>
+          <span class="text-[11px] px-1.5 py-0.5 rounded border font-medium flex-shrink-0 text-violet-400 bg-violet-500/10 border-violet-500/20">active</span>
+        </div>
+        <div class="flex items-center px-4 py-3 gap-3">
+          <span class="text-[12px] font-semibold text-[#E4E4E7] w-20 flex-shrink-0">dbt</span>
+          <svg width="12" height="8" viewBox="0 0 12 8"><path d="M0 4H10M7 1.5l3 2.5-3 2.5" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="flex-1 min-w-0">
+            <p class="text-[11px] font-mono text-[#71717A] truncate">pwin_model</p>
+            <p class="text-[10px] text-[#3F3F46]">queued</p>
+          </div>
+          <span class="text-[11px] px-1.5 py-0.5 rounded border font-medium flex-shrink-0 text-[#71717A] bg-white/[0.04] border-white/[0.08]">queued</span>
+        </div>
+      </div>
+      <div class="px-4 py-2.5 border-t border-white/[0.04] flex-shrink-0">
+        <p class="text-[11px] text-[#52525B]">Updated after every call · No custom pipelines required</p>
+      </div>
+    </div>
+  </div>
+</div>
