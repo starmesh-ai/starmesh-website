@@ -20,7 +20,7 @@ const teamsRaw = [
           { key:'slip risk',       val:'high',           color:'red'    },
           { key:'competitor',      val:'Chorus · 3×',    color:'orange' },
         ],
-        outIdx:[0],
+        outIdx:[1],
       },
       {
         id:'email',
@@ -31,7 +31,7 @@ const teamsRaw = [
           { key:'pricing pressure', val:'low — hold firm',   color:'green' },
           { key:'champion',         val:'Sarah Kim · warm',  color:'green' },
         ],
-        outIdx:[1],
+        outIdx:[0],
       },
       {
         id:'crm',
@@ -48,8 +48,8 @@ const teamsRaw = [
     conclusion: '3 sources, one root cause. Fix the security review — champion is warm, pricing is solid, everything else is already in place.',
     alert: 'Q4 close at risk · Acme Corp · act by Friday',
     outcomes: [
-      { icon:'📈', title:'Win Probability',  meta:'74% · trending down', chart:[20,23,27,31,35,39,42,45], body:'Down 12pts in 2 weeks. Security review still open and next steps are missing. Close the blocker this week or this deal moves to Q1.' },
       { icon:'💬', title:'Deal Copilot',     meta:null, chat:{user:'What do I need to do before Friday?', ai:'Send SOC2 docs to Sarah today. Get your SE on the security call — that\'s the only real blocker. Log next steps in Salesforce before EOD or this slips to Q1.'} },
+      { icon:'📈', title:'Win Probability',  meta:'74% · trending down', chart:[20,23,27,31,35,39,42,45], body:'Down 12pts in 2 weeks. Security review still open and next steps are missing. Close the blocker this week or this deal moves to Q1.' },
       { icon:'🕒', title:'Deal Timeline',    meta:null, tl:[{d:'Feb 24',t:'Security objection raised on Zoom call'},{d:'Feb 23',t:'VP Eng joined buying committee'},{d:'Feb 21',t:'Stage → Commit · next steps still blank'}] },
       { icon:'⇄',  title:'CRM Auto-update', meta:null, body:'Win probability, slip risk, security blocker and missing next steps auto-logged to Salesforce & HubSpot.' },
     ],
@@ -73,7 +73,7 @@ const teamsRaw = [
           { key:'open escalations', val:'2 · P1 active', color:'red' },
           { key:'health score',     val:'44 / 100',      color:'red' },
         ],
-        outIdx:[0],
+        outIdx:[1],
       },
       {
         id:'calls',
@@ -84,7 +84,7 @@ const teamsRaw = [
           { key:'sentiment', val:'declining −18pts', color:'red' },
           { key:'champion',  val:'cold · 6 weeks',   color:'red' },
         ],
-        outIdx:[1],
+        outIdx:[0],
       },
       {
         id:'email',
@@ -101,8 +101,8 @@ const teamsRaw = [
     conclusion: 'Tickets, calls, and email all point the same way. This is a pattern, not a one-off — intervene now or you will lose this account.',
     alert: 'Churn risk · Meridian Inc · renewal in 47 days',
     outcomes: [
-      { icon:'❤️', title:'Account Health',   meta:'44/100 · falling fast', chart:[20,22,25,30,38,44,50,54], body:'Down 18pts in 30 days. Two P1s open, champion gone cold, renewal in 47 days. Without intervention this account is on a fast track to churn.' },
       { icon:'💬', title:'CSM Copilot',      meta:null, chat:{user:'What should I do before this renewal?', ai:'Book an exec call this week — your champion has been cold for 6 weeks. Get engineering to commit on the webhook fix, then lead the renewal with a health roadmap showing what\'s being fixed.'} },
+      { icon:'❤️', title:'Account Health',   meta:'44/100 · falling fast', chart:[20,22,25,30,38,44,50,54], body:'Down 18pts in 30 days. Two P1s open, champion gone cold, renewal in 47 days. Without intervention this account is on a fast track to churn.' },
       { icon:'🕒', title:'Account Timeline', meta:null, tl:[{d:'Feb 26',t:'P1 opened · webhook failing since deploy'},{d:'Feb 24',t:'QBR: NPS down 18pts · onboarding cited'},{d:'Feb 20',t:'Champion Sarah Lee changed roles'}] },
       { icon:'⇄',  title:'CRM Auto-update', meta:null, body:'Health score, open escalations, champion status and churn risk synced to Salesforce & Gainsight.' },
     ],
@@ -126,7 +126,7 @@ const teamsRaw = [
           { key:'#1 feature request', val:'cohort analytics',  color:'green'  },
           { key:'demand signal',       val:'12× in 60 days',   color:'yellow' },
         ],
-        outIdx:[0],
+        outIdx:[1],
       },
       {
         id:'usage',
@@ -137,7 +137,7 @@ const teamsRaw = [
           { key:'step 3 exit rate', val:'34%',            color:'red'   },
           { key:'retention lift',   val:'2.1× at day 30', color:'green' },
         ],
-        outIdx:[1],
+        outIdx:[0],
       },
       {
         id:'issues',
@@ -154,8 +154,8 @@ const teamsRaw = [
     conclusion: 'Calls, usage data, and backlog all agree. Ship cohort analytics first — it is your highest-ROI item and $180K is already waiting.',
     alert: 'Roadmap gap · $180K revenue blocked across 4 enterprise accounts',
     outcomes: [
-      { icon:'📊', title:'Feature Demand',  meta:'8 themes · 3 accelerating', chart:[44,40,36,31,25,20,16,12], body:'Cohort analytics up 3× in 60 days — 12 enterprise mentions, $180K in deals blocked. Highest-ROI item in your backlog right now.' },
       { icon:'💬', title:'PM Copilot',      meta:null, chat:{user:'What should we prioritize this quarter?', ai:'Ship cohort analytics first — #1 requested, $180K blocked, confirmed by both calls and usage data. Then fix the step 3 drop-off, it\'s killing retention. Permission bugs are noise compared to those two.'} },
+      { icon:'📊', title:'Feature Demand',  meta:'8 themes · 3 accelerating', chart:[44,40,36,31,25,20,16,12], body:'Cohort analytics up 3× in 60 days — 12 enterprise mentions, $180K in deals blocked. Highest-ROI item in your backlog right now.' },
       { icon:'🕒', title:'Signal Timeline', meta:null, tl:[{d:'Mar 1',t:'Cohort analytics on 3 enterprise calls in one day'},{d:'Feb 27',t:'34% exit rate at step 3 confirmed in Pendo'},{d:'Feb 24',t:'Permission tickets up 40% after last release'}] },
       { icon:'⇄',  title:'Data Write-back', meta:null, body:'Feature scores and revenue impact auto-exported to Snowflake, Jira, and Productboard.' },
     ],
@@ -234,46 +234,46 @@ const phaseStepLabel: Record<string, string> = {
               ))}
             </div>
 
-            <!-- ── CENTER: two-stage AI card ── -->
+            <!-- ── CENTER: two circles ── -->
             <div class="ov-ai-col">
-              <div class="ov-ai-card">
-                <div class="ov-ai-head">
-                  <span class="ov-ai-dot"></span>
-                  <span class="ov-ai-title">Starmesh AI</span>
-                  <span class="ov-ai-badge" id={`badge-${team.id}`}>Waiting</span>
-                </div>
+              <div class="ov-circles-panel">
+                <!-- hidden badge for JS status -->
+                <span class="ov-ai-badge ov-badge-float" id={`badge-${team.id}`}>Waiting</span>
 
-                <!-- Stage 1: Ingestion log -->
-                <div class="ov-ingest-stage">
-                  {team.phases.map((phase) => (
-                    <div class="ov-ingest-step" data-team={team.id} data-phase-id={phase.id}>
-                      <div class="ov-ingest-head">
-                        <span class="ov-ingest-icon"></span>
-                        <span class="ov-ingest-src">{phase.srcLabel}</span>
-                      </div>
-                      <p class="ov-ingest-finding">{phase.finding}</p>
+                <div class="ov-circles-body">
+                  <!-- Circle 1: Data Engineering -->
+                  <div class="ov-circle ov-circle-de" data-circle-team={team.id}>
+                    <div class="ov-circle-inner">
+                      <svg class="ov-circle-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>
+                      <span class="ov-circle-label">Data<br/>Engineering</span>
                     </div>
-                  ))}
-                </div>
+                    <div class="ov-circle-tip">
+                      <p class="ov-tip-title">Data Engineering</p>
+                      <ul>
+                        <li>Extract &amp; unify all sources</li>
+                        <li>Transform transcripts &amp; CRM</li>
+                        <li>Build structured pipelines</li>
+                      </ul>
+                    </div>
+                  </div>
 
-                <!-- Stage 2: Synthesized output -->
-                <div class="ov-synth-divider" data-team={team.id}>
-                  <span class="ov-synth-label">Synthesized insights</span>
-                </div>
-                <div class="ov-synth-stage">
-                  {team.phases.map((phase) => (
-                    <div class="ov-synth-group" data-team={team.id} data-phase-id={phase.id}>
-                      {phase.rows.map((r, ri) => (
-                        <div class="ov-row" data-team={team.id} data-phase={phase.id} data-ri={ri}>
-                          <span class="ov-rk">{r.key}</span>
-                          <span class={`ov-rv ov-${r.color}`}>{r.val}</span>
-                        </div>
-                      ))}
+                  <!-- Connector line -->
+                  <div class="ov-circ-line"></div>
+
+                  <!-- Circle 2: AI Engineering -->
+                  <div class="ov-circle ov-circle-ai" data-circle-team={team.id}>
+                    <div class="ov-circle-inner">
+                      <svg class="ov-circle-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-1.14"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-1.14"/></svg>
+                      <span class="ov-circle-label">AI<br/>Engineering</span>
                     </div>
-                  ))}
-                  <div class="ov-conclusion" data-concl-team={team.id}>
-                    <span class="ov-concl-icon">✦</span>
-                    <p class="ov-concl-text">{team.conclusion}</p>
+                    <div class="ov-circle-tip ov-tip-right">
+                      <p class="ov-tip-title">AI Engineering</p>
+                      <ul>
+                        <li>Generate signals &amp; primitives</li>
+                        <li>Compute Win Prob &amp; Churn Risk</li>
+                        <li>Write back to CRM &amp; warehouse</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
 
@@ -426,34 +426,12 @@ const phaseStepLabel: Record<string, string> = {
   window.addEventListener('popstate', applyTeamParam);
 
   // ── Timing constants ──
-  const INGEST_ACTIVE   = 1200; // ms source stays lit during ingestion
-  const FINDING_DELAY   = 700;  // ms after step appears before finding shows
-  const STEP_DONE_AFTER = 4000; // ms after step appears before checkmark
-  const GAP_STEPS       = 800;  // ms gap between ingestion steps
-  const SYNTH_GAP       = 1500; // ms after last ingest step before synthesis begins
-  const ROW_DELAY       = 800;  // ms between result rows in synthesis
-  const OUT_DELAY       = 900;  // ms after last row before outcome card appears
-  const OUT_STAGGER     = 500;  // ms between multiple outcome cards from same phase
-  const BETWEEN_GROUPS  = 1200; // ms between synthesis groups
-  const CYCLE_PAUSE     = 6000; // ms after all done before reset
+  const CYCLE_PAUSE = 5000; // ms after all done before reset
 
   function resetTeamState(teamId: string) {
-    // Ingest steps
-    document.querySelectorAll<HTMLElement>(`.ov-ingest-step[data-team="${teamId}"]`).forEach(s => {
-      s.classList.remove('ingest-active', 'ingest-done');
-    });
-    document.querySelectorAll<HTMLElement>(`.ov-ingest-finding`).forEach(f => {
-      f.classList.remove('finding-vis');
-    });
-    // Synth divider + groups
-    document.querySelectorAll<HTMLElement>(`.ov-synth-divider[data-team="${teamId}"]`).forEach(d => {
-      d.classList.remove('synth-vis');
-    });
-    document.querySelectorAll<HTMLElement>(`.ov-row[data-team="${teamId}"]`).forEach(r => {
-      r.classList.remove('vis');
-    });
-    document.querySelectorAll<HTMLElement>(`.ov-conclusion[data-concl-team="${teamId}"]`).forEach(c => {
-      c.classList.remove('concl-vis');
+    // Circles
+    document.querySelectorAll<HTMLElement>(`.ov-circle[data-circle-team="${teamId}"]`).forEach(c => {
+      c.classList.remove('circle-active');
     });
     // Source cards — reset to dim
     document.querySelectorAll<HTMLElement>(`[data-src-team="${teamId}"]`).forEach(c => {
@@ -488,111 +466,75 @@ const phaseStepLabel: Record<string, string> = {
 
     const badge = document.getElementById(`badge-${teamId}`);
 
-    const ingestSteps = Array.from(
-      document.querySelectorAll<HTMLElement>(`.ov-ingest-step[data-team="${teamId}"]`)
-    );
+    // Derive phase order from source cards
+    const srcCards = Array.from(document.querySelectorAll<HTMLElement>(`[data-src-team="${teamId}"]`));
+    const phasesSeen = new Set<string>();
+    const phases: string[] = [];
+    srcCards.forEach(c => {
+      const p = c.getAttribute('data-src-phase')!;
+      if (p && !phasesSeen.has(p)) { phasesSeen.add(p); phases.push(p); }
+    });
 
-    let t = 400;
+    const PHASE_DUR   = 1400; // ms each source phase stays active
+    const PHASE_GAP   =  250; // ms gap between phases
+    const AI_DELAY    =  500; // ms after ingestion before AI circle activates
+    const OUT_STAGGER =  580; // ms between outcome cards appearing
 
-    // ── Stage 1: Sequential ingestion ──
-    if (badge) addTimer(teamId, () => {
-      badge.textContent = 'Processing'; badge.className = 'ov-ai-badge badge-processing';
+    let t = 300;
+
+    // ── Stage 1: Data Engineering circle activates, phases run ──
+    addTimer(teamId, () => {
+      if (badge) { badge.textContent = 'Ingesting'; badge.className = 'ov-ai-badge badge-processing'; }
+      setCtrlStatus(teamId, 'Ingesting data…', 'status-active');
+      document.querySelector<HTMLElement>(`.ov-circle-de[data-circle-team="${teamId}"]`)?.classList.add('circle-active');
     }, t);
 
-    ingestSteps.forEach((step, phaseIdx) => {
-      const phaseId = step.getAttribute('data-phase-id')!;
-      const finding = step.querySelector<HTMLElement>('.ov-ingest-finding');
+    phases.forEach((phaseId, pi) => {
+      const pStart = t + 300 + pi * (PHASE_DUR + PHASE_GAP);
 
-      // Activate step + source cards + draw input lines for this phase
       addTimer(teamId, () => {
-        step.classList.add('ingest-active');
-        setStepState(teamId, phaseIdx, 'active');
+        setStepState(teamId, pi, 'active');
         setCtrlStatus(teamId, phaseStatusText[phaseId] ?? 'Processing…', 'status-active');
-        document.querySelectorAll<HTMLElement>(
-          `[data-src-team="${teamId}"][data-src-phase="${phaseId}"]`
-        ).forEach(c => { c.classList.remove('src-dim'); c.classList.add('src-active'); });
-        drawPhaseInputConnections(teamId, phaseId, step);
-      }, t);
+        document.querySelectorAll<HTMLElement>(`[data-src-team="${teamId}"][data-src-phase="${phaseId}"]`)
+          .forEach(c => { c.classList.remove('src-dim'); c.classList.add('src-active'); });
+        drawPhaseInputConnections(teamId, phaseId);
+      }, pStart);
 
-      // Show finding text
       addTimer(teamId, () => {
-        finding?.classList.add('finding-vis');
-      }, t + FINDING_DELAY);
-
-      t += STEP_DONE_AFTER;
-
-      // Mark done + transition sources to done state
-      addTimer(teamId, () => {
-        step.classList.remove('ingest-active');
-        step.classList.add('ingest-done');
-        setStepState(teamId, phaseIdx, 'done');
-        document.querySelectorAll<HTMLElement>(
-          `[data-src-team="${teamId}"][data-src-phase="${phaseId}"]`
-        ).forEach(c => { c.classList.remove('src-active'); c.classList.add('src-done'); });
-      }, t);
-
-      t += GAP_STEPS;
+        setStepState(teamId, pi, 'done');
+        document.querySelectorAll<HTMLElement>(`[data-src-team="${teamId}"][data-src-phase="${phaseId}"]`)
+          .forEach(c => { c.classList.remove('src-active'); c.classList.add('src-done'); });
+      }, pStart + PHASE_DUR);
     });
 
-    // ── Stage 2: Synthesis ──
-    t += SYNTH_GAP;
-
-    if (badge) addTimer(teamId, () => {
-      badge.textContent = 'Synthesizing'; badge.className = 'ov-ai-badge badge-synth';
-      setCtrlStatus(teamId, 'Synthesizing insights…', 'status-synth');
-    }, t);
+    // ── Stage 2: AI Engineering circle activates, outcomes appear ──
+    const aiT = t + 300 + phases.length * (PHASE_DUR + PHASE_GAP) + AI_DELAY;
 
     addTimer(teamId, () => {
-      document.querySelector<HTMLElement>(`.ov-synth-divider[data-team="${teamId}"]`)?.classList.add('synth-vis');
-    }, t);
+      if (badge) { badge.textContent = 'Synthesizing'; badge.className = 'ov-ai-badge badge-synth'; }
+      setCtrlStatus(teamId, 'Generating insights…', 'status-synth');
+      document.querySelector<HTMLElement>(`.ov-circle-de[data-circle-team="${teamId}"]`)?.classList.remove('circle-active');
+      document.querySelector<HTMLElement>(`.ov-circle-ai[data-circle-team="${teamId}"]`)?.classList.add('circle-active');
+    }, aiT);
 
-    const synthGroups = Array.from(
-      document.querySelectorAll<HTMLElement>(`.ov-synth-group[data-team="${teamId}"]`)
-    );
-
-    synthGroups.forEach((group) => {
-      const phaseId = group.getAttribute('data-phase-id')!;
-      const rows    = Array.from(group.querySelectorAll<HTMLElement>('.ov-row'));
-
-      t += 300;
-
-      // Rows appear one by one
-      rows.forEach((row, ri) => {
-        addTimer(teamId, () => row.classList.add('vis'), t + ri * ROW_DELAY);
-      });
-
-      t += rows.length * ROW_DELAY + OUT_DELAY;
-
-      // Outcome cards appear + output connections drawn
-      const outCards = Array.from(
-        document.querySelectorAll<HTMLElement>(
-          `[data-out-team="${teamId}"][data-out-phase="${phaseId}"]`
-        )
-      );
-      outCards.forEach((card, oi) => {
-        addTimer(teamId, () => {
-          card.classList.add('out-lit');
-          drawOutputConnection(card, group);
-        }, t + oi * OUT_STAGGER);
-      });
-
-      t += outCards.length * OUT_STAGGER + BETWEEN_GROUPS;
+    const outCards = Array.from(document.querySelectorAll<HTMLElement>(`[data-out-team="${teamId}"]`));
+    outCards.forEach((card, oi) => {
+      addTimer(teamId, () => {
+        card.classList.add('out-lit');
+        drawOutputConnection(card);
+      }, aiT + 450 + oi * OUT_STAGGER);
     });
 
-    addTimer(teamId, () => {
-      document.querySelector<HTMLElement>(`.ov-conclusion[data-concl-team="${teamId}"]`)?.classList.add('concl-vis');
-    }, t);
-
-    t += 600;
+    const doneT = aiT + 450 + outCards.length * OUT_STAGGER + 300;
 
     addTimer(teamId, () => {
       if (badge) { badge.textContent = 'Live'; badge.className = 'ov-ai-badge'; }
       setCtrlStatus(teamId, 'Analysis complete ✓', 'status-done');
-    }, t);
+    }, doneT);
 
     addTimer(teamId, () => {
       if (!isPaused[teamId]) restartAnimation(teamId);
-    }, t + CYCLE_PAUSE);
+    }, doneT + CYCLE_PAUSE);
   }
 
   // ── SVG connections ──
@@ -600,7 +542,7 @@ const phaseStepLabel: Record<string, string> = {
   let uid = 0;
 
   // Input connections: drawn per-phase when that phase activates
-  function drawPhaseInputConnections(teamId: string, phaseId: string, step: HTMLElement) {
+  function drawPhaseInputConnections(teamId: string, phaseId: string) {
     if (!svg) return;
 
     // Skip if already drawn for this phase (prevents duplicates on resume)
@@ -615,13 +557,11 @@ const phaseStepLabel: Record<string, string> = {
     const panel = document.querySelector<HTMLElement>('.ov-panel.active');
     if (!panel) return;
 
-    const aiCard = panel.querySelector<HTMLElement>('.ov-ai-card');
-    if (!aiCard) return;
-    const ar  = aiCard.getBoundingClientRect();
-    const aLX = ar.left - br.left;
-
-    const ir  = step.getBoundingClientRect();
-    const y2  = ir.top + ir.height / 2 - br.top;
+    const deCircle = panel.querySelector<HTMLElement>(`.ov-circle-de[data-circle-team="${teamId}"]`);
+    if (!deCircle) return;
+    const dr  = deCircle.getBoundingClientRect();
+    const aLX = dr.left - br.left;
+    const y2  = dr.top + dr.height / 2 - br.top;
 
     const srcs = Array.from(panel.querySelectorAll<HTMLElement>(
       `[data-src-team="${teamId}"][data-src-phase="${phaseId}"]`
@@ -631,13 +571,12 @@ const phaseStepLabel: Record<string, string> = {
       const x1 = sr.right - br.left - 4;
       const y1 = sr.top + sr.height / 2 - br.top;
       addPath(x1, y1, aLX + 4, y2, 'ovLgIn', '#6366F1', i * 0.18, 'ov-in-path');
-      // Tag so we can guard against redrawing on resume
       svg!.lastElementChild?.setAttribute('data-in-phase', `${teamId}-${phaseId}`);
     });
   }
 
-  // Output connections: AI synth group → outcome card (drawn on demand)
-  function drawOutputConnection(outCard: HTMLElement, synthGroup: HTMLElement) {
+  // Output connections: AI circle → outcome card (drawn on demand)
+  function drawOutputConnection(outCard: HTMLElement) {
     // Skip if this card's line was already drawn (prevents duplicates on resume)
     if (outCard.hasAttribute('data-line-drawn')) return;
     outCard.setAttribute('data-line-drawn', '1');
@@ -650,13 +589,14 @@ const phaseStepLabel: Record<string, string> = {
     const panel = document.querySelector<HTMLElement>('.ov-panel.active');
     if (!panel) return;
 
-    const aiCard = panel.querySelector<HTMLElement>('.ov-ai-card');
-    if (!aiCard) return;
-    const ar  = aiCard.getBoundingClientRect();
+    const teamId   = outCard.getAttribute('data-out-team')!;
+    const aiCircle = panel.querySelector<HTMLElement>(`.ov-circle-ai[data-circle-team="${teamId}"]`);
+    if (!aiCircle) return;
+    const ar  = aiCircle.getBoundingClientRect();
     const aRX = ar.right - br.left;
 
-    // Y from synth group center
-    const gr  = synthGroup.getBoundingClientRect();
+    // Y from AI circle center
+    const gr  = aiCircle.getBoundingClientRect();
     const y1  = gr.top + gr.height / 2 - br.top;
 
     const or_ = outCard.getBoundingClientRect();
@@ -770,7 +710,7 @@ const phaseStepLabel: Record<string, string> = {
   .ov-tab:hover:not(.active) { background:rgba(139,92,246,.08); color:#E4E4E7; }
 
   /* ── Board ── */
-  .ov-board { position:relative; border-radius:1.25rem; border:1px solid rgba(255,255,255,.07); background:#0a0a0d; overflow:hidden; box-shadow:0 0 80px rgba(99,102,241,.06), inset 0 1px 0 rgba(255,255,255,.04); }
+  .ov-board { position:relative; border-radius:1.25rem; border:1px solid rgba(255,255,255,.07); background:#0a0a0d; overflow:visible; box-shadow:0 0 80px rgba(99,102,241,.06), inset 0 1px 0 rgba(255,255,255,.04); }
   .ov-dotgrid { position:absolute; inset:0; pointer-events:none; background-image:radial-gradient(rgba(255,255,255,.022) 1px,transparent 1px); background-size:22px 22px; }
   .ov-svg { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible; }
 
@@ -800,100 +740,95 @@ const phaseStepLabel: Record<string, string> = {
   .ov-src-type { font-size:.65rem; color:#a8a2d8; margin:0; line-height:1.25; }
   .ov-src-sample { font-size:.71rem; color:#d4cef5; line-height:1.45; margin:0; }
 
-  /* ── CENTER: AI card ── */
-  .ov-ai-col { padding:18px 28px; display:flex; align-items:stretch; }
-  .ov-ai-card {
-    flex:1; border-radius:9px; background:#0f0f12;
-    border:1px solid rgba(99,102,241,.45);
-    box-shadow:0 0 28px rgba(99,102,241,.12), inset 0 1px 0 rgba(255,255,255,.04);
-    display:flex; flex-direction:column; overflow:hidden;
-  }
-  .ov-ai-head { display:flex; align-items:center; gap:6px; padding:8px 12px; background:#111118; border-bottom:1px solid rgba(99,102,241,.2); flex-shrink:0; }
-  .ov-ai-dot { width:6px; height:6px; border-radius:50%; background:#34D399; flex-shrink:0; animation:aiPulse 2s ease-in-out infinite; }
-  @keyframes aiPulse { 0%,100%{box-shadow:0 0 0 0 rgba(52,211,153,.4)} 50%{box-shadow:0 0 0 4px rgba(52,211,153,0)} }
-  .ov-ai-title { font-size:.72rem; font-weight:600; color:#A1A1AA; flex:1; }
+  /* ── CENTER: two circles ── */
+  .ov-ai-col { padding:18px 20px; display:flex; align-items:stretch; overflow:visible; }
+  .ov-circles-panel { flex:1; display:flex; flex-direction:column; position:relative; }
+  .ov-badge-float { align-self:center; margin-bottom:10px; flex-shrink:0; }
   .ov-ai-badge { font-size:.62rem; font-weight:700; color:#4ADE80; background:rgba(74,222,128,.1); border:1px solid rgba(74,222,128,.25); border-radius:999px; padding:.06rem .42rem; letter-spacing:.05em; transition:all .3s ease; }
   .ov-ai-badge.badge-processing { color:#818CF8; background:rgba(99,102,241,.12); border-color:rgba(99,102,241,.3); }
   .ov-ai-badge.badge-synth { color:#FACC15; background:rgba(250,204,21,.08); border-color:rgba(250,204,21,.25); }
 
-  /* Ingestion stage */
-  .ov-ingest-stage { padding:7px 8px 4px; border-bottom:1px solid rgba(255,255,255,.045); flex-shrink:0; }
-  .ov-ingest-step {
-    padding:4px 6px; border-radius:6px; margin-bottom:3px;
-    opacity:0; transform:translateY(4px);
-    transition:opacity .3s ease, transform .3s ease, background .3s ease;
+  /* ── Two Circles ── */
+  .ov-circles-body {
+    flex:1; display:flex; flex-direction:column; align-items:center;
+    justify-content:center; gap:0; padding:8px 0;
   }
-  .ov-ingest-step:last-child { margin-bottom:0; }
-  .ov-ingest-step.ingest-active { opacity:1; transform:translateY(0); background:rgba(99,102,241,.05); }
-  .ov-ingest-step.ingest-done   { opacity:1; transform:translateY(0); }
 
-  .ov-ingest-head { display:flex; align-items:center; gap:6px; }
-  .ov-ingest-icon {
-    width:8px; height:8px; border-radius:50%; flex-shrink:0;
-    border:1px solid rgba(255,255,255,.15); background:transparent;
-    transition:all .3s ease;
+  /* The actual circle */
+  .ov-circle {
+    width:112px; height:112px; border-radius:50%; flex-shrink:0;
+    border:1.5px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.025);
+    display:flex; align-items:center; justify-content:center;
+    position:relative; cursor:default;
+    transition:border-color .4s ease, background .4s ease, box-shadow .4s ease;
   }
-  .ov-ingest-step.ingest-active .ov-ingest-icon { background:#6366F1; border-color:#6366F1; animation:stepPulse 1s ease-in-out infinite; }
-  .ov-ingest-step.ingest-done   .ov-ingest-icon { background:#34D399; border-color:#34D399; animation:none; }
-  @keyframes stepPulse { 0%,100%{box-shadow:0 0 0 0 rgba(99,102,241,.5)} 50%{box-shadow:0 0 0 3px rgba(99,102,241,0)} }
-
-  .ov-ingest-src { font-size:.67rem; font-family:ui-monospace,monospace; color:#3F3F46; transition:color .3s ease; }
-  .ov-ingest-step.ingest-active .ov-ingest-src { color:#818CF8; }
-  .ov-ingest-step.ingest-done   .ov-ingest-src { color:#818CF8; opacity:.9; }
-
-  .ov-ingest-finding {
-    margin:3px 0 0 14px; padding:3px 7px;
-    font-size:.65rem; color:#71717A; line-height:1.4;
-    border-left:2px solid rgba(99,102,241,.15);
-    background:rgba(99,102,241,.03); border-radius:0 3px 3px 0;
-    opacity:0; max-height:0; overflow:hidden;
-    transition:opacity .35s ease, max-height .4s ease, border-color .3s ease, color .3s ease;
+  .ov-circle-de.circle-active {
+    border-color:rgba(99,102,241,.6);
+    background:rgba(99,102,241,.1);
+    box-shadow:0 0 28px rgba(99,102,241,.3), 0 0 60px rgba(99,102,241,.1);
   }
-  .ov-ingest-finding.finding-vis { opacity:1; max-height:3.5em; }
-  .ov-ingest-step.ingest-done .ov-ingest-finding { border-left-color:rgba(52,211,153,.35); color:#A1A1AA; }
-
-  /* Synthesis stage */
-  .ov-synth-divider {
-    display:flex; align-items:center; gap:8px; padding:5px 12px;
-    opacity:0; transition:opacity .4s ease; flex-shrink:0;
+  .ov-circle-ai.circle-active {
+    border-color:rgba(139,92,246,.6);
+    background:rgba(139,92,246,.1);
+    box-shadow:0 0 28px rgba(139,92,246,.3), 0 0 60px rgba(139,92,246,.1);
   }
-  .ov-synth-divider::before,.ov-synth-divider::after { content:''; flex:1; height:1px; background:rgba(255,255,255,.1); }
-  .ov-synth-divider.synth-vis { opacity:1; }
-  .ov-synth-label { font-size:.56rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#71717A; white-space:nowrap; }
-
-  .ov-synth-stage { flex:1; padding:0 8px 8px; display:flex; flex-direction:column; gap:0; }
-  .ov-synth-group { padding:3px 0; border-bottom:1px solid rgba(255,255,255,.04); }
-  .ov-synth-group:last-child { border-bottom:none; }
-
-  .ov-row {
-    display:flex; align-items:baseline; justify-content:space-between;
-    padding:3px 4px;
-    opacity:0; transform:translateX(-5px);
-    transition:opacity .28s ease, transform .28s ease;
+  .ov-circle:hover {
+    border-color:rgba(139,92,246,.45);
+    background:rgba(139,92,246,.07);
   }
-  .ov-row.vis { opacity:1; transform:translateX(0); }
-  .ov-rk { font-size:.65rem; font-family:ui-monospace,monospace; color:#71717A; }
-  .ov-rv { font-size:.67rem; font-family:ui-monospace,monospace; font-weight:700; padding:.08rem .4rem; border-radius:4px; }
-  .ov-green  { color:#34D399; background:rgba(52,211,153,.1); }
-  .ov-red    { color:#F87171; background:rgba(248,113,113,.1); }
-  .ov-yellow { color:#FACC15; background:rgba(250,204,21,.1); }
-  .ov-orange { color:#FB923C; background:rgba(251,146,60,.1); }
-  .ov-neutral{ color:#A1A1AA; background:rgba(161,161,170,.07); }
 
-  /* AI conclusion */
-  .ov-conclusion {
-    margin:auto 4px 0;
-    padding:7px 10px;
-    border-radius:6px;
-    background:rgba(99,102,241,.07);
-    border:1px solid rgba(99,102,241,.2);
-    display:flex; gap:7px; align-items:flex-start;
-    opacity:0; transform:translateY(5px);
-    transition:opacity .45s ease, transform .45s ease;
+  /* Inner content of circle */
+  .ov-circle-inner {
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+    pointer-events:none;
   }
-  .ov-conclusion.concl-vis { opacity:1; transform:translateY(0); }
-  .ov-concl-icon { font-size:.58rem; color:#818CF8; flex-shrink:0; margin-top:.18rem; line-height:1; }
-  .ov-concl-text { font-size:.66rem; color:#C4B5FD; line-height:1.5; margin:0; font-style:italic; }
+  .ov-circle-svg { opacity:.45; transition:opacity .35s ease; }
+  .ov-circle-de .ov-circle-svg { color:#818CF8; }
+  .ov-circle-ai .ov-circle-svg { color:#A78BFA; }
+  .ov-circle-de.circle-active .ov-circle-svg,
+  .ov-circle-ai.circle-active .ov-circle-svg,
+  .ov-circle:hover .ov-circle-svg { opacity:1; }
+
+  .ov-circle-label {
+    font-size:.6rem; font-weight:700; color:#52525B; text-align:center;
+    line-height:1.3; letter-spacing:.03em; text-transform:uppercase;
+    transition:color .35s ease;
+  }
+  .ov-circle-de.circle-active .ov-circle-label { color:#818CF8; }
+  .ov-circle-ai.circle-active .ov-circle-label { color:#A78BFA; }
+  .ov-circle:hover .ov-circle-label { color:#E4E4E7; }
+
+  /* Tooltip on hover — appears to the left (toward board center) */
+  .ov-circle-tip {
+    position:absolute; top:50%; right:calc(100% + 12px); transform:translateY(-50%);
+    width:158px; background:#111118;
+    border:1px solid rgba(99,102,241,.3); border-radius:8px;
+    padding:10px 12px; pointer-events:none;
+    opacity:0; transition:opacity .2s ease;
+    z-index:10;
+  }
+  .ov-circle:hover .ov-circle-tip { opacity:1; }
+
+  .ov-tip-title {
+    font-size:.65rem; font-weight:700; color:#E4E4E7; margin:0 0 7px;
+  }
+  .ov-circle-tip ul {
+    list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:5px;
+  }
+  .ov-circle-tip li {
+    font-size:.63rem; color:#A1A1AA; display:flex; align-items:center; gap:5px;
+  }
+  .ov-circle-tip li::before {
+    content:''; width:3px; height:3px; border-radius:50%; background:#6366F1; flex-shrink:0;
+  }
+  .ov-circle-ai .ov-circle-tip li::before { background:#8B5CF6; }
+
+  /* Connector line between circles */
+  .ov-circ-line {
+    width:1px; height:30px; flex-shrink:0;
+    background:linear-gradient(to bottom, rgba(99,102,241,.3), rgba(139,92,246,.3));
+  }
 
   .ov-ai-alert { display:flex; align-items:center; gap:6px; padding:7px 12px; background:rgba(239,68,68,.04); border-top:1px solid rgba(239,68,68,.15); font-size:.65rem; color:#F87171; font-weight:500; flex-shrink:0; margin-top:auto; }
 

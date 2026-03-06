@@ -5,14 +5,14 @@ import CTASection from '../components/sections/CTASection.astro';
 import Footer from '../components/ui/Footer.astro';
 
 const enterprise = [
-  { icon: '📞', text: 'Unlimited call & email ingestion' },
-  { icon: '🤖', text: 'All AI signals — PWin, EWI, Deal Health, Churn Risk' },
-  { icon: '🔄', text: 'CRM write-back to Salesforce & HubSpot' },
-  { icon: '🏗️', text: 'Custom warehouse destinations — BigQuery, Snowflake, Redshift' },
-  { icon: '🔐', text: 'Role-based access & SSO' },
-  { icon: '🧑‍💼', text: 'Dedicated onboarding & customer success manager' },
-  { icon: '📋', text: 'Audit logging & compliance controls' },
-  { icon: '⚡', text: 'SLA-backed support with named contacts' },
+  { text: 'Unlimited call & email ingestion' },
+  { text: 'All AI signals — PWin, EWI, Deal Health, Churn Risk' },
+  { text: 'CRM write-back to Salesforce & HubSpot' },
+  { text: 'Custom warehouse destinations — BigQuery, Snowflake, Redshift' },
+  { text: 'Role-based access & SSO' },
+  { text: 'Dedicated onboarding & customer success manager' },
+  { text: 'Audit logging & compliance controls' },
+  { text: 'SLA-backed support with named contacts' },
 ];
 ---
 <BaseLayout
@@ -28,7 +28,7 @@ const enterprise = [
           <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">
             Built for <span class="gradient-text">enterprise teams</span>
           </h1>
-          <p class="text-[#A1A1AA] text-lg max-w-xl mx-auto">Starmesh deploys alongside your existing data stack. Pricing is based on seats and data volume — we'll give you a number after understanding your use case.</p>
+          <p class="text-[#A1A1AA] text-lg max-w-xl mx-auto">Starmesh deploys alongside your existing data stack. Pricing is usage-based — we'll give you a number after understanding your use case.</p>
         </div>
 
         <div class="max-w-2xl mx-auto">
@@ -41,7 +41,7 @@ const enterprise = [
                   <div class="flex items-baseline gap-2 mb-2">
                     <span class="text-5xl font-bold text-[#FAFAFA] tracking-tight">Custom</span>
                   </div>
-                  <p class="text-[#71717A] text-sm">Priced per seat · scales with your team</p>
+                  <p class="text-[#71717A] text-sm">Usage-based pricing · scales with your data volume</p>
                 </div>
                 <span class="flex-shrink-0 text-xs px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 font-semibold mt-1">Available now</span>
               </div>
@@ -52,7 +52,9 @@ const enterprise = [
               <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {enterprise.map(f => (
                   <li class="flex items-start gap-3">
-                    <span class="text-base flex-shrink-0 mt-0.5">{f.icon}</span>
+                    <span class="text-[#6366F1] flex-shrink-0 mt-1">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
                     <span class="text-sm text-[#A1A1AA] leading-snug">{f.text}</span>
                   </li>
                 ))}
