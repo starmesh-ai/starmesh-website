@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --color-bg: #09090B;
+  --color-card: #111114;
+  --color-border: rgba(255,255,255,0.07);
+  --color-accent-from: #6366F1;
+  --color-accent-to: #8B5CF6;
+  --color-text: #FAFAFA;
+  --color-muted: #A1A1AA;
+}
+
+/* Base resets */
+html { scroll-behavior: smooth; }
+body { background: #09090B; color: #FAFAFA; font-family: 'Inter', sans-serif; }
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, #6366F1, #8B5CF6, #A855F7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gradient button */
+.btn-primary {
+  background: linear-gradient(135deg, #6366F1, #8B5CF6);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.625rem 1.5rem;
+  font-weight: 600;
+  transition: opacity 0.2s, transform 0.2s;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+
+.btn-ghost {
+  background: transparent;
+  color: #FAFAFA;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  padding: 0.625rem 1.5rem;
+  font-weight: 500;
+  transition: border-color 0.2s, transform 0.2s;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+.btn-ghost:hover { border-color: rgba(255,255,255,0.4); transform: translateY(-1px); }
+
+/* Marquee */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 30s linear infinite;
+  display: flex;
+  white-space: nowrap;
+}
+.marquee-track:hover { animation-play-state: paused; }
+
+/* Fade up on scroll */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fade-up 0.6s ease-out forwards; }
+
+/* Pulse dot */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+.pulse-dot {
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+/* Card base */
+.card {
+  background: #111114;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+.card:hover {
+  border-color: rgba(99,102,241,0.35);
+  transform: translateY(-2px);
+}
+
+/* Pipeline connector dots */
+@keyframes flow {
+  0% { opacity: 0.2; }
+  50% { opacity: 1; }
+  100% { opacity: 0.2; }
+}
+
+/* Section fade-in utility */
+.section-animate {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.section-animate.visible {
+  opacity: 1;
+  transform: translateY(0);
+}

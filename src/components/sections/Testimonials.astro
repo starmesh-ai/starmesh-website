@@ -1,0 +1,78 @@
+---
+const testimonials = [
+  {
+    quote: "Starmesh flags disengagement across my 150+ accounts automatically — I only step in where it matters. Retention has never been cleaner.",
+    name: "Shabib",
+    role: "CSM",
+    company: "BirdEye",
+    initial: "S",
+  },
+  {
+    quote: "Rep notes were always inconsistent. Starmesh standardized our call data so pipeline reports finally reflect reality, not what reps remembered to log.",
+    name: "Richard",
+    role: "Sales Operations",
+    company: "Eltropy",
+    initial: "R",
+  },
+  {
+    quote: "Enterprise deals stall quietly. Starmesh surfaces pricing pressure and champion silence weeks before we'd normally catch it.",
+    name: "David",
+    role: "VP of Sales",
+    company: "Vectra",
+    initial: "D",
+  },
+  {
+    quote: "We were losing deals we thought were won. Starmesh surfaced the signals we missed — win rate improved significantly within two quarters.",
+    name: "Priya",
+    role: "Director of Revenue Operations",
+    company: "CommerceIQ",
+    initial: "P",
+  },
+  {
+    quote: "We used to guess what resonated with enterprise buyers. Now we have a structured view of every objection and competitor mention across every discovery call.",
+    name: "Steve",
+    role: "Head of Marketing",
+    company: "OpenText",
+    initial: "S",
+  },
+];
+---
+<section id="testimonials" class="py-24 px-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-14">
+      <p class="text-xs text-[#71717A] uppercase tracking-widest mb-3">What teams are saying</p>
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+        Trusted by revenue teams at
+      </h2>
+      <!-- Company name pills -->
+      <div class="flex items-center justify-center gap-3 flex-wrap mt-4">
+        {["BirdEye", "Eltropy", "Vectra", "CommerceIQ", "OpenText"].map(c => (
+          <span class="px-3 py-1 rounded-full border border-white/[0.08] bg-white/[0.03] text-sm text-[#A1A1AA] font-medium">{c}</span>
+        ))}
+      </div>
+    </div>
+
+    <div class="flex gap-5 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-hide">
+      {testimonials.map((t) => (
+        <div class="card p-6 flex flex-col flex-none w-80 snap-start">
+
+          <!-- Quote -->
+          <blockquote class="text-sm text-[#A1A1AA] leading-relaxed flex-1 mb-6">
+            "{t.quote}"
+          </blockquote>
+
+          <!-- Attribution -->
+          <div class="flex items-center gap-3 pt-4 border-t border-white/[0.06]">
+            <div class="w-9 h-9 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center flex-shrink-0">
+              <span class="text-xs font-bold text-indigo-400">{t.initial}</span>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-[#FAFAFA]">{t.name}</p>
+              <p class="text-xs text-[#A1A1AA]">{t.role} · {t.company}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

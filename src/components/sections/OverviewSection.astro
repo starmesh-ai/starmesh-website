@@ -1,0 +1,663 @@
+---
+import DealIntelligenceWindow from '../DealIntelligenceWindow.astro';
+import WinProbabilityWindow from '../WinProbabilityWindow.astro';
+import InteractionTimelineWindow from '../InteractionTimelineWindow.astro';
+import CRMSyncWindow from '../CRMSyncWindow.astro';
+import DestinationsWindow from '../DestinationsWindow.astro';
+const teams = [
+  {
+    id: 'sales', label: 'Sales',
+    sources: [
+      { app:'Zoom',       logo:'zoom.us',        title:'Call recording',     sample:'Budget is approved but procurement pushed the timeline — new VP Eng needs to sign off first.' },
+      { app:'Gong',       logo:'gong.io',         title:'Deal call notes',    sample:'Champion is strong. Security review is the only real blocker right now.' },
+      { app:'Gmail',      logo:'mail.google.com', title:'Email thread',       sample:'Before we go to signature, can you confirm your SOC2 controls and migration support?' },
+      { app:'Salesforce', logo:'salesforce.com',  title:'Opportunity update', sample:'Stage changed to Commit. Buying committee expanded to include VP Engineering.' },
+      { app:'HubSpot',    logo:'hubspot.com',     title:'Contact activity',   sample:"VP of Engineering added to deal — first question was about data residency." },
+    ],
+    outcomes: [
+      { icon:'💬', title:'Deal Copilot',     meta:null,                  chat:{user:'What do I need to do before Friday?', ai:"Send SOC2 docs to Sarah today. Get your SE on the security call — that's the only real blocker. Log next steps in Salesforce before EOD or this slips to Q1."} },
+      { icon:'📈', title:'Win Probability',  meta:'74% · trending down', chart:[20,23,27,31,35,39,42,45], body:'Down 12pts in 2 weeks. Security review still open and next steps are missing. Close the blocker this week or this deal moves to Q1.' },
+      { icon:'🕒', title:'Deal Timeline',    meta:null,                  tl:[{d:'Feb 24',t:'Security objection raised on Zoom call'},{d:'Feb 23',t:'VP Eng joined buying committee'},{d:'Feb 21',t:'Stage → Commit · next steps still blank'}] },
+      { icon:'⇄',  title:'CRM Auto-update', meta:null,                  body:'Win probability, slip risk, security blocker and missing next steps auto-logged to Salesforce & HubSpot.' },
+    ],
+  },
+  {
+    id: 'cx', label: 'CX',
+    sources: [
+      { app:'Intercom', logo:'intercom.com',    title:'Support tickets',  sample:'Export issue repeats after every billing cycle close — third time this quarter.' },
+      { app:'Zendesk',  logo:'zendesk.com',     title:'Escalation case',  sample:'P1 raised by enterprise account — webhook retries failing since last deploy.' },
+      { app:'Zoom',     logo:'zoom.us',          title:'QBR recording',    sample:'Team is generally happy but onboarding still felt slow and confusing.' },
+      { app:'Gmail',    logo:'mail.google.com',  title:'Renewal email',    sample:'We need better visibility into our account health before we can commit to renewal.' },
+      { app:'Slack',    logo:'slack.com',        title:'Customer channel', sample:"Any ETA on the permission bug? It's blocking three of our admin users right now." },
+    ],
+    outcomes: [
+      { icon:'💬', title:'CSM Copilot',      meta:null,                     chat:{user:'What should I do before this renewal?', ai:"Book an exec call this week — your champion has been cold for 6 weeks. Get engineering to commit on the webhook fix, then lead the renewal with a health roadmap showing what's being fixed."} },
+      { icon:'❤️', title:'Account Health',   meta:'44/100 · falling fast',  chart:[20,22,25,30,38,44,50,54], body:'Down 18pts in 30 days. Two P1s open, champion gone cold, renewal in 47 days. Without intervention this account is on a fast track to churn.' },
+      { icon:'🕒', title:'Account Timeline', meta:null,                     tl:[{d:'Feb 26',t:'P1 opened · webhook failing since deploy'},{d:'Feb 24',t:'QBR: NPS down 18pts · onboarding cited'},{d:'Feb 20',t:'Champion Sarah Lee changed roles'}] },
+      { icon:'⇄',  title:'CRM Auto-update', meta:null,                     body:'Health score, open escalations, champion status and churn risk synced to Salesforce & Gainsight.' },
+    ],
+  },
+  {
+    id: 'product', label: 'Product',
+    sources: [
+      { app:'Gong',     logo:'gong.io',         title:'Call transcripts', sample:'Cohort-level analytics keeps coming up on enterprise calls — heard it three times this week alone.' },
+      { app:'Zoom',     logo:'zoom.us',          title:'Customer calls',   sample:'Dashboard clarity was the top pain point in every PM discovery session this quarter.' },
+      { app:'Pendo',    logo:'pendo.io',         title:'Usage events',     sample:'Drop-off spikes every time users hit the integration settings screen at step 3.' },
+      { app:'Mixpanel', logo:'mixpanel.com',     title:'Behavior cohorts', sample:'Users with two data sources connected retain 2.1× better at 30 days. Single-source users churn fast.' },
+      { app:'Jira',     logo:'atlassian.com',    title:'Issue backlog',    sample:'Permission-related tickets jumped 40% in the two weeks after the last release.' },
+    ],
+    outcomes: [
+      { icon:'💬', title:'PM Copilot',      meta:null,                         chat:{user:'What should we prioritize this quarter?', ai:"Ship cohort analytics first — #1 requested, \$180K blocked, confirmed by both calls and usage data. Then fix the step 3 drop-off, it's killing retention. Permission bugs are noise compared to those two."} },
+      { icon:'📊', title:'Feature Demand',  meta:'8 themes · 3 accelerating', chart:[44,40,36,31,25,20,16,12], body:'Cohort analytics up 3× in 60 days — 12 enterprise mentions, $180K in deals blocked. Highest-ROI item in your backlog right now.' },
+      { icon:'🕒', title:'Signal Timeline', meta:null,                         tl:[{d:'Mar 1',t:'Cohort analytics on 3 enterprise calls in one day'},{d:'Feb 27',t:'34% exit rate at step 3 confirmed in Pendo'},{d:'Feb 24',t:'Permission tickets up 40% after last release'}] },
+      { icon:'⇄',  title:'Data Write-back', meta:null,                         body:'Feature scores and revenue impact auto-exported to Snowflake, Jira, and Productboard.' },
+    ],
+  },
+];
+---
+
+<section id="overview" class="py-24 px-6">
+  <div class="max-w-[1200px] mx-auto">
+
+    <div class="text-center mb-12">
+      <p class="text-xs text-[#71717A] uppercase tracking-widest mb-3">Overview</p>
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+        One platform for every <span class="gradient-text">customer-facing team</span>
+      </h2>
+      <p class="text-[#A1A1AA] text-lg max-w-2xl mx-auto">See how Starmesh ingests raw conversations, synthesizes intelligence, and delivers structured results to every tool in your stack.</p>
+    </div>
+
+    <div class="ov-pills" role="tablist">
+      {teams.map((team, i) => (
+        <button class={`ov-tab ${i === 0 ? 'active' : ''}`} data-tab={team.id}>{team.label}</button>
+      ))}
+    </div>
+
+    <div class="ov-board" id="ov-board">
+      <div class="ov-dotgrid"></div>
+
+      {teams.map((team, ti) => (
+        <div class={`ov-panel ${ti === 0 ? 'active' : ''}`} data-panel={team.id}>
+          <div class="ov-grid">
+
+            <!-- LEFT: source cards -->
+            <div class="ov-src-col">
+              {team.sources.map((src) => (
+                <div class="ov-src-card">
+                  <div class="ov-src-layout">
+                    <div class="ov-src-meta">
+                      <span class="ov-logo">
+                        <img src={`https://www.google.com/s2/favicons?sz=64&domain=${src.logo}`} alt={src.app} loading="lazy"
+                          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/>
+                        <span class="ov-logo-fb">{src.app.slice(0,2).toUpperCase()}</span>
+                      </span>
+                      <p class="ov-src-type">{src.title}</p>
+                    </div>
+                    <p class="ov-src-sample">{src.sample}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <!-- CENTER: two circles -->
+            <div class="ov-ai-col">
+              <div class="ov-circles-panel">
+                <div class="ov-circles-body">
+
+                  <div class="ov-circle ov-circle-de">
+                    <div class="ov-circle-inner">
+                      <svg class="ov-circle-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>
+                      <span class="ov-circle-label">Data<br/>Engineering</span>
+                    </div>
+                    <div class="ov-circle-tip">
+                      <p class="ov-tip-title">Data Engineering</p>
+                      <ul>
+                        <li>Extract &amp; unify all sources</li>
+                        <li>Transform transcripts &amp; CRM</li>
+                        <li>Build structured pipelines</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="ov-connector-spacer" aria-hidden="true"></div>
+
+                  <div class="ov-circle ov-circle-ai">
+                    <div class="ov-circle-inner">
+                      <svg class="ov-circle-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-1.14"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-1.14"/></svg>
+                      <span class="ov-circle-label">AI<br/>Engineering</span>
+                    </div>
+                    <div class="ov-circle-tip ov-tip-right">
+                      <p class="ov-tip-title">AI Engineering</p>
+                      <ul>
+                        <li>Generate signals &amp; primitives</li>
+                        <li>Compute Win Prob &amp; Churn Risk</li>
+                        <li>Write back to CRM &amp; warehouse</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT: outcome cards -->
+            <div class="ov-out-col">
+              {team.outcomes.map((out) => (
+                <div class="ov-out-card"
+                  data-has-chat={out.chat ? 'true' : undefined}
+                  data-window-title={out.chat ? (out.title === 'Deal Copilot' ? 'Deal Intelligence' : out.title === 'CSM Copilot' ? 'Account Intelligence' : out.title === 'PM Copilot' ? 'Product Intelligence' : out.title) : undefined}
+                  data-has-chart={out.chart ? 'true' : undefined}
+                  data-has-tl={out.tl ? 'true' : undefined}
+                  data-has-crm={out.title === 'CRM Auto-update' ? 'true' : undefined}
+                  data-has-dest={out.title === 'Data Write-back' ? 'true' : undefined}>
+                  <div class="ov-out-head">
+                    <span class="ov-out-icon">{out.icon}</span>
+                    <span class="ov-out-name">{out.title}</span>
+                    {out.meta && <span class="ov-out-meta">{out.meta}</span>}
+                  </div>
+                  {out.chart && (
+                    <div class="ov-spark">
+                      <svg viewBox={`0 0 ${(out.chart.length-1)*20} 48`} preserveAspectRatio="none">
+                        <polyline points={out.chart.map((v,i)=>`${i*20},${v}`).join(' ')}/>
+                      </svg>
+                    </div>
+                  )}
+                  {out.body && <p class="ov-out-body">{out.body}</p>}
+                  {out.chat && (
+                    <>
+                      <div class="ov-bbl-u">{out.chat.user}</div>
+                      <div class="ov-bbl-a">{out.chat.ai}</div>
+                    </>
+                  )}
+                  {out.tl && out.tl.map(row => (
+                    <div class="ov-tl">
+                      <span class="ov-tl-dot"></span>
+                      <span class="ov-tl-d">{row.d}</span>
+                      <span class="ov-tl-t">{row.t}</span>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+
+          </div>
+        </div>
+      ))}
+
+      <!-- SVG overlay for connection lines -->
+      <svg class="ov-lines" id="ov-lines" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Same gradient/stroke design as Hero.astro -->
+          <linearGradient id="ovGin" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#6366F1" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#6366F1" stop-opacity="0.7"/>
+          </linearGradient>
+          <linearGradient id="ovGout" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0.3"/>
+          </linearGradient>
+          <filter id="ovGlow" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="3" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+      </svg>
+    </div>
+
+  </div>
+</section>
+
+<!-- Tooltip portal: rendered in body, above everything -->
+<div id="ov-tooltip-portal" class="ov-tooltip-portal" aria-hidden="true"></div>
+<!-- Blur overlay: covers everything except the right section (ov-out-col) -->
+<div id="ov-blur-overlay" class="ov-blur-overlay" aria-hidden="true">
+  <div id="ov-blur-top" class="ov-blur-panel"></div>
+  <div id="ov-blur-left" class="ov-blur-panel"></div>
+  <div id="ov-blur-bottom" class="ov-blur-panel"></div>
+  <div id="ov-blur-right" class="ov-blur-panel"></div>
+</div>
+<!-- Copilot window portal: exact Features.astro Deal Intelligence screenshot design -->
+<div id="ov-copilot-window-portal" class="ov-copilot-window-portal" aria-hidden="true">
+  <div class="ov-copilot-window-item" data-panel="sales">
+    <DealIntelligenceWindow
+      title="Deal Intelligence"
+      userText="What do I need to do before Friday?"
+      aiText="Send SOC2 docs to Sarah today. Get your SE on the security call — that's the only real blocker. Log next steps in Salesforce before EOD or this slips to Q1."
+    />
+  </div>
+  <div class="ov-copilot-window-item" data-panel="cx">
+    <DealIntelligenceWindow
+      title="Account Intelligence"
+      userText="What should I do before this renewal?"
+      aiText="Book an exec call this week — your champion has been cold for 6 weeks. Get engineering to commit on the webhook fix, then lead the renewal with a health roadmap showing what's being fixed."
+    />
+  </div>
+  <div class="ov-copilot-window-item" data-panel="product">
+    <DealIntelligenceWindow
+      title="Product Intelligence"
+      userText="What should we prioritize this quarter?"
+      aiText="Ship cohort analytics first — #1 requested, $180K blocked, confirmed by both calls and usage data. Then fix the step 3 drop-off, it's killing retention. Permission bugs are noise compared to those two."
+    />
+  </div>
+</div>
+<!-- Win Probability / Pipeline Intelligence windows -->
+<div id="ov-winprob-portal" class="ov-copilot-window-portal" aria-hidden="true">
+  <div class="ov-copilot-window-item" data-panel="sales"><WinProbabilityWindow title="Pipeline Intelligence" /></div>
+  <div class="ov-copilot-window-item" data-panel="cx"><WinProbabilityWindow title="Deal Health" /></div>
+  <div class="ov-copilot-window-item" data-panel="product"><WinProbabilityWindow title="Pipeline Intelligence" /></div>
+</div>
+<!-- Deal / Account / Signal Timeline windows -->
+<div id="ov-timeline-portal" class="ov-copilot-window-portal" aria-hidden="true">
+  <div class="ov-copilot-window-item" data-panel="sales">
+    <InteractionTimelineWindow title="Interaction Timeline" events={teams[0].outcomes.find(o=>o.tl)?.tl ?? []} />
+  </div>
+  <div class="ov-copilot-window-item" data-panel="cx">
+    <InteractionTimelineWindow title="Account Timeline" events={teams[1].outcomes.find(o=>o.tl)?.tl ?? []} />
+  </div>
+  <div class="ov-copilot-window-item" data-panel="product">
+    <InteractionTimelineWindow title="Signal Timeline" events={teams[2].outcomes.find(o=>o.tl)?.tl ?? []} />
+  </div>
+</div>
+<!-- CRM Auto-update / Salesforce Sync windows (Sales, CX) -->
+<div id="ov-crm-portal" class="ov-copilot-window-portal" aria-hidden="true">
+  <div class="ov-copilot-window-item" data-panel="sales"><CRMSyncWindow title="Salesforce Sync" /></div>
+  <div class="ov-copilot-window-item" data-panel="cx"><CRMSyncWindow title="Salesforce Sync" /></div>
+</div>
+<!-- Data Write-back / Destinations window (Product) -->
+<div id="ov-dest-portal" class="ov-copilot-window-portal" aria-hidden="true">
+  <div class="ov-copilot-window-item" data-panel="product"><DestinationsWindow title="Destinations" /></div>
+</div>
+
+<script>
+  const tabs    = document.querySelectorAll<HTMLElement>('[data-tab]');
+  const panels  = document.querySelectorAll<HTMLElement>('[data-panel]');
+  const svgEl   = document.getElementById('ov-lines') as SVGSVGElement | null;
+  const parser  = new DOMParser();
+
+  function drawLines() {
+    if (!svgEl) return;
+    svgEl.querySelectorAll('.ov-dyn').forEach(el => el.remove());
+
+    const board = document.getElementById('ov-board');
+    if (!board) return;
+    const br = board.getBoundingClientRect();
+    svgEl.setAttribute('width',  String(br.width));
+    svgEl.setAttribute('height', String(br.height));
+
+    const panel = document.querySelector<HTMLElement>('.ov-panel.active');
+    if (!panel) return;
+
+    const de = panel.querySelector<HTMLElement>('.ov-circle-de');
+    const ai = panel.querySelector<HTMLElement>('.ov-circle-ai');
+    if (!de || !ai) return;
+
+    const deR  = de.getBoundingClientRect();
+    const aiR  = ai.getBoundingClientRect();
+    const deLX = deR.left  - br.left;
+    const deCY = deR.top   + deR.height / 2 - br.top;
+    const aiRX = aiR.right - br.left;
+    const aiCY = aiR.top   + aiR.height / 2 - br.top;
+    const deCX = deR.left  + deR.width / 2 - br.left;
+    const aiCX = aiR.left  + aiR.width / 2 - br.left;
+    const deBottom = deR.bottom - br.top;
+    const aiTop = aiR.top - br.top;
+
+    // DE → AI connector (same design as other lines; solid stroke — gradient fails on thin vertical path)
+    injectVerticalLine(deCX, deBottom, aiTop, 'rgba(129,140,248,0.7)', '#6366F1', '#8B5CF6', 0);
+
+    Array.from(panel.querySelectorAll<HTMLElement>('.ov-src-card')).forEach((card, i) => {
+      const cr = card.getBoundingClientRect();
+      injectLine(
+        cr.right - br.left, cr.top + cr.height / 2 - br.top,
+        deLX, deCY,
+        'url(#ovGin)', '#6366F1', '#818CF8', i * 0.4
+      );
+    });
+
+    Array.from(panel.querySelectorAll<HTMLElement>('.ov-out-card')).forEach((card, i) => {
+      const cr = card.getBoundingClientRect();
+      injectLine(
+        aiRX, aiCY,
+        cr.left - br.left, cr.top + cr.height / 2 - br.top,
+        'url(#ovGout)', '#8B5CF6', '#A78BFA', i * 0.5
+      );
+    });
+  }
+
+  // Same line design as Hero.astro: dashed path with gradient stroke + animated flow dots with glow
+  function injectLine(x1: number, y1: number, x2: number, y2: number,
+                      stroke: string, c1: string, c2: string, delay: number) {
+    if (!svgEl) return;
+    const mid = ((x1 + x2) / 2).toFixed(1);
+    const X1 = x1.toFixed(1), Y1 = y1.toFixed(1);
+    const X2 = x2.toFixed(1), Y2 = y2.toFixed(1);
+    const d  = `M${X1},${Y1} C${mid},${Y1} ${mid},${Y2} ${X2},${Y2}`;
+    const b1 = delay.toFixed(2);
+    const b2 = (delay + 0.3).toFixed(2);
+
+    const doc = parser.parseFromString(`<svg xmlns="http://www.w3.org/2000/svg">
+      <g class="ov-dyn">
+        <path d="${d}" fill="none" stroke="${stroke}" stroke-width="1.5" stroke-dasharray="5 5"/>
+        <circle r="3.5" fill="${c1}" filter="url(#ovGlow)">
+          <animateMotion dur="3.6s" repeatCount="indefinite" begin="${b1}s" path="${d}"/>
+        </circle>
+        <circle r="2.5" fill="${c2}" opacity="0.6">
+          <animateMotion dur="3.6s" repeatCount="indefinite" begin="${b2}s" path="${d}"/>
+        </circle>
+      </g>
+    </svg>`, 'image/svg+xml');
+
+    const g = doc.documentElement.firstElementChild;
+    if (g) svgEl.appendChild(document.adoptNode(g));
+  }
+
+  function injectVerticalLine(x: number, y1: number, y2: number,
+                              stroke: string, c1: string, c2: string, delay: number) {
+    if (!svgEl) return;
+    const X = x.toFixed(1);
+    const Y1 = y1.toFixed(1);
+    const Y2 = y2.toFixed(1);
+    const d = `M${X},${Y1} L${X},${Y2}`;
+    const b1 = delay.toFixed(2);
+    const b2 = (delay + 0.3).toFixed(2);
+
+    const doc = parser.parseFromString(`<svg xmlns="http://www.w3.org/2000/svg">
+      <g class="ov-dyn">
+        <path d="${d}" fill="none" stroke="${stroke}" stroke-width="1.5" stroke-dasharray="5 5"/>
+        <circle r="3.5" fill="${c1}" filter="url(#ovGlow)">
+          <animateMotion dur="3.6s" repeatCount="indefinite" begin="${b1}s" path="${d}"/>
+        </circle>
+        <circle r="2.5" fill="${c2}" opacity="0.6">
+          <animateMotion dur="3.6s" repeatCount="indefinite" begin="${b2}s" path="${d}"/>
+        </circle>
+      </g>
+    </svg>`, 'image/svg+xml');
+
+    const g = doc.documentElement.firstElementChild;
+    if (g) svgEl.appendChild(document.adoptNode(g));
+  }
+
+  function activateTab(id: string) {
+    tabs.forEach(t   => t.classList.toggle('active', t.dataset.tab   === id));
+    panels.forEach(p => p.classList.toggle('active', p.dataset.panel === id));
+    setTimeout(drawLines, 20);
+  }
+
+  tabs.forEach(tab => tab.addEventListener('click', () => activateTab(tab.dataset.tab!)));
+  window.addEventListener('resize', drawLines);
+  setTimeout(drawLines, 100);
+
+  // Tooltip portal: move to body so it renders above SVG/bubbles
+  const portal = document.getElementById('ov-tooltip-portal');
+  if (portal && portal.parentElement !== document.body) {
+    document.body.appendChild(portal);
+  }
+
+  // Copilot window portal: move to body, show Starmesh · Deal Intelligence style on hover
+  const copilotPortal = document.getElementById('ov-copilot-window-portal');
+  if (copilotPortal && copilotPortal.parentElement !== document.body) {
+    document.body.appendChild(copilotPortal);
+  }
+  const winprobPortal = document.getElementById('ov-winprob-portal');
+  if (winprobPortal && winprobPortal.parentElement !== document.body) {
+    document.body.appendChild(winprobPortal);
+  }
+  const timelinePortal = document.getElementById('ov-timeline-portal');
+  if (timelinePortal && timelinePortal.parentElement !== document.body) {
+    document.body.appendChild(timelinePortal);
+  }
+  const crmPortal = document.getElementById('ov-crm-portal');
+  if (crmPortal && crmPortal.parentElement !== document.body) {
+    document.body.appendChild(crmPortal);
+  }
+  const destPortal = document.getElementById('ov-dest-portal');
+  if (destPortal && destPortal.parentElement !== document.body) {
+    document.body.appendChild(destPortal);
+  }
+  const blurOverlay = document.getElementById('ov-blur-overlay');
+  if (blurOverlay && blurOverlay.parentElement !== document.body) {
+    document.body.appendChild(blurOverlay);
+  }
+
+  function showWindowForCard(card: HTMLElement, portal: HTMLElement | null) {
+    if (!portal) return;
+    const panel = card.closest<HTMLElement>('[data-panel]');
+    const panelId = panel?.getAttribute('data-panel') || 'sales';
+    const windowItem = portal.querySelector<HTMLElement>(`[data-panel="${panelId}"]`);
+    if (!windowItem) return;
+    portal.classList.add('ov-copilot-window-visible');
+    portal.setAttribute('aria-hidden', 'false');
+    windowItem.classList.add('ov-copilot-window-active');
+    if (blurOverlay) {
+      blurOverlay.classList.add('ov-blur-overlay-visible');
+      blurOverlay.setAttribute('aria-hidden', 'false');
+      const outCol = panel?.querySelector<HTMLElement>('.ov-out-col');
+      if (outCol) {
+        const r = outCol.getBoundingClientRect();
+        const topEl = document.getElementById('ov-blur-top');
+        const leftEl = document.getElementById('ov-blur-left');
+        const bottomEl = document.getElementById('ov-blur-bottom');
+        const rightEl = document.getElementById('ov-blur-right');
+        if (topEl) { topEl.style.top = '0'; topEl.style.left = '0'; topEl.style.right = '0'; topEl.style.height = `${r.top}px`; }
+        if (leftEl) { leftEl.style.top = `${r.top}px`; leftEl.style.left = '0'; leftEl.style.width = `${r.left}px`; leftEl.style.height = `${r.height}px`; }
+        if (bottomEl) { bottomEl.style.top = `${r.bottom}px`; bottomEl.style.left = '0'; bottomEl.style.right = '0'; bottomEl.style.bottom = '0'; }
+        if (rightEl) { rightEl.style.top = `${r.top}px`; rightEl.style.left = `${r.right}px`; rightEl.style.right = '0'; rightEl.style.height = `${r.height}px`; }
+      }
+    }
+    requestAnimationFrame(() => {
+      const cr = card.getBoundingClientRect();
+      const wr = windowItem.getBoundingClientRect();
+      const gap = 12;
+      let left = cr.right + gap;
+      if (left + wr.width > window.innerWidth - 16) left = cr.left - wr.width - gap;
+      if (left < 16) left = 16;
+      let top = cr.top + cr.height / 2 - wr.height / 2;
+      if (top < 16) top = 16;
+      if (top + wr.height > window.innerHeight - 16) top = window.innerHeight - wr.height - 16;
+      windowItem.style.left = `${left}px`;
+      windowItem.style.top = `${top}px`;
+    });
+  }
+
+  function hideWindow(portal: HTMLElement | null) {
+    if (!portal) return;
+    portal.querySelectorAll('.ov-copilot-window-active').forEach(el => el.classList.remove('ov-copilot-window-active'));
+    portal.classList.remove('ov-copilot-window-visible');
+    portal.setAttribute('aria-hidden', 'true');
+    blurOverlay?.classList.remove('ov-blur-overlay-visible');
+    blurOverlay?.setAttribute('aria-hidden', 'true');
+  }
+
+  document.querySelectorAll<HTMLElement>('.ov-out-card[data-has-chat="true"]').forEach((card) => {
+    card.addEventListener('mouseenter', () => showWindowForCard(card, copilotPortal));
+    card.addEventListener('mouseleave', () => hideWindow(copilotPortal));
+  });
+
+  document.querySelectorAll<HTMLElement>('.ov-out-card[data-has-chart="true"]').forEach((card) => {
+    card.addEventListener('mouseenter', () => showWindowForCard(card, winprobPortal));
+    card.addEventListener('mouseleave', () => hideWindow(winprobPortal));
+  });
+
+  document.querySelectorAll<HTMLElement>('.ov-out-card[data-has-tl="true"]').forEach((card) => {
+    card.addEventListener('mouseenter', () => showWindowForCard(card, timelinePortal));
+    card.addEventListener('mouseleave', () => hideWindow(timelinePortal));
+  });
+
+  document.querySelectorAll<HTMLElement>('.ov-out-card[data-has-crm="true"]').forEach((card) => {
+    card.addEventListener('mouseenter', () => showWindowForCard(card, crmPortal));
+    card.addEventListener('mouseleave', () => hideWindow(crmPortal));
+  });
+
+  document.querySelectorAll<HTMLElement>('.ov-out-card[data-has-dest="true"]').forEach((card) => {
+    card.addEventListener('mouseenter', () => showWindowForCard(card, destPortal));
+    card.addEventListener('mouseleave', () => hideWindow(destPortal));
+  });
+
+  document.querySelectorAll<HTMLElement>('.ov-circle').forEach((circle) => {
+    const tip = circle.querySelector<HTMLElement>('.ov-circle-tip');
+    if (!tip || !portal) return;
+    const isRight = tip.classList.contains('ov-tip-right');
+
+    circle.addEventListener('mouseenter', () => {
+      portal.innerHTML = tip.innerHTML;
+      portal.classList.toggle('ov-tip-right', isRight);
+      portal.classList.add('ov-tooltip-portal-visible');
+      portal.setAttribute('aria-hidden', 'false');
+      requestAnimationFrame(() => {
+        const cr = circle.getBoundingClientRect();
+        const pr = portal.getBoundingClientRect();
+        const gap = 14;
+        if (isRight) {
+          portal.style.left = `${cr.right + gap}px`;
+          portal.style.right = 'auto';
+        } else {
+          portal.style.right = `${window.innerWidth - cr.left + gap}px`;
+          portal.style.left = 'auto';
+        }
+        portal.style.top = `${cr.top + cr.height / 2 - pr.height / 2}px`;
+      });
+    });
+
+    circle.addEventListener('mouseleave', () => {
+      portal.classList.remove('ov-tooltip-portal-visible', 'ov-tip-right');
+      portal.setAttribute('aria-hidden', 'true');
+    });
+  });
+
+  const teamParam = new URLSearchParams(window.location.search).get('team');
+  if (teamParam && [...tabs].some(t => t.dataset.tab === teamParam)) {
+    activateTab(teamParam);
+    requestAnimationFrame(() => {
+      const pills = document.querySelector('.ov-pills');
+      if (pills) window.scrollTo({ top: pills.getBoundingClientRect().top + scrollY - 80, behavior: 'smooth' });
+    });
+  }
+</script>
+
+<style>
+  /* Pills */
+  .ov-pills { display:flex; gap:.25rem; background:rgba(255,255,255,.03); border-radius:.7rem; padding:.2rem; width:fit-content; margin:0 auto .9rem; }
+  .ov-tab { border-radius:.5rem; border:1px solid transparent; padding:.35rem 1.1rem; background:transparent; color:#A1A1AA; font-weight:600; font-size:.875rem; cursor:pointer; transition:all .18s ease; }
+  .ov-tab.active { background:rgba(139,92,246,.22); color:#f4f2ff; box-shadow:0 4px 14px rgba(139,92,246,.25); border-color:rgba(139,92,246,.25); }
+  .ov-tab:hover:not(.active) { background:rgba(139,92,246,.08); color:#E4E4E7; }
+
+  /* Board */
+  .ov-board { position:relative; border-radius:1.25rem; border:1px solid rgba(255,255,255,.07); background:#0a0a0d; overflow:hidden; box-shadow:0 0 80px rgba(99,102,241,.06), inset 0 1px 0 rgba(255,255,255,.04); }
+  .ov-lines { position:absolute; inset:0; pointer-events:none; z-index:2; overflow:visible; }
+  .ov-dotgrid { position:absolute; inset:0; pointer-events:none; background-image:radial-gradient(rgba(255,255,255,.022) 1px,transparent 1px); background-size:22px 22px; }
+
+  /* Panel */
+  .ov-panel { display:none; }
+  .ov-panel.active { display:block; animation:ovFade .25s ease; }
+  @keyframes ovFade { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
+
+  /* Grid */
+  .ov-grid { display:grid; grid-template-columns:0.85fr 1.1fr 0.88fr; position:relative; z-index:1; min-height:560px; }
+
+  /* LEFT */
+  .ov-src-col { padding:18px 8px 18px 18px; display:flex; flex-direction:column; gap:6px; justify-content:space-evenly; border-right:1px solid rgba(255,255,255,.04); }
+  .ov-src-card { padding:9px 10px; border-radius:9px; border:1px solid rgba(255,255,255,.07); background:rgba(255,255,255,.02); transition:border-color .2s, background .2s; }
+  .ov-src-card:hover { border-color:rgba(99,102,241,.35); background:rgba(99,102,241,.05); }
+  .ov-src-layout { display:grid; grid-template-columns:28% 72%; gap:8px; align-items:center; }
+  .ov-src-meta { display:flex; flex-direction:column; align-items:flex-start; gap:4px; }
+  .ov-logo { width:34px; height:34px; border-radius:7px; background:#fff; overflow:hidden; flex-shrink:0; display:flex; align-items:center; justify-content:center; padding:3px; box-sizing:border-box; }
+  .ov-logo img { width:100%; height:100%; object-fit:contain; display:block; }
+  .ov-logo-fb { display:none; font-size:.6rem; font-weight:800; color:#fff; background:#7c3aed; width:100%; height:100%; align-items:center; justify-content:center; border-radius:4px; }
+  .ov-src-type { font-size:.63rem; color:#6366F1; margin:0; line-height:1.2; font-weight:600; letter-spacing:.01em; }
+  .ov-src-sample { font-size:.7rem; color:#A1A1AA; line-height:1.45; margin:0; }
+
+  /* CENTER */
+  .ov-ai-col { padding:24px 20px; display:flex; align-items:stretch; border-right:1px solid rgba(255,255,255,.04); }
+  .ov-circles-panel { flex:1; display:flex; flex-direction:column; }
+  .ov-circles-body { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:8px 0; }
+
+  .ov-circle { width:116px; height:116px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; position:relative; cursor:default; transition:transform .2s ease; }
+  .ov-circle:hover { transform:scale(1.04); }
+
+  .ov-circle-de { border:1.5px solid rgba(99,102,241,.5); background:rgba(99,102,241,.08); animation:deGlow 3.2s ease-in-out infinite; }
+  .ov-circle-ai { border:1.5px solid rgba(139,92,246,.5); background:rgba(139,92,246,.08); animation:aiGlow 3.2s ease-in-out infinite 1.6s; }
+
+  @keyframes deGlow {
+    0%,100% { box-shadow:0 0 28px rgba(99,102,241,.22), 0 0 56px rgba(99,102,241,.07); }
+    50%      { box-shadow:0 0 48px rgba(99,102,241,.45), 0 0 90px rgba(99,102,241,.18); }
+  }
+  @keyframes aiGlow {
+    0%,100% { box-shadow:0 0 28px rgba(139,92,246,.22), 0 0 56px rgba(139,92,246,.07); }
+    50%      { box-shadow:0 0 48px rgba(139,92,246,.45), 0 0 90px rgba(139,92,246,.18); }
+  }
+
+  .ov-circle-inner { display:flex; flex-direction:column; align-items:center; gap:7px; pointer-events:none; }
+  .ov-circle-de .ov-circle-svg { color:#818CF8; opacity:.9; }
+  .ov-circle-ai .ov-circle-svg { color:#A78BFA; opacity:.9; }
+  .ov-circle-label { font-size:.6rem; font-weight:700; text-align:center; line-height:1.3; letter-spacing:.05em; text-transform:uppercase; }
+  .ov-circle-de .ov-circle-label { color:#818CF8; }
+  .ov-circle-ai .ov-circle-label { color:#A78BFA; }
+
+  /* Tooltips — hidden in DOM, content copied to portal */
+  .ov-circle-tip { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+  .ov-tip-right { }
+  .ov-tip-title { font-size:.65rem; font-weight:700; color:#fafafa; margin:0 0 7px; }
+  .ov-circle-tip ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:5px; }
+  .ov-circle-tip li { font-size:.63rem; color:#e4e4e7; display:flex; align-items:center; gap:5px; }
+  .ov-circle-tip li::before { content:''; width:3px; height:3px; border-radius:50%; background:#6366F1; flex-shrink:0; }
+  .ov-tip-right li::before { background:#8B5CF6; }
+
+  /* Tooltip portal — rendered in body, above everything, fully opaque */
+  .ov-tooltip-portal { position:fixed; z-index:99999; width:164px; padding:10px 12px; border-radius:9px; pointer-events:none; opacity:0; transition:opacity .15s ease; }
+  .ov-tooltip-portal-visible { opacity:1; }
+  .ov-tooltip-portal { background:#27272a; border:1px solid #52525b; box-shadow:0 8px 32px rgba(0,0,0,.95); }
+  .ov-tooltip-portal .ov-tip-title { font-size:.65rem; font-weight:700; color:#fafafa; margin:0 0 7px; }
+  .ov-tooltip-portal ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:5px; }
+  .ov-tooltip-portal li { font-size:.63rem; color:#e4e4e7; display:flex; align-items:center; gap:5px; }
+  .ov-tooltip-portal li::before { content:''; width:3px; height:3px; border-radius:50%; background:#6366F1; flex-shrink:0; }
+  .ov-tooltip-portal.ov-tip-right li::before { background:#8B5CF6; }
+
+  /* Blur overlay — four panels covering viewport except .ov-out-col (right section stays sharp) */
+  .ov-blur-overlay { position:fixed; inset:0; z-index:99997; pointer-events:none; opacity:0; transition:opacity .2s ease; }
+  .ov-blur-overlay.ov-blur-overlay-visible { opacity:1; }
+  .ov-blur-panel { position:fixed; backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); background:rgba(0,0,0,.12); }
+
+  /* Copilot window portal — contains DealIntelligenceWindow (exact Features.astro design) */
+  .ov-copilot-window-portal { position:fixed; top:0; left:0; width:0; height:0; overflow:visible; z-index:99998; pointer-events:none; opacity:0; transition:opacity .15s ease; }
+  .ov-copilot-window-portal.ov-copilot-window-visible { opacity:1; }
+  .ov-copilot-window-item { position:fixed; opacity:0; pointer-events:none; transition:opacity .15s ease; }
+  .ov-copilot-window-item.ov-copilot-window-active { opacity:1; }
+
+  /* Connector spacer (line drawn by SVG overlay) */
+  .ov-connector-spacer { width:2px; height:36px; flex-shrink:0; }
+
+  /* RIGHT */
+  .ov-out-col { padding:18px 18px 18px 14px; display:flex; flex-direction:column; gap:8px; justify-content:space-evenly; }
+  .ov-out-card { border:1px solid rgba(139,92,246,.2); border-radius:9px; background:rgba(139,92,246,.04); padding:11px 13px; transition:border-color .2s, background .2s; }
+  .ov-out-card:hover { border-color:rgba(139,92,246,.42); background:rgba(139,92,246,.08); }
+  .ov-out-head { display:flex; align-items:center; gap:6px; margin-bottom:5px; }
+  .ov-out-icon { font-size:.75rem; line-height:1; }
+  .ov-out-name { font-size:.75rem; font-weight:700; color:#E4E4E7; flex:1; }
+  .ov-out-meta { font-size:.63rem; color:#71717A; white-space:nowrap; }
+  .ov-out-body { font-size:.7rem; color:#A1A1AA; line-height:1.5; margin:0; }
+
+  .ov-spark { width:100%; height:24px; margin-bottom:5px; border-left:1px solid rgba(255,255,255,.06); border-bottom:1px solid rgba(255,255,255,.06); }
+  .ov-spark svg { width:100%; height:100%; overflow:visible; }
+  .ov-spark polyline { fill:none; stroke:#818CF8; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; filter:drop-shadow(0 0 3px rgba(129,140,248,.45)); }
+
+  .ov-bbl-u,.ov-bbl-a { font-size:.7rem; line-height:1.45; border-radius:5px; padding:4px 7px; margin-bottom:3px; }
+  .ov-bbl-a { margin-bottom:0; }
+  .ov-bbl-u { background:rgba(255,255,255,.05); color:#D4D4D8; }
+  .ov-bbl-a { background:rgba(139,92,246,.14); color:#E4E4E7; }
+
+  .ov-tl { display:flex; align-items:center; gap:5px; font-size:.7rem; margin-bottom:3px; }
+  .ov-tl:last-child { margin-bottom:0; }
+  .ov-tl-dot { width:4px; height:4px; border-radius:50%; background:#6366F1; flex-shrink:0; }
+  .ov-tl-d { color:#A1A1AA; font-weight:600; flex-shrink:0; width:44px; }
+  .ov-tl-t { color:#71717A; }
+
+  /* Mobile */
+  @media (max-width:900px) {
+    .ov-grid { grid-template-columns:1fr; min-height:auto; }
+    .ov-src-col,.ov-ai-col { border-right:none; border-bottom:1px solid rgba(255,255,255,.05); }
+    .ov-src-col { padding:16px; }
+    .ov-ai-col  { padding:16px; }
+    .ov-out-col { padding:16px; }
+    .ov-circle-tip { display:none; }
+  }
+</style>
