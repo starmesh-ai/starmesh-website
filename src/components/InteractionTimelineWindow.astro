@@ -4,7 +4,7 @@ interface Props {
   events: Array<{ d: string; t: string }>;
 }
 const { title, events } = Astro.props;
-const colors = ['red', 'yellow', 'green', 'blue', 'indigo'] as const;
+const colors = ['red', 'yellow', 'green', 'blue', 'teal'] as const;
 const tags = ['Risk: high', 'No response', 'Momentum ↑', 'Opened 3×', 'MEDDICC: 68%'];
 const sources = ['Zoom', 'Gmail', 'Zoom', 'Gmail', 'Zoom'];
 ---
@@ -56,9 +56,9 @@ const sources = ['Zoom', 'Gmail', 'Zoom', 'Gmail', 'Zoom'];
             const color = colors[i % colors.length];
             const tag = tags[i % tags.length];
             const source = sources[i % sources.length];
-            const bc = color === 'red' ? 'bg-red-500/10 border-red-500/20' : color === 'yellow' ? 'bg-yellow-500/10 border-yellow-500/20' : color === 'green' ? 'bg-green-500/10 border-green-500/20' : color === 'blue' ? 'bg-blue-500/10 border-blue-500/20' : 'bg-indigo-500/10 border-indigo-500/20';
-            const tc = color === 'red' ? 'text-red-400' : color === 'yellow' ? 'text-yellow-400' : color === 'green' ? 'text-green-400' : color === 'blue' ? 'text-blue-400' : 'text-indigo-400';
-            const dot = color === 'red' ? 'bg-red-400' : color === 'yellow' ? 'bg-yellow-400' : color === 'green' ? 'bg-green-400' : color === 'blue' ? 'bg-blue-400' : 'bg-indigo-400';
+            const bc = color === 'red' ? 'bg-red-500/10 border-red-500/20' : color === 'yellow' ? 'bg-yellow-500/10 border-yellow-500/20' : color === 'green' ? 'bg-green-500/10 border-green-500/20' : color === 'blue' ? 'bg-blue-500/10 border-blue-500/20' : 'bg-teal-500/10 border-teal-500/20';
+            const tc = color === 'red' ? 'text-red-400' : color === 'yellow' ? 'text-yellow-400' : color === 'green' ? 'text-green-400' : color === 'blue' ? 'text-blue-400' : 'text-teal-400';
+            const dot = color === 'red' ? 'bg-red-400' : color === 'yellow' ? 'bg-yellow-400' : color === 'green' ? 'bg-green-400' : color === 'blue' ? 'bg-blue-400' : 'bg-teal-400';
             return (
               <div class="relative flex items-center gap-3 min-w-0">
                 <div class={`absolute -left-[1.45rem] w-2.5 h-2.5 rounded-full flex-shrink-0 ${dot}`} style="border:2px solid #0a0a0d;"></div>

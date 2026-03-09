@@ -1,6 +1,6 @@
 ---
 ---
-<section id="benefits" class="py-24 px-6">
+<section id="features" class="py-24 px-6">
   <div class="max-w-5xl mx-auto">
     <div class="text-center mb-16">
       <p class="text-xs text-[#71717A] uppercase tracking-widest mb-3">Platform</p>
@@ -35,7 +35,7 @@
               <div class="flex flex-col flex-shrink-0" style="width:110px; background:#0a0a0d; border-right:1px solid rgba(255,255,255,0.05);">
                 <div class="px-3 py-2 border-b border-white/[0.04]"><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold">Quarter</p></div>
                 {["Q1 2025","Q2 2025","Q3 2025","Q4 2025"].map((q,i) => (
-                  <div class={`px-3 py-2.5 border-b border-white/[0.03] ${i===1?'bg-indigo-500/10 border-l-2 border-l-indigo-500/70':''}`}>
+                  <div class={`px-3 py-2.5 border-b border-white/[0.03] ${i===1?'bg-teal-500/10 border-l-2 border-l-teal-500/70':''}`}>
                     <p class={`text-[11px] ${i===1?'text-[#E4E4E7] font-semibold':'text-[#52525B]'}`}>{q}</p>
                   </div>
                 ))}
@@ -49,7 +49,7 @@
               <div class="flex-1 flex flex-col overflow-hidden">
                 <div class="grid grid-cols-3 divide-x divide-white/[0.05] border-b border-white/[0.05] flex-shrink-0">
                   <div class="px-3 py-2.5 text-center"><p class="text-base font-bold text-[#FAFAFA]">18</p><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider mt-0.5">Active</p></div>
-                  <div class="px-3 py-2.5 text-center"><p class="text-base font-bold text-indigo-400">0.67</p><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider mt-0.5">Avg PWin</p></div>
+                  <div class="px-3 py-2.5 text-center"><p class="text-base font-bold text-primary">0.67</p><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider mt-0.5">Avg PWin</p></div>
                   <div class="px-3 py-2.5 text-center"><p class="text-base font-bold text-red-400">3</p><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider mt-0.5">At risk</p></div>
                 </div>
                 <div class="flex-1 divide-y divide-white/[0.04] overflow-hidden">
@@ -62,8 +62,8 @@
                     <div class="flex items-center px-3 py-2.5 gap-2">
                       <div class="flex-1 min-w-0"><p class="text-[12px] font-medium text-[#E4E4E7] truncate">{r.name}</p><p class="text-[10px] text-[#52525B]">{r.stage}</p></div>
                       <div class="flex items-center gap-1.5 flex-shrink-0">
-                        <div class="w-12 h-1.5 rounded-full bg-white/[0.06]"><div class={`h-1.5 rounded-full ${r.pwin>=60?'bg-indigo-500':'bg-red-500'} opacity-70`} style={`width:${r.pwin}%`}></div></div>
-                        <span class={`text-[11px] font-mono font-bold w-6 text-right ${r.pwin>=60?'text-indigo-400':'text-red-400'}`}>{r.pwin}%</span>
+                        <div class="w-12 h-1.5 rounded-full bg-white/[0.06]"><div class={`h-1.5 rounded-full ${r.pwin>=60?'bg-teal-500':'bg-red-500'} opacity-70`} style={`width:${r.pwin}%`}></div></div>
+                        <span class={`text-[11px] font-mono font-bold w-6 text-right ${r.pwin>=60?'text-primary':'text-red-400'}`}>{r.pwin}%</span>
                       </div>
                       <span class={`text-[10px] px-1.5 py-0.5 rounded border font-medium w-12 text-center flex-shrink-0 ${r.risk==='high'?'text-red-400 bg-red-500/10 border-red-500/20':r.risk==='medium'?'text-yellow-400 bg-yellow-500/10 border-yellow-500/20':'text-green-400 bg-green-500/10 border-green-500/20'}`}>{r.risk}</span>
                     </div>
@@ -128,7 +128,7 @@
                         <div class="flex items-center gap-1.5">
                           <span class={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${r.severity==='high'?'bg-red-400':r.severity==='medium'?'bg-orange-400':'bg-yellow-400'}`}></span>
                           <span class="text-[12px] font-semibold text-[#FAFAFA]">{r.name}</span>
-                          <span class="text-[10px] font-mono text-indigo-400/60">{r.deal}</span>
+                          <span class="text-[10px] font-mono text-primary/60">{r.deal}</span>
                         </div>
                         <span class="text-[10px] text-[#52525B]">{r.time}</span>
                       </div>
@@ -303,7 +303,7 @@
                 "Context-aware — knows stage, stakeholders, and history",
               ].map(b => (
                 <li class="flex items-start gap-3">
-                  <svg class="w-4 h-4 text-indigo-400 flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                  <svg class="w-4 h-4 text-primary flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
                   <span class="text-sm text-[#A1A1AA]">{b}</span>
                 </li>
               ))}
@@ -311,7 +311,7 @@
           </div>
           <!-- Right: screenshot -->
           <div class="flex-1 min-w-0">
-            <div class="rounded-xl overflow-hidden" style="background:#0c0c10; border:1px solid rgba(255,255,255,0.1); box-shadow:0 16px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03), 0 0 80px rgba(99,102,241,.06);">
+            <div class="rounded-xl overflow-hidden" style="background:#0c0c10; border:1px solid rgba(255,255,255,0.1); box-shadow:0 16px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03), 0 0 80px rgba(13,148,136,.06);">
               <div class="flex items-center px-4 py-3 border-b border-white/[0.06]" style="background:#111118;">
                 <div class="flex gap-1.5 flex-shrink-0">
                   <span class="w-3 h-3 rounded-full" style="background:#FF5F56;"></span>
@@ -325,13 +325,13 @@
                 <div class="flex flex-col flex-shrink-0" style="width:160px; background:#0a0a0d; border-right:1px solid rgba(255,255,255,0.05);">
                   <div class="px-3 py-2.5 border-b border-white/[0.04]"><p class="text-[10px] text-[#3F3F46] uppercase tracking-wider font-bold">Deals</p></div>
                   {[
-                    {name:"Acme Corp",  tag:"74%",tc:"text-indigo-400",active:true },
+                    {name:"Acme Corp",  tag:"74%",tc:"text-primary",active:true },
                     {name:"FinCo Ltd",  tag:"88%",tc:"text-green-400", active:false},
                     {name:"Meridian",   tag:"41%",tc:"text-red-400",   active:false},
                     {name:"Brightwave", tag:"79%",tc:"text-green-400", active:false},
-                    {name:"Ironclad",   tag:"63%",tc:"text-indigo-400",active:false},
+                    {name:"Ironclad",   tag:"63%",tc:"text-primary",active:false},
                   ].map(d=>(
-                    <div class={`px-3 py-3 border-b border-white/[0.03] flex items-center justify-between gap-2 ${d.active?'bg-indigo-500/10 border-l-2 border-l-indigo-500/70':''}`}>
+                    <div class={`px-3 py-3 border-b border-white/[0.03] flex items-center justify-between gap-2 ${d.active?'bg-teal-500/10 border-l-2 border-l-teal-500/70':''}`}>
                       <p class={`text-[12px] truncate ${d.active?'text-[#E4E4E7] font-semibold':'text-[#52525B]'}`}>{d.name}</p>
                       <span class={`text-[11px] font-mono font-bold flex-shrink-0 ${d.tc}`}>{d.tag}</span>
                     </div>
@@ -341,7 +341,7 @@
                   <div class="flex items-center justify-between px-4 py-2 border-b border-white/[0.05]" style="background:rgba(255,255,255,0.01);">
                     <div class="flex items-center gap-2">
                       <span class="text-[13px] font-semibold text-[#FAFAFA]">Acme Corp</span>
-                      <span class="text-[11px] font-mono text-indigo-400/60">D-2847</span>
+                      <span class="text-[11px] font-mono text-primary/60">D-2847</span>
                     </div>
                     <div class="flex gap-1">
                       <span class="text-[11px] px-1.5 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] text-[#71717A]">Negotiation</span>
@@ -353,11 +353,11 @@
                       <p class="text-[13px] text-[#A1A1AA] bg-white/[0.05] border border-white/[0.07] rounded-xl rounded-br-sm px-3 py-2 leading-relaxed max-w-[80%]">What's blocking the Acme deal?</p>
                     </div>
                     <div class="flex gap-2.5">
-                      <div class="w-5 h-5 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <div class="w-5 h-5 rounded-full bg-teal-500/20 border border-teal-500/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                         <svg width="8" height="8" viewBox="0 0 10 10" fill="none"><path d="M5 1l1.18 2.39 2.64.38-1.91 1.86.45 2.63L5 7l-2.36 1.26.45-2.63L1.18 3.77l2.64-.38L5 1z" fill="#818CF8"/></svg>
                       </div>
                       <div class="flex-1">
-                        <p class="text-[13px] text-[#E4E4E7] bg-indigo-500/[0.07] border border-indigo-500/15 rounded-xl rounded-tl-sm px-3 py-2 leading-relaxed mb-2">Procurement is the main blocker — CFO sign-off flagged on the Mar 3 call. Legal went silent after Feb 28. Champion is still warm but hasn't driven urgency internally.</p>
+                        <p class="text-[13px] text-[#E4E4E7] bg-teal-500/[0.07] border border-teal-500/15 rounded-xl rounded-tl-sm px-3 py-2 leading-relaxed mb-2">Procurement is the main blocker — CFO sign-off flagged on the Mar 3 call. Legal went silent after Feb 28. Champion is still warm but hasn't driven urgency internally.</p>
                         <div class="flex gap-1.5 flex-wrap">
                           {["Mar 3 · Zoom","Feb 28 · Gmail","Feb 21 · Zoom"].map(s=>(<span class="text-[11px] px-1.5 py-0.5 rounded bg-white/[0.04] border border-white/[0.05] text-[#71717A]">↗ {s}</span>))}
                         </div>
@@ -367,19 +367,19 @@
                       <p class="text-[13px] text-[#A1A1AA] bg-white/[0.05] border border-white/[0.07] rounded-xl rounded-br-sm px-3 py-2 leading-relaxed max-w-[80%]">Who's the internal champion?</p>
                     </div>
                     <div class="flex gap-2.5 items-center">
-                      <div class="w-5 h-5 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center flex-shrink-0">
+                      <div class="w-5 h-5 rounded-full bg-teal-500/20 border border-teal-500/30 flex items-center justify-center flex-shrink-0">
                         <svg width="8" height="8" viewBox="0 0 10 10" fill="none"><path d="M5 1l1.18 2.39 2.64.38-1.91 1.86.45 2.63L5 7l-2.36 1.26.45-2.63L1.18 3.77l2.64-.38L5 1z" fill="#818CF8"/></svg>
                       </div>
-                      <div class="bg-indigo-500/[0.07] border border-indigo-500/15 rounded-xl rounded-tl-sm px-3 py-2.5 flex items-center gap-1.5">
-                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-bounce" style="animation-delay:0s"></span>
-                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-bounce" style="animation-delay:0.15s"></span>
-                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-bounce" style="animation-delay:0.3s"></span>
+                      <div class="bg-teal-500/[0.07] border border-teal-500/15 rounded-xl rounded-tl-sm px-3 py-2.5 flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-teal-400 animate-bounce" style="animation-delay:0s"></span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-teal-400 animate-bounce" style="animation-delay:0.15s"></span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-teal-400 animate-bounce" style="animation-delay:0.3s"></span>
                       </div>
                     </div>
                   </div>
                   <div class="px-4 py-3 border-t border-white/[0.05] flex items-center gap-2">
                     <div class="flex-1 text-[12px] text-[#3F3F46] bg-white/[0.03] border border-white/[0.05] rounded-lg px-3 py-2">Ask about any deal, rep, or account…</div>
-                    <div class="w-7 h-7 rounded-lg bg-indigo-500/20 border border-indigo-500/25 flex items-center justify-center flex-shrink-0">
+                    <div class="w-7 h-7 rounded-lg bg-teal-500/20 border border-teal-500/25 flex items-center justify-center flex-shrink-0">
                       <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 6L2 2V5.5L7 6L2 6.5V10Z" fill="#818CF8"/></svg>
                     </div>
                   </div>
@@ -460,7 +460,7 @@
                         {date:"Mar 3", source:"Gmail",title:"Legal contract sent",       tag:"No response",  tc:"text-yellow-400", bc:"bg-yellow-500/10 border-yellow-500/20", dot:"bg-yellow-400"},
                         {date:"Feb 28",source:"Zoom", title:"Champion 1:1",              tag:"Momentum ↑",   tc:"text-green-400",  bc:"bg-green-500/10 border-green-500/20",   dot:"bg-green-400"},
                         {date:"Feb 22",source:"Gmail",title:"Pricing proposal sent",     tag:"Opened 3×",    tc:"text-blue-400",   bc:"bg-blue-500/10 border-blue-500/20",     dot:"bg-blue-400"},
-                        {date:"Feb 15",source:"Zoom", title:"Technical evaluation call", tag:"MEDDICC: 68%", tc:"text-indigo-400", bc:"bg-indigo-500/10 border-indigo-500/20", dot:"bg-indigo-400"},
+                        {date:"Feb 15",source:"Zoom", title:"Technical evaluation call", tag:"MEDDICC: 68%", tc:"text-primary", bc:"bg-teal-500/10 border-teal-500/20", dot:"bg-teal-400"},
                       ].map(e=>(
                         <div class="relative flex items-center gap-3 min-w-0">
                           <div class={`absolute -left-[1.45rem] w-2.5 h-2.5 rounded-full flex-shrink-0 ${e.dot}`} style="border:2px solid #0a0a0d;"></div>
