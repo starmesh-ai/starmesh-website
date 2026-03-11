@@ -15,10 +15,10 @@ const teams = [
       { app:'HubSpot',    logo:'hubspot.com',     title:'Contact activity',   sample:"VP of Engineering added to deal — first question was about data residency." },
     ],
     outcomes: [
-      { icon:'💬', title:'Deal Copilot',     meta:null,                  chat:{user:'What do I need to do before Friday?', ai:"Send SOC2 docs to Sarah today. Get your SE on the security call — that's the only real blocker. Log next steps in Salesforce before EOD or this slips to Q1."} },
-      { icon:'📈', title:'Win Probability',  meta:'74% · trending down', chart:[20,23,27,31,35,39,42,45], body:'Down 12pts in 2 weeks. Security review still open and next steps are missing. Close the blocker this week or this deal moves to Q1.' },
-      { icon:'🕒', title:'Deal Timeline',    meta:null,                  tl:[{d:'Feb 24',t:'Security objection raised on Zoom call'},{d:'Feb 23',t:'VP Eng joined buying committee'},{d:'Feb 21',t:'Stage → Commit · next steps still blank'}] },
-      { icon:'⇄',  title:'CRM Auto-update', meta:null,                  body:'Win probability, slip risk, security blocker and missing next steps auto-logged to Salesforce & HubSpot.' },
+      { title:'Deal Copilot',     meta:null,                  chat:{user:'What do I need to do before Friday?', ai:"Send SOC2 docs to Sarah today. Get your SE on the security call — that's the only real blocker. Log next steps in Salesforce before EOD or this slips to Q1."} },
+      { title:'Win Probability',  meta:'74% · trending down', chart:[20,23,27,31,35,39,42,45], body:'Down 12pts in 2 weeks. Security review still open and next steps are missing. Close the blocker this week or this deal moves to Q1.' },
+      { title:'Deal Timeline',    meta:null,                  tl:[{d:'Feb 24',t:'Security objection raised on Zoom call'},{d:'Feb 23',t:'VP Eng joined buying committee'},{d:'Feb 21',t:'Stage → Commit · next steps still blank'}] },
+      { title:'CRM Auto-update', meta:null,                  body:'Win probability, slip risk, security blocker and missing next steps auto-logged to Salesforce & HubSpot.' },
     ],
   },
   {
@@ -31,10 +31,10 @@ const teams = [
       { app:'Slack',    logo:'slack.com',        title:'Customer channel', sample:"Any ETA on the permission bug? It's blocking three of our admin users right now." },
     ],
     outcomes: [
-      { icon:'💬', title:'CSM Copilot',      meta:null,                     chat:{user:'What should I do before this renewal?', ai:"Book an exec call this week — your champion has been cold for 6 weeks. Get engineering to commit on the webhook fix, then lead the renewal with a health roadmap showing what's being fixed."} },
-      { icon:'❤️', title:'Account Health',   meta:'44/100 · falling fast',  chart:[20,22,25,30,38,44,50,54], body:'Down 18pts in 30 days. Two P1s open, champion gone cold, renewal in 47 days. Without intervention this account is on a fast track to churn.' },
-      { icon:'🕒', title:'Account Timeline', meta:null,                     tl:[{d:'Feb 26',t:'P1 opened · webhook failing since deploy'},{d:'Feb 24',t:'QBR: NPS down 18pts · onboarding cited'},{d:'Feb 20',t:'Champion Sarah Lee changed roles'}] },
-      { icon:'⇄',  title:'CRM Auto-update', meta:null,                     body:'Health score, open escalations, champion status and churn risk synced to Salesforce & Gainsight.' },
+      { title:'CSM Copilot',      meta:null,                     chat:{user:'What should I do before this renewal?', ai:"Book an exec call this week — your champion has been cold for 6 weeks. Get engineering to commit on the webhook fix, then lead the renewal with a health roadmap showing what's being fixed."} },
+      { title:'Account Health',   meta:'44/100 · falling fast',  chart:[20,22,25,30,38,44,50,54], body:'Down 18pts in 30 days. Two P1s open, champion gone cold, renewal in 47 days. Without intervention this account is on a fast track to churn.' },
+      { title:'Account Timeline', meta:null,                     tl:[{d:'Feb 26',t:'P1 opened · webhook failing since deploy'},{d:'Feb 24',t:'QBR: NPS down 18pts · onboarding cited'},{d:'Feb 20',t:'Champion Sarah Lee changed roles'}] },
+      { title:'CRM Auto-update', meta:null,                     body:'Health score, open escalations, champion status and churn risk synced to Salesforce & Gainsight.' },
     ],
   },
   {
@@ -47,30 +47,35 @@ const teams = [
       { app:'Jira',     logo:'atlassian.com',    title:'Issue backlog',    sample:'Permission-related tickets jumped 40% in the two weeks after the last release.' },
     ],
     outcomes: [
-      { icon:'💬', title:'PM Copilot',      meta:null,                         chat:{user:'What should we prioritize this quarter?', ai:"Ship cohort analytics first — #1 requested, \$180K blocked, confirmed by both calls and usage data. Then fix the step 3 drop-off, it's killing retention. Permission bugs are noise compared to those two."} },
-      { icon:'📊', title:'Feature Demand',  meta:'8 themes · 3 accelerating', chart:[44,40,36,31,25,20,16,12], body:'Cohort analytics up 3× in 60 days — 12 enterprise mentions, $180K in deals blocked. Highest-ROI item in your backlog right now.' },
-      { icon:'🕒', title:'Signal Timeline', meta:null,                         tl:[{d:'Mar 1',t:'Cohort analytics on 3 enterprise calls in one day'},{d:'Feb 27',t:'34% exit rate at step 3 confirmed in Pendo'},{d:'Feb 24',t:'Permission tickets up 40% after last release'}] },
-      { icon:'⇄',  title:'Data Write-back', meta:null,                         body:'Feature scores and revenue impact auto-exported to Snowflake, Jira, and Productboard.' },
+      { title:'PM Copilot',      meta:null,                         chat:{user:'What should we prioritize this quarter?', ai:"Ship cohort analytics first — #1 requested, \$180K blocked, confirmed by both calls and usage data. Then fix the step 3 drop-off, it's killing retention. Permission bugs are noise compared to those two."} },
+      { title:'Feature Demand',  meta:'8 themes · 3 accelerating', chart:[44,40,36,31,25,20,16,12], body:'Cohort analytics up 3× in 60 days — 12 enterprise mentions, $180K in deals blocked. Highest-ROI item in your backlog right now.' },
+      { title:'Signal Timeline', meta:null,                         tl:[{d:'Mar 1',t:'Cohort analytics on 3 enterprise calls in one day'},{d:'Feb 27',t:'34% exit rate at step 3 confirmed in Pendo'},{d:'Feb 24',t:'Permission tickets up 40% after last release'}] },
+      { title:'Data Write-back', meta:null,                         body:'Feature scores and revenue impact auto-exported to Snowflake, Jira, and Productboard.' },
     ],
   },
 ];
 ---
-
-<section id="overview" class="py-24 px-6">
+<section id="overview" class="py-16 md:py-20 px-6">
   <div class="max-w-[1200px] mx-auto">
 
-    <div class="text-center mb-12">
-      <p class="text-xs text-muted uppercase tracking-widest mb-3">Overview</p>
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-        One platform for every <span class="gradient-text">customer-facing team</span>
-      </h2>
-      <p class="text-muted-foreground text-lg max-w-2xl mx-auto">See how Starmesh ingests raw conversations, synthesizes intelligence, and delivers structured results to every tool in your stack.</p>
-    </div>
+    <div class="ov-head">
+      <div class="ov-head-copy">
+        <p class="text-xs text-muted uppercase tracking-widest mb-3">Overview</p>
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+          One platform for every <span class="gradient-text">customer-facing team</span>
+        </h2>
+        <p class="text-muted-foreground text-lg max-w-2xl">
+          See how Starmesh ingests raw conversations, synthesizes intelligence, and delivers structured results to every tool in your stack.
+        </p>
+      </div>
 
-    <div class="ov-pills" role="tablist">
-      {teams.map((team, i) => (
-        <button class={`ov-tab ${i === 0 ? 'active' : ''}`} data-tab={team.id}>{team.label}</button>
-      ))}
+      <div class="ov-head-tabs">
+        <div class="ov-pills" role="tablist" aria-label="Overview teams">
+          {teams.map((team, i) => (
+            <button class={`ov-tab ${i === 0 ? 'active' : ''}`} data-tab={team.id}>{team.label}</button>
+          ))}
+        </div>
+      </div>
     </div>
 
     <div class="ov-board" id="ov-board">
@@ -151,17 +156,9 @@ const teams = [
                   data-has-crm={out.title === 'CRM Auto-update' ? 'true' : undefined}
                   data-has-dest={out.title === 'Data Write-back' ? 'true' : undefined}>
                   <div class="ov-out-head">
-                    <span class="ov-out-icon">{out.icon}</span>
                     <span class="ov-out-name">{out.title}</span>
                     {out.meta && <span class="ov-out-meta">{out.meta}</span>}
                   </div>
-                  {out.chart && (
-                    <div class="ov-spark">
-                      <svg viewBox={`0 0 ${(out.chart.length-1)*20} 48`} preserveAspectRatio="none">
-                        <polyline points={out.chart.map((v,i)=>`${i*20},${v}`).join(' ')}/>
-                      </svg>
-                    </div>
-                  )}
                   {out.body && <p class="ov-out-body">{out.body}</p>}
                   {out.chat && (
                     <>
@@ -425,12 +422,8 @@ const teams = [
     const panelId = panel?.getAttribute('data-panel') || 'sales';
     const windowItem = portal.querySelector<HTMLElement>(`[data-panel="${panelId}"]`);
     if (!windowItem) return;
-    portal.classList.add('ov-copilot-window-visible');
-    portal.setAttribute('aria-hidden', 'false');
-    windowItem.classList.add('ov-copilot-window-active');
+    // Blur overlay: set panel positions then show (sync, no rAF — avoids lag)
     if (blurOverlay) {
-      blurOverlay.classList.add('ov-blur-overlay-visible');
-      blurOverlay.setAttribute('aria-hidden', 'false');
       const outCol = panel?.querySelector<HTMLElement>('.ov-out-col');
       if (outCol) {
         const r = outCol.getBoundingClientRect();
@@ -443,7 +436,12 @@ const teams = [
         if (bottomEl) { bottomEl.style.top = `${r.bottom}px`; bottomEl.style.left = '0'; bottomEl.style.right = '0'; bottomEl.style.bottom = '0'; }
         if (rightEl) { rightEl.style.top = `${r.top}px`; rightEl.style.left = `${r.right}px`; rightEl.style.right = '0'; rightEl.style.height = `${r.height}px`; }
       }
+      blurOverlay.classList.add('ov-blur-overlay-visible');
+      blurOverlay.setAttribute('aria-hidden', 'false');
     }
+    portal.classList.add('ov-copilot-window-visible');
+    portal.setAttribute('aria-hidden', 'false');
+    windowItem.classList.add('ov-copilot-window-active');
     requestAnimationFrame(() => {
       const cr = card.getBoundingClientRect();
       const wr = windowItem.getBoundingClientRect();
@@ -535,8 +533,13 @@ const teams = [
 </script>
 
 <style>
+  /* Header (copy left, tabs right) */
+  .ov-head { display:grid; grid-template-columns: 1fr auto; gap:18px; align-items:end; margin-bottom:14px; }
+  .ov-head-copy { text-align:left; }
+  .ov-head-tabs { display:flex; justify-content:flex-end; }
+
   /* Pills */
-  .ov-pills { display:flex; gap:.25rem; background:rgba(255,255,255,.03); border-radius:.7rem; padding:.2rem; width:fit-content; margin:0 auto .9rem; }
+  .ov-pills { display:flex; gap:.25rem; background:rgba(255,255,255,.03); border-radius:.7rem; padding:.2rem; width:fit-content; margin:0; }
   .ov-tab { border-radius:.5rem; border:1px solid transparent; padding:.35rem 1.1rem; background:transparent; color:var(--color-muted-foreground); font-weight:600; font-size:.875rem; cursor:pointer; transition:all .18s ease; }
   .ov-tab.active { background:rgba(13,148,136,.22); color:var(--color-primary-foreground); box-shadow:0 4px 14px rgba(13,148,136,.25); border-color:rgba(13,148,136,.25); }
   .ov-tab:hover:not(.active) { background:rgba(13,148,136,.08); color:var(--color-foreground); }
@@ -552,7 +555,7 @@ const teams = [
   @keyframes ovFade { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
 
   /* Grid */
-  .ov-grid { display:grid; grid-template-columns:0.85fr 1.1fr 0.88fr; position:relative; z-index:1; min-height:560px; }
+  .ov-grid { display:grid; grid-template-columns:0.85fr 1.1fr 0.88fr; position:relative; z-index:1; min-height:clamp(440px, 58vh, 560px); }
 
   /* LEFT */
   .ov-src-col { padding:18px 8px 18px 18px; display:flex; flex-direction:column; gap:6px; justify-content:space-evenly; border-right:1px solid var(--color-border-subtle); }
@@ -563,8 +566,8 @@ const teams = [
   .ov-logo { width:34px; height:34px; border-radius:7px; background:#fff; overflow:hidden; flex-shrink:0; display:flex; align-items:center; justify-content:center; padding:3px; box-sizing:border-box; }
   .ov-logo img { width:100%; height:100%; object-fit:contain; display:block; }
   .ov-logo-fb { display:none; font-size:.6rem; font-weight:800; color:#fff; background:var(--color-primary); width:100%; height:100%; align-items:center; justify-content:center; border-radius:4px; }
-  .ov-src-type { font-size:.63rem; color:var(--color-primary); margin:0; line-height:1.2; font-weight:600; letter-spacing:.01em; }
-  .ov-src-sample { font-size:.7rem; color:var(--color-muted-foreground); line-height:1.45; margin:0; }
+  .ov-src-type { font-size:.7rem; color:var(--color-primary); margin:0; line-height:1.2; font-weight:600; letter-spacing:.01em; }
+  .ov-src-sample { font-size:.75rem; color:var(--color-muted-foreground); line-height:1.45; margin:0; }
 
   /* CENTER */
   .ov-ai-col { padding:24px 20px; display:flex; align-items:stretch; border-right:1px solid var(--color-border-subtle); }
@@ -589,16 +592,16 @@ const teams = [
   .ov-circle-inner { display:flex; flex-direction:column; align-items:center; gap:7px; pointer-events:none; }
   .ov-circle-de .ov-circle-svg { color:var(--color-primary); opacity:.9; }
   .ov-circle-ai .ov-circle-svg { color:var(--color-accent-to); opacity:.9; }
-  .ov-circle-label { font-size:.6rem; font-weight:700; text-align:center; line-height:1.3; letter-spacing:.05em; text-transform:uppercase; }
+  .ov-circle-label { font-size:.65rem; font-weight:700; text-align:center; line-height:1.3; letter-spacing:.05em; text-transform:uppercase; }
   .ov-circle-de .ov-circle-label { color:var(--color-primary); }
   .ov-circle-ai .ov-circle-label { color:var(--color-accent-to); }
 
   /* Tooltips — hidden in DOM, content copied to portal */
   .ov-circle-tip { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
   .ov-tip-right { }
-  .ov-tip-title { font-size:.65rem; font-weight:700; color:var(--color-foreground); margin:0 0 7px; }
+  .ov-tip-title { font-size:.7rem; font-weight:700; color:var(--color-foreground); margin:0 0 7px; }
   .ov-circle-tip ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:5px; }
-  .ov-circle-tip li { font-size:.63rem; color:var(--color-foreground); display:flex; align-items:center; gap:5px; }
+  .ov-circle-tip li { font-size:.7rem; color:var(--color-foreground); display:flex; align-items:center; gap:5px; }
   .ov-circle-tip li::before { content:''; width:3px; height:3px; border-radius:50%; background:var(--color-primary); flex-shrink:0; }
   .ov-tip-right li::before { background:var(--color-accent-to); }
 
@@ -606,22 +609,22 @@ const teams = [
   .ov-tooltip-portal { position:fixed; z-index:99999; width:164px; padding:10px 12px; border-radius:9px; pointer-events:none; opacity:0; transition:opacity .15s ease; }
   .ov-tooltip-portal-visible { opacity:1; }
   .ov-tooltip-portal { background:var(--color-card); border:1px solid var(--color-border); box-shadow:0 8px 32px rgba(0,0,0,.95); }
-  .ov-tooltip-portal .ov-tip-title { font-size:.65rem; font-weight:700; color:var(--color-foreground); margin:0 0 7px; }
+  .ov-tooltip-portal .ov-tip-title { font-size:.7rem; font-weight:700; color:var(--color-foreground); margin:0 0 7px; }
   .ov-tooltip-portal ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:5px; }
-  .ov-tooltip-portal li { font-size:.63rem; color:var(--color-foreground); display:flex; align-items:center; gap:5px; }
+  .ov-tooltip-portal li { font-size:.7rem; color:var(--color-foreground); display:flex; align-items:center; gap:5px; }
   .ov-tooltip-portal li::before { content:''; width:3px; height:3px; border-radius:50%; background:var(--color-primary); flex-shrink:0; }
   .ov-tooltip-portal.ov-tip-right li::before { background:var(--color-accent-to); }
 
-  /* Blur overlay — four panels covering viewport except .ov-out-col (right section stays sharp) */
-  .ov-blur-overlay { position:fixed; inset:0; z-index:99997; pointer-events:none; opacity:0; transition:opacity .2s ease; }
-  .ov-blur-overlay.ov-blur-overlay-visible { opacity:1; }
+  /* Blur overlay — four panels covering viewport except .ov-out-col. Instant show (no transition) so it appears with the window; transition only on hide. */
+  .ov-blur-overlay { position:fixed; inset:0; z-index:99997; pointer-events:none; opacity:0; transition:opacity .15s ease; }
+  .ov-blur-overlay.ov-blur-overlay-visible { opacity:1; transition:none; }
   .ov-blur-panel { position:fixed; backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); background:rgba(0,0,0,.12); }
 
-  /* Copilot window portal — contains DealIntelligenceWindow (exact Features.astro design) */
+  /* Copilot window portal — instant show so it appears with blur; transition only on hide. */
   .ov-copilot-window-portal { position:fixed; top:0; left:0; width:0; height:0; overflow:visible; z-index:99998; pointer-events:none; opacity:0; transition:opacity .15s ease; }
-  .ov-copilot-window-portal.ov-copilot-window-visible { opacity:1; }
+  .ov-copilot-window-portal.ov-copilot-window-visible { opacity:1; transition:none; }
   .ov-copilot-window-item { position:fixed; opacity:0; pointer-events:none; transition:opacity .15s ease; }
-  .ov-copilot-window-item.ov-copilot-window-active { opacity:1; }
+  .ov-copilot-window-item.ov-copilot-window-active { opacity:1; transition:none; }
 
   /* Connector spacer (line drawn by SVG overlay) */
   .ov-connector-spacer { width:2px; height:36px; flex-shrink:0; }
@@ -631,21 +634,16 @@ const teams = [
   .ov-out-card { border:1px solid rgba(6,182,212,.2); border-radius:9px; background:rgba(6,182,212,.04); padding:11px 13px; transition:border-color .2s, background .2s; }
   .ov-out-card:hover { border-color:var(--color-primary-glow-strong); background:rgba(6,182,212,.08); }
   .ov-out-head { display:flex; align-items:center; gap:6px; margin-bottom:5px; }
-  .ov-out-icon { font-size:.75rem; line-height:1; }
-  .ov-out-name { font-size:.75rem; font-weight:700; color:var(--color-foreground); flex:1; }
-  .ov-out-meta { font-size:.63rem; color:var(--color-muted); white-space:nowrap; }
-  .ov-out-body { font-size:.7rem; color:var(--color-muted-foreground); line-height:1.5; margin:0; }
+  .ov-out-name { font-size:.8125rem; font-weight:700; color:var(--color-foreground); flex:1; }
+  .ov-out-meta { font-size:.7rem; color:var(--color-muted); white-space:nowrap; }
+  .ov-out-body { font-size:.75rem; color:var(--color-muted-foreground); line-height:1.5; margin:0; }
 
-  .ov-spark { width:100%; height:24px; margin-bottom:5px; border-left:1px solid var(--color-border-subtle); border-bottom:1px solid var(--color-border-subtle); }
-  .ov-spark svg { width:100%; height:100%; overflow:visible; }
-  .ov-spark polyline { fill:none; stroke:var(--color-primary); stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; filter:drop-shadow(0 0 3px var(--color-primary-glow)); }
-
-  .ov-bbl-u,.ov-bbl-a { font-size:.7rem; line-height:1.45; border-radius:5px; padding:4px 7px; margin-bottom:3px; }
+  .ov-bbl-u,.ov-bbl-a { font-size:.75rem; line-height:1.45; border-radius:5px; padding:4px 7px; margin-bottom:3px; }
   .ov-bbl-a { margin-bottom:0; }
   .ov-bbl-u { background:rgba(255,255,255,.05); color:var(--color-muted-foreground); }
   .ov-bbl-a { background:rgba(6,182,212,.14); color:var(--color-foreground); }
 
-  .ov-tl { display:flex; align-items:center; gap:5px; font-size:.7rem; margin-bottom:3px; }
+  .ov-tl { display:flex; align-items:center; gap:5px; font-size:.75rem; margin-bottom:3px; }
   .ov-tl:last-child { margin-bottom:0; }
   .ov-tl-dot { width:4px; height:4px; border-radius:50%; background:var(--color-primary); flex-shrink:0; }
   .ov-tl-d { color:var(--color-muted-foreground); font-weight:600; flex-shrink:0; width:44px; }
@@ -653,6 +651,8 @@ const teams = [
 
   /* Mobile */
   @media (max-width:900px) {
+    .ov-head { grid-template-columns:1fr; align-items:start; gap:12px; margin-bottom:12px; }
+    .ov-head-tabs { justify-content:flex-start; }
     .ov-grid { grid-template-columns:1fr; min-height:auto; }
     .ov-src-col,.ov-ai-col { border-right:none; border-bottom:1px solid var(--color-border-subtle); }
     .ov-src-col { padding:16px; }
