@@ -7,56 +7,83 @@ import DestinationsWindow from '../DestinationsWindow.astro';
 const teams = [
   {
     id: 'sales', label: 'Sales',
+    aiExplain: {
+      extract: 'decision makers, intent, timeline, next steps, risks',
+      link: 'signals to the right deal, stakeholders, and pipeline stage',
+    },
+    aiTip: [
+      'Surfaces next steps, risks, and who matters for the deal',
+      'Ties every signal to the right opportunity and stage',
+      'Explainable so you can trust and defend the output',
+    ],
     sources: [
       { app:'Zoom',       logo:'zoom.us',        title:'Call recording',     sample:'Budget is approved but procurement pushed the timeline — new VP Eng needs to sign off first.' },
       { app:'Gong',       logo:'gong.io',         title:'Deal call notes',    sample:'Champion is strong. Security review is the only real blocker right now.' },
       { app:'Gmail',      logo:'mail.google.com', title:'Email thread',       sample:'Before we go to signature, can you confirm your SOC2 controls and migration support?' },
       { app:'Salesforce', logo:'salesforce.com',  title:'Opportunity update', sample:'Stage changed to Commit. Buying committee expanded to include VP Engineering.' },
-      { app:'HubSpot',    logo:'hubspot.com',     title:'Contact activity',   sample:"VP of Engineering added to deal — first question was about data residency." },
+      // { app:'HubSpot',    logo:'hubspot.com',     title:'Contact activity',   sample:"VP of Engineering added to deal — first question was about data residency." }, // (hidden for spacing)
     ],
     outcomes: [
-      { title:'Deal Copilot',     meta:null,                  chat:{user:'What do I need to do before Friday?', ai:"Send SOC2 docs to Sarah today. Get your SE on the security call — that's the only real blocker. Log next steps in Salesforce before EOD or this slips to Q1."} },
-      { title:'Win Probability',  meta:'74% · trending down', chart:[20,23,27,31,35,39,42,45], body:'Down 12pts in 2 weeks. Security review still open and next steps are missing. Close the blocker this week or this deal moves to Q1.' },
-      { title:'Deal Timeline',    meta:null,                  tl:[{d:'Feb 24',t:'Security objection raised on Zoom call'},{d:'Feb 23',t:'VP Eng joined buying committee'},{d:'Feb 21',t:'Stage → Commit · next steps still blank'}] },
-      { title:'CRM Auto-update', meta:null,                  body:'Win probability, slip risk, security blocker and missing next steps auto-logged to Salesforce & HubSpot.' },
+      { title:'Deal Copilot',     subtitle:'Unlimited deal Q&A and next-best actions', meta:null,                  chat:{user:'What do I need to do before Friday?', ai:"Send SOC2 docs to Sarah today. Get your SE on the security call — that's the only real blocker. Log next steps in Salesforce before EOD or this slips to Q1."} },
+      { title:'Win Probability',  subtitle:'Predict close likelihood and trend',      meta:'74% · trending down', chart:[20,23,27,31,35,39,42,45], body:'Down 12pts in 2 weeks. Security review still open and next steps are missing. Close the blocker this week or this deal moves to Q1.' },
+      { title:'Deal Timeline',    subtitle:'Key moments, blockers, and momentum',     meta:null,                  tl:[{d:'Feb 24',t:'Security objection raised on Zoom call'},{d:'Feb 23',t:'VP Eng joined buying committee'},{d:'Feb 21',t:'Stage → Commit · next steps still blank'}] },
+      { title:'CRM Auto-update',  subtitle:'Auto-log signals and risks to your CRM',  meta:null,                  body:'Win probability, slip risk, security blocker and missing next steps auto-logged to Salesforce & HubSpot.' },
     ],
   },
   {
     id: 'cx', label: 'CX',
+    aiExplain: {
+      extract: 'sentiment, product issues, escalation severity, renewal risk',
+      link: 'signals to the right account, ticket cluster, and renewal window',
+    },
+    aiTip: [
+      'Surfaces churn risk, health signals, and what to do before renewal',
+      'Ties every signal to the right account and renewal window',
+      'Explainable so you can trust and defend the output',
+    ],
     sources: [
       { app:'Intercom', logo:'intercom.com',    title:'Support tickets',  sample:'Export issue repeats after every billing cycle close — third time this quarter.' },
       { app:'Zendesk',  logo:'zendesk.com',     title:'Escalation case',  sample:'P1 raised by enterprise account — webhook retries failing since last deploy.' },
       { app:'Zoom',     logo:'zoom.us',          title:'QBR recording',    sample:'Team is generally happy but onboarding still felt slow and confusing.' },
       { app:'Gmail',    logo:'mail.google.com',  title:'Renewal email',    sample:'We need better visibility into our account health before we can commit to renewal.' },
-      { app:'Slack',    logo:'slack.com',        title:'Customer channel', sample:"Any ETA on the permission bug? It's blocking three of our admin users right now." },
+      // { app:'Slack',    logo:'slack.com',        title:'Customer channel', sample:"Any ETA on the permission bug? It's blocking three of our admin users right now." }, // (hidden for spacing)
     ],
     outcomes: [
-      { title:'CSM Copilot',      meta:null,                     chat:{user:'What should I do before this renewal?', ai:"Book an exec call this week — your champion has been cold for 6 weeks. Get engineering to commit on the webhook fix, then lead the renewal with a health roadmap showing what's being fixed."} },
-      { title:'Account Health',   meta:'44/100 · falling fast',  chart:[20,22,25,30,38,44,50,54], body:'Down 18pts in 30 days. Two P1s open, champion gone cold, renewal in 47 days. Without intervention this account is on a fast track to churn.' },
-      { title:'Account Timeline', meta:null,                     tl:[{d:'Feb 26',t:'P1 opened · webhook failing since deploy'},{d:'Feb 24',t:'QBR: NPS down 18pts · onboarding cited'},{d:'Feb 20',t:'Champion Sarah Lee changed roles'}] },
-      { title:'CRM Auto-update', meta:null,                     body:'Health score, open escalations, champion status and churn risk synced to Salesforce & Gainsight.' },
+      { title:'CSM Copilot',      subtitle:'Unlimited account Q&A and renewal guidance', meta:null,                     chat:{user:'What should I do before this renewal?', ai:"Book an exec call this week — your champion has been cold for 6 weeks. Get engineering to commit on the webhook fix, then lead the renewal with a health roadmap showing what's being fixed."} },
+      { title:'Account Health',   subtitle:'Health score and churn risk signals',        meta:'44/100 · falling fast',  chart:[20,22,25,30,38,44,50,54], body:'Down 18pts in 30 days. Two P1s open, champion gone cold, renewal in 47 days. Without intervention this account is on a fast track to churn.' },
+      { title:'Account Timeline', subtitle:'Escalations, sentiment, and renewal events', meta:null,                     tl:[{d:'Feb 26',t:'P1 opened · webhook failing since deploy'},{d:'Feb 24',t:'QBR: NPS down 18pts · onboarding cited'},{d:'Feb 20',t:'Champion Sarah Lee changed roles'}] },
+      { title:'CRM Auto-update',  subtitle:'Sync health and churn risk to your systems', meta:null,                     body:'Health score, open escalations, champion status and churn risk synced to Salesforce & Gainsight.' },
     ],
   },
   {
     id: 'product', label: 'Product',
+    aiExplain: {
+      extract: 'themes, demand, revenue impact, retention + drop-off drivers',
+      link: 'signals to the right feature, segment, and time period',
+    },
+    aiTip: [
+      'Surfaces top themes, revenue impact, and retention drivers',
+      'Ties every signal to the right feature and segment',
+      'Explainable so you can trust and defend the output',
+    ],
     sources: [
       { app:'Gong',     logo:'gong.io',         title:'Call transcripts', sample:'Cohort-level analytics keeps coming up on enterprise calls — heard it three times this week alone.' },
       { app:'Zoom',     logo:'zoom.us',          title:'Customer calls',   sample:'Dashboard clarity was the top pain point in every PM discovery session this quarter.' },
       { app:'Pendo',    logo:'pendo.io',         title:'Usage events',     sample:'Drop-off spikes every time users hit the integration settings screen at step 3.' },
       { app:'Mixpanel', logo:'mixpanel.com',     title:'Behavior cohorts', sample:'Users with two data sources connected retain 2.1× better at 30 days. Single-source users churn fast.' },
-      { app:'Jira',     logo:'atlassian.com',    title:'Issue backlog',    sample:'Permission-related tickets jumped 40% in the two weeks after the last release.' },
+      // { app:'Jira',     logo:'atlassian.com',    title:'Issue backlog',    sample:'Permission-related tickets jumped 40% in the two weeks after the last release.' }, // (hidden for spacing)
     ],
     outcomes: [
-      { title:'PM Copilot',      meta:null,                         chat:{user:'What should we prioritize this quarter?', ai:"Ship cohort analytics first — #1 requested, \$180K blocked, confirmed by both calls and usage data. Then fix the step 3 drop-off, it's killing retention. Permission bugs are noise compared to those two."} },
-      { title:'Feature Demand',  meta:'8 themes · 3 accelerating', chart:[44,40,36,31,25,20,16,12], body:'Cohort analytics up 3× in 60 days — 12 enterprise mentions, $180K in deals blocked. Highest-ROI item in your backlog right now.' },
-      { title:'Signal Timeline', meta:null,                         tl:[{d:'Mar 1',t:'Cohort analytics on 3 enterprise calls in one day'},{d:'Feb 27',t:'34% exit rate at step 3 confirmed in Pendo'},{d:'Feb 24',t:'Permission tickets up 40% after last release'}] },
-      { title:'Data Write-back', meta:null,                         body:'Feature scores and revenue impact auto-exported to Snowflake, Jira, and Productboard.' },
+      { title:'PM Copilot',      subtitle:'Unlimited discovery Q&A and prioritization', meta:null,                          chat:{user:'What should we prioritize this quarter?', ai:"Ship cohort analytics first — #1 requested, \$180K blocked, confirmed by both calls and usage data. Then fix the step 3 drop-off, it's killing retention. Permission bugs are noise compared to those two."} },
+      { title:'Feature Demand',  subtitle:'Themes, momentum, and revenue impact',       meta:'8 themes · 3 accelerating',  chart:[44,40,36,31,25,20,16,12], body:'Cohort analytics up 3× in 60 days — 12 enterprise mentions, $180K in deals blocked. Highest-ROI item in your backlog right now.' },
+      { title:'Signal Timeline', subtitle:'Voice-of-customer + usage signals over time', meta:null,                         tl:[{d:'Mar 1',t:'Cohort analytics on 3 enterprise calls in one day'},{d:'Feb 27',t:'34% exit rate at step 3 confirmed in Pendo'},{d:'Feb 24',t:'Permission tickets up 40% after last release'}] },
+      { title:'Data Write-back', subtitle:'Export structured insights to your tools',    meta:null,                         body:'Feature scores and revenue impact auto-exported to Snowflake, Jira, and Productboard.' },
     ],
   },
 ];
 ---
 <section id="overview" class="py-16 md:py-20 px-6">
-  <div class="max-w-[1200px] mx-auto">
+  <div class="max-w-[1320px] mx-auto">
 
     <div class="ov-head">
       <div class="ov-head-copy">
@@ -65,7 +92,7 @@ const teams = [
           One platform for every <span class="gradient-text">customer-facing team</span>
         </h2>
         <p class="text-muted-foreground text-lg max-w-2xl">
-          See how Starmesh ingests raw conversations, synthesizes intelligence, and delivers structured results to every tool in your stack.
+          Conversations in — intelligence out, everywhere you work.
         </p>
       </div>
 
@@ -87,94 +114,151 @@ const teams = [
 
             <!-- LEFT: source cards -->
             <div class="ov-src-col">
-              {team.sources.map((src) => (
-                <div class="ov-src-card">
-                  <div class="ov-src-layout">
-                    <div class="ov-src-meta">
-                      <span class="ov-logo">
-                        <img src={`https://www.google.com/s2/favicons?sz=64&domain=${src.logo}`} alt={src.app} loading="lazy"
-                          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/>
-                        <span class="ov-logo-fb">{src.app.slice(0,2).toUpperCase()}</span>
-                      </span>
-                      <p class="ov-src-type">{src.title}</p>
+              <div class="ov-col-head">Sources</div>
+              <div class="ov-col-body">
+                {team.sources.map((src) => (
+                  <div class="ov-src-card">
+                    <div class="ov-src-layout">
+                      <div class="ov-src-meta">
+                        <span class="ov-logo">
+                          <img src={`https://www.google.com/s2/favicons?sz=64&domain=${src.logo}`} alt={src.app} loading="lazy"
+                            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/>
+                          <span class="ov-logo-fb">{src.app.slice(0,2).toUpperCase()}</span>
+                        </span>
+                        <p class="ov-src-type">{src.title}</p>
+                      </div>
+                      <p class="ov-src-sample">{src.sample}</p>
                     </div>
-                    <p class="ov-src-sample">{src.sample}</p>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
-            <!-- CENTER: two circles -->
+            <!-- CENTER: How it works (clear pipeline, benefit-led) -->
             <div class="ov-ai-col">
-              <div class="ov-circles-panel">
-                <div class="ov-circles-body">
-
-                  <div class="ov-circle ov-circle-de">
-                    <div class="ov-circle-inner">
-                      <svg class="ov-circle-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>
-                      <span class="ov-circle-label">Data<br/>Engineering</span>
-                    </div>
-                    <div class="ov-circle-tip">
-                      <p class="ov-tip-title">Data Engineering</p>
-                      <ul>
-                        <li>Extract &amp; unify all sources</li>
-                        <li>Transform transcripts &amp; CRM</li>
-                        <li>Build structured pipelines</li>
-                      </ul>
+              <div class="ov-col-head ov-col-head-center">What Starmesh Does</div>
+              <div class="ov-engine" data-engine>
+                <div class="ov-engine-step ov-engine-step-ingest" data-engine-in>
+                  <div class="ov-engine-tip" aria-hidden="true">
+                    <p class="ov-tip-title">Ingest</p>
+                    <ul>
+                      <li>Unify multiple sources into one chronological stream</li>
+                      <li>Security &amp; compliance by design</li>
+                      <li>Privacy-preserving; you control your data</li>
+                    </ul>
+                  </div>
+                  <div class="ov-engine-step-top">
+                    <span class="ov-engine-step-name">1. Ingest</span>
+                    <div class="ov-engine-icons" aria-hidden="true">
+                      {team.sources.slice(0, 4).map((src) => (
+                        <span class="ov-engine-ico" title={src.app}>
+                          <img src={`https://www.google.com/s2/favicons?sz=64&domain=${src.logo}`} alt="" loading="lazy"
+                            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/>
+                          <span class="ov-engine-ico-fb">{src.app.slice(0,1).toUpperCase()}</span>
+                        </span>
+                      ))}
                     </div>
                   </div>
+                  <p class="ov-engine-step-desc">All your conversations and CRM activity in one place — secure and under your control.</p>
+                </div>
+                <div class="ov-engine-connector" aria-hidden="true"><span class="ov-engine-connector-arrow"></span></div>
 
-                  <div class="ov-connector-spacer" aria-hidden="true"></div>
-
-                  <div class="ov-circle ov-circle-ai">
-                    <div class="ov-circle-inner">
-                      <svg class="ov-circle-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-1.14"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-1.14"/></svg>
-                      <span class="ov-circle-label">AI<br/>Engineering</span>
+                <div class="ov-engine-step ov-engine-step-ai" data-engine-in>
+                  <div class="ov-engine-tip" aria-hidden="true">
+                    <p class="ov-tip-title">Understand</p>
+                    <ul>
+                      {(team.aiTip ?? ['Extract and link signals to the right record.']).map((line) => (<li>{line}</li>))}
+                    </ul>
+                  </div>
+                  <div class="ov-engine-step-top">
+                    <span class="ov-engine-step-name">2. Understand</span>
+                    <span class="ov-engine-step-tag">what matters for you</span>
+                  </div>
+                  <div class="ov-ai-read" aria-label="AI reading examples">
+                    <div class="ov-ai-ind" aria-hidden="true">
+                      <span class="ov-ai-dot"></span>
+                      Reading your data…
                     </div>
-                    <div class="ov-circle-tip ov-tip-right">
-                      <p class="ov-tip-title">AI Engineering</p>
-                      <ul>
-                        <li>Generate signals &amp; primitives</li>
-                        <li>Compute Win Prob &amp; Churn Risk</li>
-                        <li>Write back to CRM &amp; warehouse</li>
-                      </ul>
+                    {team.sources.slice(0, 4).map((src) => (
+                      <div class="ov-ai-snippet" data-full={src.sample}>
+                        <div class="ov-ai-sn-head">
+                          <span class="ov-ai-sn-app">{src.app}</span>
+                          <span class="ov-ai-sn-type">{src.title}</span>
+                        </div>
+                        <div class="ov-ai-sn-body"></div>
+                      </div>
+                    ))}
+                  </div>
+                  <p class="ov-ai-explain-label">For {team.label}:</p>
+                  <div class="ov-ai-explain" aria-label="What we extract and link for this team">
+                    <div class="ov-ai-ex-row">
+                      <span class="ov-ai-ex-k">We find</span>
+                      <span class="ov-ai-ex-v">{team.aiExplain?.extract ?? 'key signals and intent'}</span>
+                    </div>
+                    <div class="ov-ai-ex-row">
+                      <span class="ov-ai-ex-k">We tie to</span>
+                      <span class="ov-ai-ex-v">{team.aiExplain?.link ?? 'signals to the right record and timeline moment'}</span>
                     </div>
                   </div>
+                </div>
+                <div class="ov-engine-connector" aria-hidden="true"><span class="ov-engine-connector-arrow"></span></div>
 
+                <div class="ov-engine-step ov-engine-step-out" data-engine-out>
+                  <div class="ov-engine-tip" aria-hidden="true">
+                    <p class="ov-tip-title">Deliver</p>
+                    <ul>
+                      <li>Guidance, scores, and timelines in one place</li>
+                      <li>Syncs to your CRM and tools automatically</li>
+                      <li>No manual logging or copy-paste</li>
+                    </ul>
+                  </div>
+                  <div class="ov-engine-step-top">
+                    <span class="ov-engine-step-name">3. Deliver</span>
+                    <span class="ov-engine-step-tag">into your tools</span>
+                  </div>
+                  <p class="ov-engine-step-desc">Guidance, scores, and timelines — synced to your CRM and stack so you don’t log it yourself.</p>
                 </div>
               </div>
             </div>
 
             <!-- RIGHT: outcome cards -->
             <div class="ov-out-col">
-              {team.outcomes.map((out) => (
-                <div class="ov-out-card"
-                  data-has-chat={out.chat ? 'true' : undefined}
-                  data-window-title={out.chat ? (out.title === 'Deal Copilot' ? 'Deal Intelligence' : out.title === 'CSM Copilot' ? 'Account Intelligence' : out.title === 'PM Copilot' ? 'Product Intelligence' : out.title) : undefined}
-                  data-has-chart={out.chart ? 'true' : undefined}
-                  data-has-tl={out.tl ? 'true' : undefined}
-                  data-has-crm={out.title === 'CRM Auto-update' ? 'true' : undefined}
-                  data-has-dest={out.title === 'Data Write-back' ? 'true' : undefined}>
-                  <div class="ov-out-head">
-                    <span class="ov-out-name">{out.title}</span>
-                    {out.meta && <span class="ov-out-meta">{out.meta}</span>}
-                  </div>
-                  {out.body && <p class="ov-out-body">{out.body}</p>}
-                  {out.chat && (
-                    <>
-                      <div class="ov-bbl-u">{out.chat.user}</div>
-                      <div class="ov-bbl-a">{out.chat.ai}</div>
-                    </>
-                  )}
-                  {out.tl && out.tl.map(row => (
-                    <div class="ov-tl">
-                      <span class="ov-tl-dot"></span>
-                      <span class="ov-tl-d">{row.d}</span>
-                      <span class="ov-tl-t">{row.t}</span>
+              <div class="ov-col-head ov-col-head-right">Outcomes</div>
+              <div class="ov-col-body">
+                {team.outcomes.map((out) => (
+                  <div class="ov-out-card"
+                    data-has-chat={out.chat ? 'true' : undefined}
+                    data-window-title={out.chat ? (out.title === 'Deal Copilot' ? 'Deal Intelligence' : out.title === 'CSM Copilot' ? 'Account Intelligence' : out.title === 'PM Copilot' ? 'Product Intelligence' : out.title) : undefined}
+                    data-has-chart={out.chart ? 'true' : undefined}
+                    data-has-tl={out.tl ? 'true' : undefined}
+                    data-has-crm={out.title === 'CRM Auto-update' ? 'true' : undefined}
+                    data-has-dest={out.title === 'Data Write-back' ? 'true' : undefined}>
+                    <div class="ov-out-head">
+                      <div class="ov-out-titles">
+                        <div class="ov-out-titleline">
+                          <span class="ov-out-name">{out.title}</span>
+                          {out.subtitle && <span class="ov-out-sub">{out.subtitle}</span>}
+                        </div>
+                      </div>
+                      {out.meta && <span class="ov-out-meta">{out.meta}</span>}
                     </div>
-                  ))}
-                </div>
-              ))}
+                    {out.body && <p class="ov-out-body">{out.body}</p>}
+                    {out.chat && (
+                      <>
+                        <div class="ov-bbl-u">{out.chat.user}</div>
+                        <div class="ov-bbl-a">{out.chat.ai}</div>
+                      </>
+                    )}
+                    {out.tl && out.tl.map(row => (
+                      <div class="ov-tl">
+                        <span class="ov-tl-dot"></span>
+                        <span class="ov-tl-d">{row.d}</span>
+                        <span class="ov-tl-t">{row.t}</span>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
             </div>
 
           </div>
@@ -284,29 +368,22 @@ const teams = [
     const panel = document.querySelector<HTMLElement>('.ov-panel.active');
     if (!panel) return;
 
-    const de = panel.querySelector<HTMLElement>('.ov-circle-de');
-    const ai = panel.querySelector<HTMLElement>('.ov-circle-ai');
-    if (!de || !ai) return;
+    const engineIn = panel.querySelector<HTMLElement>('[data-engine-in]');
+    const engineOut = panel.querySelector<HTMLElement>('[data-engine-out]');
+    if (!engineIn || !engineOut) return;
 
-    const deR  = de.getBoundingClientRect();
-    const aiR  = ai.getBoundingClientRect();
-    const deLX = deR.left  - br.left;
-    const deCY = deR.top   + deR.height / 2 - br.top;
-    const aiRX = aiR.right - br.left;
-    const aiCY = aiR.top   + aiR.height / 2 - br.top;
-    const deCX = deR.left  + deR.width / 2 - br.left;
-    const aiCX = aiR.left  + aiR.width / 2 - br.left;
-    const deBottom = deR.bottom - br.top;
-    const aiTop = aiR.top - br.top;
-
-    // DE → AI connector (same design as other lines; solid stroke — gradient fails on thin vertical path)
-    injectVerticalLine(deCX, deBottom, aiTop, 'rgba(13,148,136,0.7)', '#0D9488', '#06B6D4', 0);
+    const inR = engineIn.getBoundingClientRect();
+    const outR = engineOut.getBoundingClientRect();
+    const inLX = inR.left - br.left;
+    const inCY = inR.top + inR.height / 2 - br.top;
+    const outRX = outR.right - br.left;
+    const outCY = outR.top + outR.height / 2 - br.top;
 
     Array.from(panel.querySelectorAll<HTMLElement>('.ov-src-card')).forEach((card, i) => {
       const cr = card.getBoundingClientRect();
       injectLine(
         cr.right - br.left, cr.top + cr.height / 2 - br.top,
-        deLX, deCY,
+        inLX, inCY,
         'url(#ovGin)', '#0D9488', '#2DD4BF', i * 0.4
       );
     });
@@ -314,7 +391,7 @@ const teams = [
     Array.from(panel.querySelectorAll<HTMLElement>('.ov-out-card')).forEach((card, i) => {
       const cr = card.getBoundingClientRect();
       injectLine(
-        aiRX, aiCY,
+        outRX, outCY,
         cr.left - br.left, cr.top + cr.height / 2 - br.top,
         'url(#ovGout)', '#06B6D4', '#22D3EE', i * 0.5
       );
@@ -378,11 +455,85 @@ const teams = [
     tabs.forEach(t   => t.classList.toggle('active', t.dataset.tab   === id));
     panels.forEach(p => p.classList.toggle('active', p.dataset.panel === id));
     setTimeout(drawLines, 20);
+    setTimeout(() => startAiTypingForActivePanel(), 40);
   }
 
   tabs.forEach(tab => tab.addEventListener('click', () => activateTab(tab.dataset.tab!)));
   window.addEventListener('resize', drawLines);
   setTimeout(drawLines, 100);
+  setTimeout(() => startAiTypingForActivePanel(), 120);
+
+  let aiTypingAbort: AbortController | null = null;
+
+  function sleep(ms: number) {
+    return new Promise<void>(resolve => setTimeout(resolve, ms));
+  }
+
+  function prefersReducedMotion() {
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  async function typeInto(el: HTMLElement, text: string, signal: AbortSignal, cps = 26) {
+    el.textContent = '';
+    const step = Math.max(8, Math.floor(1000 / cps));
+    for (let i = 0; i < text.length; i++) {
+      if (signal.aborted) return;
+      el.textContent += text[i];
+      // slight jitter so it feels organic but restrained
+      if (i % 1 === 0) await sleep(step);
+    }
+  }
+
+  async function runAiTyping(panel: HTMLElement, signal: AbortSignal) {
+    const readBox = panel.querySelector<HTMLElement>('.ov-ai-read');
+    if (!readBox) return;
+    const snippets = Array.from(readBox.querySelectorAll<HTMLElement>('.ov-ai-snippet'));
+    if (!snippets.length) return;
+
+    // Ensure we always have some text if JS runs after Astro hydration.
+    snippets.forEach(s => {
+      const body = s.querySelector<HTMLElement>('.ov-ai-sn-body');
+      if (body && !body.dataset.full) {
+        body.dataset.full = s.getAttribute('data-full') || '';
+      }
+    });
+
+    let idx = 0;
+    while (!signal.aborted) {
+      const sn = snippets[idx % snippets.length];
+      snippets.forEach(x => x.classList.remove('ov-ai-active', 'ov-ai-typing'));
+      sn.classList.add('ov-ai-active', 'ov-ai-typing');
+
+      const body = sn.querySelector<HTMLElement>('.ov-ai-sn-body');
+      const full = (sn.getAttribute('data-full') || '').trim();
+      if (body) {
+        await typeInto(body, full, signal, 26);
+      }
+      if (signal.aborted) return;
+
+      sn.classList.remove('ov-ai-typing');
+      await sleep(520);
+
+      await sleep(1400);
+      idx++;
+    }
+  }
+
+  function escapeHtml(s: string) {
+    return s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
+  }
+
+  function startAiTypingForActivePanel() {
+    if (prefersReducedMotion()) return;
+    const panel = document.querySelector<HTMLElement>('.ov-panel.active');
+    if (!panel) return;
+    const readBox = panel.querySelector('.ov-ai-read');
+    if (!readBox) return;
+
+    aiTypingAbort?.abort();
+    aiTypingAbort = new AbortController();
+    runAiTyping(panel, aiTypingAbort.signal).catch(() => {});
+  }
 
   // Tooltip portal: move to body so it renders above SVG/bubbles
   const portal = document.getElementById('ov-tooltip-portal');
@@ -491,33 +642,33 @@ const teams = [
     card.addEventListener('mouseleave', () => hideWindow(destPortal));
   });
 
-  document.querySelectorAll<HTMLElement>('.ov-circle').forEach((circle) => {
-    const tip = circle.querySelector<HTMLElement>('.ov-circle-tip');
+  document.querySelectorAll<HTMLElement>('.ov-engine-step').forEach((step) => {
+    const tip = step.querySelector<HTMLElement>('.ov-engine-tip');
     if (!tip || !portal) return;
-    const isRight = tip.classList.contains('ov-tip-right');
 
-    circle.addEventListener('mouseenter', () => {
+    step.addEventListener('mouseenter', () => {
       portal.innerHTML = tip.innerHTML;
-      portal.classList.toggle('ov-tip-right', isRight);
+      portal.classList.remove('ov-tip-right');
       portal.classList.add('ov-tooltip-portal-visible');
       portal.setAttribute('aria-hidden', 'false');
       requestAnimationFrame(() => {
-        const cr = circle.getBoundingClientRect();
+        const sr = step.getBoundingClientRect();
         const pr = portal.getBoundingClientRect();
         const gap = 14;
-        if (isRight) {
-          portal.style.left = `${cr.right + gap}px`;
-          portal.style.right = 'auto';
-        } else {
-          portal.style.right = `${window.innerWidth - cr.left + gap}px`;
-          portal.style.left = 'auto';
-        }
-        portal.style.top = `${cr.top + cr.height / 2 - pr.height / 2}px`;
+        let left = sr.right + gap;
+        if (left + pr.width > window.innerWidth - 16) left = sr.left - pr.width - gap;
+        if (left < 16) left = 16;
+        portal.style.left = `${left}px`;
+        portal.style.right = 'auto';
+        let top = sr.top + sr.height / 2 - pr.height / 2;
+        if (top < 16) top = 16;
+        if (top + pr.height > window.innerHeight - 16) top = window.innerHeight - pr.height - 16;
+        portal.style.top = `${top}px`;
       });
     });
 
-    circle.addEventListener('mouseleave', () => {
-      portal.classList.remove('ov-tooltip-portal-visible', 'ov-tip-right');
+    step.addEventListener('mouseleave', () => {
+      portal.classList.remove('ov-tooltip-portal-visible');
       portal.setAttribute('aria-hidden', 'true');
     });
   });
@@ -555,11 +706,41 @@ const teams = [
   @keyframes ovFade { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
 
   /* Grid */
-  .ov-grid { display:grid; grid-template-columns:0.85fr 1.1fr 0.88fr; position:relative; z-index:1; min-height:clamp(440px, 58vh, 560px); }
+  .ov-grid { display:grid; grid-template-columns:0.85fr 1.1fr 0.88fr; column-gap:16px; position:relative; z-index:1; min-height:clamp(360px, 49vh, 480px); }
+
+  /* Column headers (premium clarity) */
+  .ov-col-head {
+    padding:9px 14px 5px;
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    font-size:.7rem;
+    font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:rgba(255,255,255,.78);
+    position:relative;
+  }
+  .ov-col-head::after {
+    content:'';
+    position:absolute;
+    left:14px;
+    bottom:0;
+    width:22px;
+    height:2px;
+    border-radius:999px;
+    background:linear-gradient(90deg, rgba(13,148,136,.95), rgba(6,182,212,.10));
+    opacity:.9;
+  }
+  .ov-col-head-center { justify-content:center; }
+  .ov-col-head-center::after { left:50%; transform:translateX(-50%); background:linear-gradient(90deg, rgba(13,148,136,.55), rgba(6,182,212,.55)); }
+  .ov-col-head-right::after { background:linear-gradient(90deg, rgba(6,182,212,.85), rgba(6,182,212,.10)); }
+  .ov-col-body { flex:1; display:flex; flex-direction:column; gap:6px; justify-content:space-evenly; padding:9px 0 11px; }
 
   /* LEFT */
-  .ov-src-col { padding:18px 8px 18px 18px; display:flex; flex-direction:column; gap:6px; justify-content:space-evenly; border-right:1px solid var(--color-border-subtle); }
-  .ov-src-card { padding:9px 10px; border-radius:9px; border:1px solid var(--color-border); background:rgba(255,255,255,.02); transition:border-color .2s, background .2s; }
+  .ov-src-col { padding:0 0 0 18px; display:flex; flex-direction:column; }
+  .ov-src-col .ov-col-body { gap:6px; }
+  .ov-src-card { padding:7px 10px; border-radius:9px; border:1px solid var(--color-border); background:rgba(255,255,255,.02); transition:border-color .2s, background .2s; }
   .ov-src-card:hover { border-color:var(--color-primary-glow); background:rgba(13,148,136,.05); }
   .ov-src-layout { display:grid; grid-template-columns:28% 72%; gap:8px; align-items:center; }
   .ov-src-meta { display:flex; flex-direction:column; align-items:flex-start; gap:4px; }
@@ -570,9 +751,183 @@ const teams = [
   .ov-src-sample { font-size:.75rem; color:var(--color-muted-foreground); line-height:1.45; margin:0; }
 
   /* CENTER */
-  .ov-ai-col { padding:24px 20px; display:flex; align-items:stretch; border-right:1px solid var(--color-border-subtle); }
-  .ov-circles-panel { flex:1; display:flex; flex-direction:column; }
-  .ov-circles-body { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:8px 0; }
+  .ov-ai-col { padding:0; display:flex; flex-direction:column; align-items:stretch; }
+  .ov-ai-col > .ov-col-head,
+  .ov-ai-col > .ov-engine {
+    width:min(360px, 100%);
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .ov-engine { flex:1; display:flex; flex-direction:column; justify-content:center; gap:9px; padding:11px 6px 13px; }
+  .ov-engine-step-ingest .ov-engine-step-desc,
+  .ov-engine-step-out .ov-engine-step-desc { margin-top:5px; }
+  .ov-engine-step {
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.10);
+    background:linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.02));
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+    padding:9px 11px;
+  }
+  .ov-engine-step-top { display:flex; align-items:baseline; justify-content:space-between; gap:10px; }
+  .ov-engine-step-name { font-weight:800; font-size:.84rem; letter-spacing:-.01em; color:rgba(255,255,255,.92); }
+  .ov-engine-step-tag { font-size:.72rem; color:rgba(255,255,255,.62); white-space:nowrap; }
+  .ov-engine-step-desc { margin:5px 0 0; font-size:.75rem; color:rgba(255,255,255,.68); line-height:1.45; }
+
+  .ov-engine-icons { display:flex; align-items:center; gap:6px; }
+  .ov-engine-ico { width:18px; height:18px; border-radius:6px; background:#fff; overflow:hidden; display:flex; align-items:center; justify-content:center; padding:2px; box-sizing:border-box; opacity:.92; }
+  .ov-engine-ico img { width:100%; height:100%; object-fit:contain; display:block; }
+  .ov-engine-ico-fb { display:none; font-size:.55rem; font-weight:900; color:#fff; background:var(--color-primary); width:100%; height:100%; align-items:center; justify-content:center; border-radius:4px; }
+  .ov-engine-more { font-size:.7rem; color:rgba(255,255,255,.55); font-weight:700; letter-spacing:-.01em; }
+
+  .ov-engine-connector {
+    flex-shrink:0;
+    height:12px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    position:relative;
+  }
+  .ov-engine-connector::before {
+    content:'';
+    position:absolute;
+    left:50%;
+    top:0;
+    bottom:6px;
+    width:2px;
+    border-radius:2px;
+    background:linear-gradient(180deg, rgba(13,148,136,.75), rgba(6,182,212,.75));
+    transform:translateX(-50%);
+    box-shadow:0 0 12px rgba(13,148,136,.25), 0 0 6px rgba(6,182,212,.2);
+  }
+  .ov-engine-connector-arrow {
+    position:relative;
+    z-index:1;
+    width:0;
+    height:0;
+    border-left:6px solid transparent;
+    border-right:6px solid transparent;
+    border-top:7px solid rgba(6,182,212,.9);
+    filter:drop-shadow(0 0 4px rgba(6,182,212,.4));
+  }
+
+  .ov-engine-step-ai { border-color:rgba(13,148,136,.18); background:linear-gradient(180deg, rgba(13,148,136,.10), rgba(255,255,255,.018)); }
+  .ov-engine-step-out { border-color:rgba(6,182,212,.18); background:linear-gradient(180deg, rgba(6,182,212,.09), rgba(255,255,255,.018)); }
+
+  .ov-ai-read { position:relative; margin-top:7px; border-radius:12px; border:1px solid rgba(255,255,255,.10); background:rgba(0,0,0,.14); overflow:hidden; height:74px; }
+  .ov-ai-ind {
+    position:absolute;
+    top:8px;
+    right:10px;
+    z-index:2;
+    font-size:.68rem;
+    font-weight:750;
+    letter-spacing:.02em;
+    color:rgba(255,255,255,.70);
+    display:flex;
+    align-items:center;
+    gap:6px;
+    pointer-events:none;
+    text-shadow:0 10px 24px rgba(0,0,0,.35);
+  }
+  .ov-ai-dot {
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:rgba(253,224,71,.85);
+    box-shadow:0 0 0 3px rgba(253,224,71,.10);
+  }
+  .ov-ai-read::before {
+    content:'';
+    position:absolute;
+    inset:0;
+    background:radial-gradient(120% 120% at 10% 0%, rgba(13,148,136,.10), transparent 55%),
+               radial-gradient(120% 120% at 90% 100%, rgba(6,182,212,.08), transparent 55%);
+    pointer-events:none;
+  }
+
+  .ov-ai-snippet {
+    position:absolute;
+    inset:10px 10px 10px 10px;
+    opacity:0;
+    transform:translateY(4px);
+    transition:opacity .22s ease, transform .22s ease;
+  }
+  .ov-ai-snippet.ov-ai-active { opacity:1; transform:translateY(0); }
+  .ov-ai-sn-body { position:relative; }
+  .ov-ai-sn-body::after {
+    content:'';
+    display:inline-block;
+    width:1px;
+    height:1em;
+    margin-left:2px;
+    background:rgba(255,255,255,.55);
+    transform:translateY(2px);
+    opacity:0;
+  }
+  .ov-ai-typing .ov-ai-sn-body::after {
+    opacity:1;
+    animation:ovCaret 1s steps(2,end) infinite;
+  }
+  @keyframes ovCaret { 0%,49%{opacity:1} 50%,100%{opacity:0} }
+
+  .ov-ai-sn-head { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+  .ov-ai-sn-app { font-size:.72rem; font-weight:800; color:rgba(255,255,255,.90); letter-spacing:-.01em; }
+  .ov-ai-sn-type { font-size:.7rem; color:rgba(255,255,255,.60); }
+  .ov-ai-sn-body {
+    font-size:.74rem;
+    line-height:1.4;
+    color:rgba(255,255,255,.76);
+    display:-webkit-box;
+    -webkit-line-clamp:3;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+  }
+
+  .ov-ai-explain-label {
+    margin-top:9px;
+    margin-bottom:4px;
+    font-size:.72rem;
+    font-weight:700;
+    letter-spacing:.02em;
+    color:rgba(255,255,255,.82);
+  }
+  .ov-ai-explain {
+    margin-top:0;
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+  }
+  .ov-ai-ex-row {
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:10px;
+    padding:6px 9px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.02);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
+  }
+  .ov-ai-ex-k {
+    font-size:.7rem;
+    font-weight:850;
+    letter-spacing:.02em;
+    color:rgba(255,255,255,.88);
+    white-space:nowrap;
+  }
+  .ov-ai-ex-v {
+    font-size:.72rem;
+    line-height:1.35;
+    color:rgba(255,255,255,.64);
+    text-align:right;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ov-ai-snippet { opacity:1; transform:none; position:relative; inset:auto; padding:10px; transition:none; }
+    .ov-ai-snippet:not(:first-child) { display:none; }
+    .ov-ai-sn-body::after { display:none; }
+    .ov-ai-read { height:auto; }
+  }
 
   .ov-circle { width:116px; height:116px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; position:relative; cursor:default; transition:transform .2s ease; }
   .ov-circle:hover { transform:scale(1.04); }
@@ -596,24 +951,63 @@ const teams = [
   .ov-circle-de .ov-circle-label { color:var(--color-primary); }
   .ov-circle-ai .ov-circle-label { color:var(--color-accent-to); }
 
-  /* Tooltips — hidden in DOM, content copied to portal */
-  .ov-circle-tip { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
-  .ov-tip-right { }
-  .ov-tip-title { font-size:.7rem; font-weight:700; color:var(--color-foreground); margin:0 0 7px; }
-  .ov-circle-tip ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:5px; }
-  .ov-circle-tip li { font-size:.7rem; color:var(--color-foreground); display:flex; align-items:center; gap:5px; }
-  .ov-circle-tip li::before { content:''; width:3px; height:3px; border-radius:50%; background:var(--color-primary); flex-shrink:0; }
-  .ov-tip-right li::before { background:var(--color-accent-to); }
+  /* Engine step tooltips — hidden in DOM, content copied to portal on hover */
+  .ov-engine-tip { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+  .ov-engine-tip .ov-tip-title { font-size:.7rem; font-weight:700; color:var(--color-foreground); margin:0 0 7px; }
+  .ov-engine-tip ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:5px; }
+  .ov-engine-tip li { font-size:.7rem; color:var(--color-foreground); display:flex; align-items:flex-start; gap:6px; line-height:1.35; white-space:normal; }
+  .ov-engine-tip li::before { content:''; width:3px; height:3px; border-radius:50%; background:var(--color-primary); flex-shrink:0; margin-top:6px; }
 
-  /* Tooltip portal — rendered in body, above everything, fully opaque */
-  .ov-tooltip-portal { position:fixed; z-index:99999; width:164px; padding:10px 12px; border-radius:9px; pointer-events:none; opacity:0; transition:opacity .15s ease; }
+  /* Tooltip portal — modern card, rendered in body */
+  .ov-tooltip-portal {
+    position:fixed;
+    z-index:99999;
+    max-width:240px;
+    width:max-content;
+    padding:0;
+    border-radius:12px;
+    pointer-events:none;
+    opacity:0;
+    transition:opacity .2s ease, transform .2s ease;
+    background:linear-gradient(165deg, rgba(24,24,27,.98), rgba(18,18,20,.99));
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.03) inset,
+      0 4px 24px rgba(0,0,0,.45),
+      0 12px 48px rgba(0,0,0,.35);
+    overflow:hidden;
+  }
   .ov-tooltip-portal-visible { opacity:1; }
-  .ov-tooltip-portal { background:var(--color-card); border:1px solid var(--color-border); box-shadow:0 8px 32px rgba(0,0,0,.95); }
-  .ov-tooltip-portal .ov-tip-title { font-size:.7rem; font-weight:700; color:var(--color-foreground); margin:0 0 7px; }
-  .ov-tooltip-portal ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:5px; }
-  .ov-tooltip-portal li { font-size:.7rem; color:var(--color-foreground); display:flex; align-items:center; gap:5px; }
-  .ov-tooltip-portal li::before { content:''; width:3px; height:3px; border-radius:50%; background:var(--color-primary); flex-shrink:0; }
-  .ov-tooltip-portal.ov-tip-right li::before { background:var(--color-accent-to); }
+  .ov-tooltip-portal .ov-tip-title {
+    font-size:.75rem;
+    font-weight:800;
+    letter-spacing:-.01em;
+    color:rgba(255,255,255,.95);
+    margin:0;
+    padding:12px 14px 10px;
+    border-bottom:1px solid rgba(255,255,255,.06);
+    background:linear-gradient(180deg, rgba(255,255,255,.04) 0%, transparent 100%);
+  }
+  .ov-tooltip-portal ul { list-style:none; padding:10px 14px 12px; margin:0; display:flex; flex-direction:column; gap:8px; }
+  .ov-tooltip-portal li {
+    font-size:.72rem;
+    color:rgba(255,255,255,.78);
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    line-height:1.4;
+    white-space:normal;
+  }
+  .ov-tooltip-portal li::before {
+    content:'';
+    width:4px;
+    height:4px;
+    border-radius:50%;
+    background:linear-gradient(135deg, #0D9488, #06B6D4);
+    flex-shrink:0;
+    margin-top:6px;
+    box-shadow:0 0 8px rgba(6,182,212,.35);
+  }
 
   /* Blur overlay — four panels covering viewport except .ov-out-col. Instant show (no transition) so it appears with the window; transition only on hide. */
   .ov-blur-overlay { position:fixed; inset:0; z-index:99997; pointer-events:none; opacity:0; transition:opacity .15s ease; }
@@ -630,20 +1024,25 @@ const teams = [
   .ov-connector-spacer { width:2px; height:36px; flex-shrink:0; }
 
   /* RIGHT */
-  .ov-out-col { padding:18px 18px 18px 14px; display:flex; flex-direction:column; gap:8px; justify-content:space-evenly; }
-  .ov-out-card { border:1px solid rgba(6,182,212,.2); border-radius:9px; background:rgba(6,182,212,.04); padding:11px 13px; transition:border-color .2s, background .2s; }
+  .ov-out-col { padding:0 18px 0 0; display:flex; flex-direction:column; }
+  .ov-out-col .ov-col-body { gap:14px; padding:11px 0 13px; }
+  .ov-out-card { border:1px solid rgba(6,182,212,.2); border-radius:11px; background:rgba(6,182,212,.04); padding:11px 13px; transition:border-color .2s, background .2s; }
   .ov-out-card:hover { border-color:var(--color-primary-glow-strong); background:rgba(6,182,212,.08); }
   .ov-out-head { display:flex; align-items:center; gap:6px; margin-bottom:5px; }
-  .ov-out-name { font-size:.8125rem; font-weight:700; color:var(--color-foreground); flex:1; }
-  .ov-out-meta { font-size:.7rem; color:var(--color-muted); white-space:nowrap; }
-  .ov-out-body { font-size:.75rem; color:var(--color-muted-foreground); line-height:1.5; margin:0; }
+  .ov-out-titles { min-width:0; flex:1; }
+  .ov-out-titleline { display:flex; align-items:baseline; gap:6px; min-width:0; flex-wrap:nowrap; }
+  .ov-out-name { font-size:.8125rem; font-weight:700; color:var(--color-foreground); white-space:nowrap; }
+  .ov-out-sub { font-size:.75rem; color:var(--color-muted-foreground); line-height:1.25; white-space:nowrap; min-width:0; overflow:hidden; text-overflow:ellipsis; }
+  .ov-out-sub::before { content:"—"; opacity:.55; margin-right:6px; }
+  .ov-out-meta { font-size:.75rem; color:var(--color-muted); white-space:nowrap; }
+  .ov-out-body { font-size:.75rem; color:var(--color-muted-foreground); line-height:1.45; margin:0; }
 
   .ov-bbl-u,.ov-bbl-a { font-size:.75rem; line-height:1.45; border-radius:5px; padding:4px 7px; margin-bottom:3px; }
   .ov-bbl-a { margin-bottom:0; }
   .ov-bbl-u { background:rgba(255,255,255,.05); color:var(--color-muted-foreground); }
   .ov-bbl-a { background:rgba(6,182,212,.14); color:var(--color-foreground); }
 
-  .ov-tl { display:flex; align-items:center; gap:5px; font-size:.75rem; margin-bottom:3px; }
+  .ov-tl { display:flex; align-items:center; gap:5px; font-size:.75rem; margin-bottom:3px; line-height:1.45; }
   .ov-tl:last-child { margin-bottom:0; }
   .ov-tl-dot { width:4px; height:4px; border-radius:50%; background:var(--color-primary); flex-shrink:0; }
   .ov-tl-d { color:var(--color-muted-foreground); font-weight:600; flex-shrink:0; width:44px; }
@@ -658,6 +1057,6 @@ const teams = [
     .ov-src-col { padding:16px; }
     .ov-ai-col  { padding:16px; }
     .ov-out-col { padding:16px; }
-    .ov-circle-tip { display:none; }
+    .ov-circle-tip, .ov-engine-tip { display:none; }
   }
 </style>
