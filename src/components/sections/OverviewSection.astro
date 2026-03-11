@@ -97,13 +97,13 @@ const teams = [
   },
 ];
 ---
-<section id="overview" class="py-16 md:py-20 px-6">
+<section id="overview" class="scroll-mt-10 py-10 md:py-14 px-6">
   <div class="max-w-[1320px] mx-auto">
 
     <div class="ov-head">
+      <p class="ov-head-label text-xs text-muted uppercase tracking-widest mb-1 text-center">Overview</p>
       <div class="ov-head-copy">
-        <p class="text-xs text-muted uppercase tracking-widest mb-3">Overview</p>
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-2">
           One platform for every <span class="gradient-text">customer-facing team</span>
         </h2>
         <p class="text-muted-foreground text-lg max-w-2xl">
@@ -711,8 +711,9 @@ const teams = [
 </script>
 
 <style>
-  /* Header (copy left, tabs right) */
-  .ov-head { display:grid; grid-template-columns: 1fr auto; gap:18px; align-items:end; margin-bottom:14px; }
+  /* Header (label full width centered, then copy left, tabs right) */
+  .ov-head { display:grid; grid-template-columns: 1fr auto; gap:8px; align-items:end; margin-bottom:8px; }
+  .ov-head-label { grid-column: 1 / -1; margin-bottom:0; }
   .ov-head-copy { text-align:left; }
   .ov-head-tabs { display:flex; justify-content:flex-end; }
 
