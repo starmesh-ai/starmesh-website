@@ -1,74 +1,226 @@
 ---
 interface Props {
   title: string;
+  variant: 'deal' | 'account' | 'feature';
 }
-const { title } = Astro.props;
+const { title, variant } = Astro.props;
+
+// Deal: bar chart scale (max = target 2.4M)
+const dealTarget = 2.4;
+const dealManual = 1.9;
+const dealAI = 1.7;
+const dealBarPct = (v: number) => Math.round((v / dealTarget) * 100);
+const dealTopAtRisk = [
+  { name: 'Meridian', stage: 'Discovery', win: 41, risk: 'high', riskClass: 'text-red-400 bg-red-500/10 border-red-500/20' },
+  { name: 'Acme Corp', stage: 'Negotiation', win: 74, risk: 'medium', riskClass: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20' },
+  { name: 'Brightwave', stage: 'Demo', win: 79, risk: 'low', riskClass: 'text-green-400 bg-green-500/10 border-green-500/20' },
+];
+
+// Account: single-number focus copy
+const accountHeadline = '5 at churn risk — act this week';
+const accountBullets = [
+  'Acme Corp · renewal in 47 days, champion cold',
+  'Brightwave · health falling, renewal in 18 days',
+  '2 more in 30–90 day window need attention',
+];
+const accountList = [
+  { name: 'Acme Corp', renewal: '47 days', health: 44, risk: 'high', riskClass: 'text-red-400 bg-red-500/10 border-red-500/20' },
+  { name: 'FinCo Ltd', renewal: '82 days', health: 78, risk: 'low', riskClass: 'text-green-400 bg-green-500/10 border-green-500/20' },
+  { name: 'Meridian', renewal: '120 days', health: 91, risk: 'low', riskClass: 'text-green-400 bg-green-500/10 border-green-500/20' },
+  { name: 'Brightwave', renewal: '18 days', health: 58, risk: 'medium', riskClass: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20' },
+];
+
+// Feature: narrative + compact list
+const featureNarrative = 'Cohort analytics up 3× in 60 days — 12 enterprise mentions, $180K blocked. Highest-ROI item in your backlog right now.';
+const featureThemes = [
+  { name: 'Cohort analytics', meta: '12 mentions · 3× in 60d', score: 92, trend: '↑', trendClass: 'text-green-400 bg-green-500/10 border-green-500/20' },
+  { name: 'Step 3 drop-off', meta: '34% exit · retention', score: 78, trend: '↑', trendClass: 'text-green-400 bg-green-500/10 border-green-500/20' },
+  { name: 'Dashboard clarity', meta: '6 mentions · stable', score: 55, trend: '—', trendClass: 'text-[#71717A] bg-white/5 border-white/10' },
+  { name: 'Permission bugs', meta: 'Tickets +40% · low impact', score: 28, trend: '—', trendClass: 'text-[#71717A] bg-white/5 border-white/10' },
+];
 ---
-<!-- Exact copy of Features.astro PWin / Pipeline Intelligence design -->
-<div class="rounded-xl overflow-hidden w-[520px] flex-shrink-0" style="background:#0c0c10; border:1px solid rgba(255,255,255,0.1); box-shadow:0 16px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03), 0 0 80px rgba(13,148,136,.06);">
+<!-- Deal Forecast (PWin), Account Health, or Feature Demand — content varies by variant -->
+<div class="rounded-xl overflow-hidden w-[620px] flex-shrink-0" style="background:#0c0c10; border:1px solid rgba(255,255,255,0.1); box-shadow:0 16px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03), 0 0 80px rgba(13,148,136,.06);">
   <div class="flex items-center px-4 py-3 border-b border-white/[0.06]" style="background:#111118;">
     <div class="flex gap-1.5 flex-shrink-0">
       <span class="w-3 h-3 rounded-full" style="background:#FF5F56;"></span>
       <span class="w-3 h-3 rounded-full" style="background:#FFBD2E;"></span>
       <span class="w-3 h-3 rounded-full" style="background:#27C93F;"></span>
     </div>
-    <span class="text-[12px] text-muted flex-1 text-center font-medium">Starmesh · {title}</span>
+    <span class="text-[12px] text-[#71717A] flex-1 text-center font-medium">Starmesh · {title}</span>
     <div style="width:54px;" class="flex-shrink-0"></div>
   </div>
-  <div class="flex" style="height:360px;">
-    <div class="flex flex-col flex-shrink-0" style="width:160px; background:#0a0a0d; border-right:1px solid rgba(255,255,255,0.05);">
-      <div class="px-3 py-2 border-b border-white/[0.04]"><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold">Quarter</p></div>
-      <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">Q1 2025</p></div>
-      <div class="px-3 py-2.5 border-b border-white/[0.03] bg-teal-500/10 border-l-2 border-l-teal-500/70"><p class="text-[11px] text-foreground font-semibold">Q2 2025</p></div>
-      <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">Q3 2025</p></div>
-      <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">Q4 2025</p></div>
-      <div class="px-3 pt-3 mt-auto border-t border-white/[0.04]">
-        <p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold mb-2">Filter</p>
-        <p class="text-[11px] py-0.5 text-muted-foreground font-semibold">All</p>
-        <p class="text-[11px] py-0.5 text-[#3F3F46]">At risk</p>
-        <p class="text-[11px] py-0.5 text-[#3F3F46]">Healthy</p>
-      </div>
+  <div class="flex" style="height:420px;">
+    <!-- Sidebar -->
+    <div class="flex flex-col flex-shrink-0" style="width:132px; background:#0a0a0d; border-right:1px solid rgba(255,255,255,0.05);">
+      {variant === 'deal' && (
+        <>
+          <div class="px-3 py-2 border-b border-white/[0.04]"><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold">Quarter</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">Q1 2025</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03] bg-teal-500/10 border-l-2 border-l-teal-500/70"><p class="text-[11px] text-[#E4E4E7] font-semibold">Q2 2025</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">Q3 2025</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">Q4 2025</p></div>
+          <div class="px-3 pt-3 mt-auto border-t border-white/[0.04]">
+            <p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold mb-2">Filter</p>
+            <p class="text-[11px] py-0.5 text-[#A1A1AA] font-semibold">All</p>
+            <p class="text-[11px] py-0.5 text-[#3F3F46]">At risk</p>
+            <p class="text-[11px] py-0.5 text-[#3F3F46]">Healthy</p>
+          </div>
+        </>
+      )}
+      {variant === 'account' && (
+        <>
+          <div class="px-3 py-2 border-b border-white/[0.04]"><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold">Renewal window</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">90+ days</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03] bg-teal-500/10 border-l-2 border-l-teal-500/70"><p class="text-[11px] text-[#E4E4E7] font-semibold">30–90 days</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">0–30 days</p></div>
+          <div class="px-3 pt-3 mt-auto border-t border-white/[0.04]">
+            <p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold mb-2">Filter</p>
+            <p class="text-[11px] py-0.5 text-[#A1A1AA] font-semibold">All</p>
+            <p class="text-[11px] py-0.5 text-[#3F3F46]">Churn risk</p>
+            <p class="text-[11px] py-0.5 text-[#3F3F46]">Healthy</p>
+          </div>
+        </>
+      )}
+      {variant === 'feature' && (
+        <>
+          <div class="px-3 py-2 border-b border-white/[0.04]"><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold">Quarter</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">Q1 2025</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03] bg-teal-500/10 border-l-2 border-l-teal-500/70"><p class="text-[11px] text-[#E4E4E7] font-semibold">Q2 2025</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">Q3 2025</p></div>
+          <div class="px-3 pt-3 mt-auto border-t border-white/[0.04]">
+            <p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold mb-2">Segment</p>
+            <p class="text-[11px] py-0.5 text-[#A1A1AA] font-semibold">All</p>
+            <p class="text-[11px] py-0.5 text-[#3F3F46]">Enterprise</p>
+            <p class="text-[11px] py-0.5 text-[#3F3F46]">SMB</p>
+          </div>
+        </>
+      )}
     </div>
+    <!-- Main content -->
     <div class="flex-1 flex flex-col overflow-hidden">
-      <div class="grid grid-cols-3 divide-x divide-white/[0.05] border-b border-white/[0.05] flex-shrink-0">
-        <div class="px-3 py-2.5 text-center"><p class="text-base font-bold text-foreground">18</p><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider mt-0.5">Active</p></div>
-        <div class="px-3 py-2.5 text-center"><p class="text-base font-bold text-primary">0.67</p><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider mt-0.5">Avg PWin</p></div>
-        <div class="px-3 py-2.5 text-center"><p class="text-base font-bold text-red-400">3</p><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider mt-0.5">At risk</p></div>
-      </div>
-      <div class="flex-1 divide-y divide-white/[0.04] overflow-hidden">
-        <div class="flex items-center px-3 py-2.5 gap-2">
-          <div class="flex-1 min-w-0"><p class="text-[12px] font-medium text-[#E4E4E7] truncate">Acme Corp</p><p class="text-[10px] text-[#52525B]">Negotiation</p></div>
-          <div class="flex items-center gap-1.5 flex-shrink-0">
-            <div class="w-12 h-1.5 rounded-full bg-white/[0.06]"><div class="h-1.5 rounded-full bg-teal-500 opacity-70" style="width:74%"></div></div>
-            <span class="text-[11px] font-mono font-bold w-6 text-right text-primary">74%</span>
+      {variant === 'deal' && (
+        <>
+          <!-- Chart-first: bar chart Target vs Manual vs AI -->
+          <div class="px-4 pt-4 pb-3 flex-shrink-0">
+            <p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold mb-3">Forecast vs target</p>
+            <div class="space-y-2.5">
+              <div class="flex items-center gap-3">
+                <span class="text-[10px] text-[#71717A] w-16 flex-shrink-0">Target</span>
+                <div class="flex-1 h-5 rounded bg-white/[0.06] overflow-hidden">
+                  <div class="h-full rounded bg-[#E4E4E7]" style={`width:${dealBarPct(dealTarget)}%`}></div>
+                </div>
+                <span class="text-[11px] font-mono font-bold text-[#FAFAFA] w-10 text-right">$2.4M</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="text-[10px] text-[#71717A] w-16 flex-shrink-0">Manual</span>
+                <div class="flex-1 h-5 rounded bg-white/[0.06] overflow-hidden">
+                  <div class="h-full rounded bg-[#A1A1AA]" style={`width:${dealBarPct(dealManual)}%`}></div>
+                </div>
+                <span class="text-[11px] font-mono font-bold text-[#A1A1AA] w-10 text-right">$1.9M</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="text-[10px] text-[#71717A] w-16 flex-shrink-0">AI</span>
+                <div class="flex-1 h-5 rounded bg-white/[0.06] overflow-hidden">
+                  <div class="h-full rounded bg-teal-500" style={`width:${dealBarPct(dealAI)}%`}></div>
+                </div>
+                <span class="text-[11px] font-mono font-bold text-teal-400 w-10 text-right">$1.7M</span>
+              </div>
+            </div>
           </div>
-          <span class="text-[10px] px-1.5 py-0.5 rounded border font-medium w-12 text-center flex-shrink-0 text-yellow-400 bg-yellow-500/10 border-yellow-500/20">medium</span>
-        </div>
-        <div class="flex items-center px-3 py-2.5 gap-2">
-          <div class="flex-1 min-w-0"><p class="text-[12px] font-medium text-[#E4E4E7] truncate">FinCo Ltd</p><p class="text-[10px] text-[#52525B]">Closing</p></div>
-          <div class="flex items-center gap-1.5 flex-shrink-0">
-            <div class="w-12 h-1.5 rounded-full bg-white/[0.06]"><div class="h-1.5 rounded-full bg-teal-500 opacity-70" style="width:88%"></div></div>
-            <span class="text-[11px] font-mono font-bold w-6 text-right text-primary">88%</span>
+          <!-- Top 3 at risk -->
+          <div class="px-4 pb-3 flex-shrink-0">
+            <p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold mb-2">Top 3 at risk</p>
+            <div class="divide-y divide-white/[0.04] rounded border border-white/[0.06] overflow-hidden">
+              {dealTopAtRisk.map((d) => (
+                <div class="flex items-center px-3 py-2 gap-2 bg-white/[0.02]">
+                  <div class="flex-1 min-w-0">
+                    <p class="text-[12px] font-medium text-[#E4E4E7] truncate">{d.name}</p>
+                    <p class="text-[10px] text-[#52525B]">{d.stage}</p>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <div class="w-10 h-1.5 rounded-full bg-white/[0.06]">
+                      <div class="h-1.5 rounded-full bg-teal-500 opacity-70" style={`width:${d.win}%`}></div>
+                    </div>
+                    <span class={`text-[11px] font-mono font-bold w-5 text-right ${d.win < 50 ? 'text-red-400' : 'text-[#E4E4E7]'}`}>{d.win}%</span>
+                  </div>
+                  <span class={`text-[10px] px-1.5 py-0.5 rounded border font-medium w-14 text-center flex-shrink-0 ${d.riskClass}`}>{d.risk}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          <span class="text-[10px] px-1.5 py-0.5 rounded border font-medium w-12 text-center flex-shrink-0 text-green-400 bg-green-500/10 border-green-500/20">low</span>
-        </div>
-        <div class="flex items-center px-3 py-2.5 gap-2">
-          <div class="flex-1 min-w-0"><p class="text-[12px] font-medium text-[#E4E4E7] truncate">Meridian</p><p class="text-[10px] text-[#52525B]">Discovery</p></div>
-          <div class="flex items-center gap-1.5 flex-shrink-0">
-            <div class="w-12 h-1.5 rounded-full bg-white/[0.06]"><div class="h-1.5 rounded-full bg-red-500 opacity-70" style="width:41%"></div></div>
-            <span class="text-[11px] font-mono font-bold w-6 text-right text-red-400">41%</span>
+        </>
+      )}
+      {variant === 'account' && (
+        <>
+          <!-- Single-number focus: headline + bullets + expand -->
+          <div class="px-4 pt-4 pb-2 flex-shrink-0">
+            <p class="text-lg font-bold text-[#FAFAFA] mb-3">{accountHeadline}</p>
+            <p class="text-[11px] text-[#71717A] mb-3">AI health 62 avg · 24 accounts in window</p>
+            <ul class="space-y-1.5">
+              {accountBullets.map((b) => (
+                <li class="text-[12px] text-[#E4E4E7] flex gap-2">
+                  <span class="text-teal-400 flex-shrink-0">·</span>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-          <span class="text-[10px] px-1.5 py-0.5 rounded border font-medium w-12 text-center flex-shrink-0 text-red-400 bg-red-500/10 border-red-500/20">high</span>
-        </div>
-        <div class="flex items-center px-3 py-2.5 gap-2">
-          <div class="flex-1 min-w-0"><p class="text-[12px] font-medium text-[#E4E4E7] truncate">Brightwave</p><p class="text-[10px] text-[#52525B]">Demo</p></div>
-          <div class="flex items-center gap-1.5 flex-shrink-0">
-            <div class="w-12 h-1.5 rounded-full bg-white/[0.06]"><div class="h-1.5 rounded-full bg-teal-500 opacity-70" style="width:79%"></div></div>
-            <span class="text-[11px] font-mono font-bold w-6 text-right text-primary">79%</span>
+          <div class="px-4 flex-1 min-h-0 flex flex-col">
+            <details class="group mt-2 flex-shrink-0">
+              <summary class="text-[11px] text-teal-400 font-medium cursor-pointer list-none inline-flex items-center gap-1 hover:text-teal-300">
+                <span class="group-open:rotate-90 transition-transform">▶</span>
+                View all accounts
+              </summary>
+              <div class="mt-2 divide-y divide-white/[0.04] rounded border border-white/[0.06] overflow-auto max-h-[180px]">
+                {accountList.map((a) => (
+                  <div class="flex items-center px-3 py-2 gap-2 bg-white/[0.02]">
+                    <div class="flex-1 min-w-0">
+                      <p class="text-[12px] font-medium text-[#E4E4E7] truncate">{a.name}</p>
+                      <p class="text-[10px] text-[#52525B]">Renewal in {a.renewal}</p>
+                    </div>
+                    <div class="flex items-center gap-1.5 flex-shrink-0">
+                      <div class="w-10 h-1.5 rounded-full bg-white/[0.06]">
+                        <div class="h-1.5 rounded-full bg-teal-500 opacity-70" style={`width:${a.health}%`}></div>
+                      </div>
+                      <span class="text-[11px] font-mono font-bold w-5 text-right text-[#E4E4E7]">{a.health}</span>
+                    </div>
+                    <span class={`text-[10px] px-1.5 py-0.5 rounded border font-medium w-14 text-center flex-shrink-0 ${a.riskClass}`}>{a.risk}</span>
+                  </div>
+                ))}
+              </div>
+            </details>
           </div>
-          <span class="text-[10px] px-1.5 py-0.5 rounded border font-medium w-12 text-center flex-shrink-0 text-green-400 bg-green-500/10 border-green-500/20">low</span>
-        </div>
-      </div>
+        </>
+      )}
+      {variant === 'feature' && (
+        <>
+          <!-- Narrative + compact table -->
+          <div class="px-4 pt-4 pb-3 flex-shrink-0">
+            <p class="text-[12px] text-[#E4E4E7] leading-relaxed">{featureNarrative}</p>
+          </div>
+          <div class="px-4 flex-1 min-h-0 overflow-auto">
+            <p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold mb-2">Themes</p>
+            <div class="divide-y divide-white/[0.04] rounded border border-white/[0.06] overflow-hidden">
+              {featureThemes.map((t) => (
+                <div class="flex items-center px-3 py-2 gap-2 bg-white/[0.02]">
+                  <div class="flex-1 min-w-0">
+                    <p class="text-[12px] font-medium text-[#E4E4E7] truncate">{t.name}</p>
+                    <p class="text-[10px] text-[#52525B]">{t.meta}</p>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <div class="w-10 h-1.5 rounded-full bg-white/[0.06]">
+                      <div class="h-1.5 rounded-full bg-teal-500 opacity-70" style={`width:${t.score}%`}></div>
+                    </div>
+                    <span class={`text-[11px] font-mono font-bold w-6 text-right ${t.score >= 70 ? 'text-teal-400' : 'text-[#A1A1AA]'}`}>{t.score}</span>
+                  </div>
+                  <span class={`text-[10px] px-1.5 py-0.5 rounded border font-medium flex-shrink-0 ${t.trendClass}`}>{t.trend}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   </div>
 </div>

@@ -25,8 +25,13 @@ const teams = [
     ],
     outcomes: [
       { title:'Deal Copilot',     subtitle:'Unlimited deal Q&A and next-best actions', meta:null,                  chat:{user:'What do I need to do before Friday?', ai:"Send SOC2 docs to Sarah today. Get your SE on the security call — that's the only real blocker. Log next steps in Salesforce before EOD or this slips to Q1."} },
-      { title:'Win Probability',  subtitle:'Predict close likelihood and trend',      meta:'74% · trending down', chart:[20,23,27,31,35,39,42,45], body:'Down 12pts in 2 weeks. Security review still open and next steps are missing. Close the blocker this week or this deal moves to Q1.' },
-      { title:'Deal Timeline',    subtitle:'Key moments, blockers, and momentum',     meta:null,                  tl:[{d:'Feb 24',t:'Security objection raised on Zoom call'},{d:'Feb 23',t:'VP Eng joined buying committee'},{d:'Feb 21',t:'Stage → Commit · next steps still blank'}] },
+      { title:'Deal Forecast',     subtitle:'Predict close likelihood and trend',      meta:'74% · trending down', chart:[20,23,27,31,35,39,42,45], body:'Down 12pts in 2 weeks. Security review still open and next steps are missing. Close the blocker this week or this deal moves to Q1.' },
+      { title:'Deal Timeline',    subtitle:'Key moments, blockers, and momentum',     meta:null,                  tl:[
+        {d:'Mar 4',t:'No contact for 7 days after security review'},
+        {d:'Feb 24',t:'Security objection raised on Zoom call'},
+        {d:'Feb 10',t:'VP Eng joined buying committee · asks about data residency and SOC2'},
+        {d:'Jan 28',t:'Stage → Commit · next steps still blank in Salesforce'}
+      ] },
       { title:'CRM Auto-update',  subtitle:'Auto-log signals and risks to your CRM',  meta:null,                  body:'Win probability, slip risk, security blocker and missing next steps auto-logged to Salesforce & HubSpot.' },
     ],
   },
@@ -51,7 +56,12 @@ const teams = [
     outcomes: [
       { title:'CSM Copilot',      subtitle:'Unlimited account Q&A and renewal guidance', meta:null,                     chat:{user:'What should I do before this renewal?', ai:"Book an exec call this week — your champion has been cold for 6 weeks. Get engineering to commit on the webhook fix, then lead the renewal with a health roadmap showing what's being fixed."} },
       { title:'Account Health',   subtitle:'Health score and churn risk signals',        meta:'44/100 · falling fast',  chart:[20,22,25,30,38,44,50,54], body:'Down 18pts in 30 days. Two P1s open, champion gone cold, renewal in 47 days. Without intervention this account is on a fast track to churn.' },
-      { title:'Account Timeline', subtitle:'Escalations, sentiment, and renewal events', meta:null,                     tl:[{d:'Feb 26',t:'P1 opened · webhook failing since deploy'},{d:'Feb 24',t:'QBR: NPS down 18pts · onboarding cited'},{d:'Feb 20',t:'Champion Sarah Lee changed roles'}] },
+      { title:'Account Timeline', subtitle:'Escalations, sentiment, and renewal events', meta:null,                     tl:[
+        {d:'Mar 1',t:'No response from champion for 12 days · renewal in 47 days'},
+        {d:'Feb 18',t:'P1 opened · webhook failing since deploy · still open'},
+        {d:'Feb 4',t:'QBR: NPS down 18pts · onboarding cited as main pain'},
+        {d:'Jan 22',t:'Champion Sarah Lee changed roles · new stakeholder not engaged yet'}
+      ] },
       { title:'CRM Auto-update',  subtitle:'Sync health and churn risk to your systems', meta:null,                     body:'Health score, open escalations, champion status and churn risk synced to Salesforce & Gainsight.' },
     ],
   },
@@ -76,7 +86,12 @@ const teams = [
     outcomes: [
       { title:'PM Copilot',      subtitle:'Unlimited discovery Q&A and prioritization', meta:null,                          chat:{user:'What should we prioritize this quarter?', ai:"Ship cohort analytics first — #1 requested, \$180K blocked, confirmed by both calls and usage data. Then fix the step 3 drop-off, it's killing retention. Permission bugs are noise compared to those two."} },
       { title:'Feature Demand',  subtitle:'Themes, momentum, and revenue impact',       meta:'8 themes · 3 accelerating',  chart:[44,40,36,31,25,20,16,12], body:'Cohort analytics up 3× in 60 days — 12 enterprise mentions, $180K in deals blocked. Highest-ROI item in your backlog right now.' },
-      { title:'Signal Timeline', subtitle:'Voice-of-customer + usage signals over time', meta:null,                         tl:[{d:'Mar 1',t:'Cohort analytics on 3 enterprise calls in one day'},{d:'Feb 27',t:'34% exit rate at step 3 confirmed in Pendo'},{d:'Feb 24',t:'Permission tickets up 40% after last release'}] },
+      { title:'Signal Timeline', subtitle:'Voice-of-customer + usage signals over time', meta:null,                         tl:[
+        {d:'Mar 3',t:'Cohort analytics on 5 enterprise calls this week · demand accelerating'},
+        {d:'Feb 18',t:'34% exit rate at step 3 confirmed in Pendo · no change in 3 weeks'},
+        {d:'Feb 2',t:'Permission tickets up 40% after last release'},
+        {d:'Jan 20',t:'First spike in "dashboard clarity" mentions in discovery calls'}
+      ] },
       { title:'Data Write-back', subtitle:'Export structured insights to your tools',    meta:null,                         body:'Feature scores and revenue impact auto-exported to Snowflake, Jira, and Productboard.' },
     ],
   },
@@ -148,7 +163,7 @@ const teams = [
                     </ul>
                   </div>
                   <div class="ov-engine-step-top">
-                    <span class="ov-engine-step-name">1. Ingest</span>
+                    <span class="ov-engine-step-name">Ingest</span>
                     <div class="ov-engine-icons" aria-hidden="true">
                       {team.sources.slice(0, 4).map((src) => (
                         <span class="ov-engine-ico" title={src.app}>
@@ -171,13 +186,13 @@ const teams = [
                     </ul>
                   </div>
                   <div class="ov-engine-step-top">
-                    <span class="ov-engine-step-name">2. Understand</span>
+                    <span class="ov-engine-step-name">Understand</span>
                     <span class="ov-engine-step-tag">what matters for you</span>
                   </div>
                   <div class="ov-ai-read" aria-label="AI reading examples">
                     <div class="ov-ai-ind" aria-hidden="true">
                       <span class="ov-ai-dot"></span>
-                      Reading your data…
+                      AI is reading…
                     </div>
                     {team.sources.slice(0, 4).map((src) => (
                       <div class="ov-ai-snippet" data-full={src.sample}>
@@ -213,7 +228,7 @@ const teams = [
                     </ul>
                   </div>
                   <div class="ov-engine-step-top">
-                    <span class="ov-engine-step-name">3. Deliver</span>
+                    <span class="ov-engine-step-name">Deliver</span>
                     <span class="ov-engine-step-tag">into your tools</span>
                   </div>
                   <p class="ov-engine-step-desc">Guidance, scores, and timelines — synced to your CRM and stack so you don’t log it yourself.</p>
@@ -228,7 +243,7 @@ const teams = [
                 {team.outcomes.map((out) => (
                   <div class="ov-out-card"
                     data-has-chat={out.chat ? 'true' : undefined}
-                    data-window-title={out.chat ? (out.title === 'Deal Copilot' ? 'Deal Intelligence' : out.title === 'CSM Copilot' ? 'Account Intelligence' : out.title === 'PM Copilot' ? 'Product Intelligence' : out.title) : undefined}
+                    data-window-title={out.chat ? out.title : undefined}
                     data-has-chart={out.chart ? 'true' : undefined}
                     data-has-tl={out.tl ? 'true' : undefined}
                     data-has-crm={out.title === 'CRM Auto-update' ? 'true' : undefined}
@@ -301,36 +316,48 @@ const teams = [
 <div id="ov-copilot-window-portal" class="ov-copilot-window-portal" aria-hidden="true">
   <div class="ov-copilot-window-item" data-panel="sales">
     <DealIntelligenceWindow
-      title="Deal Intelligence"
+      title="Deal Copilot"
+      contextSummary="Stage: Negotiation · Risk: At risk · Deal value: $120K · Expected close: Mar 15"
+      firstUserText="Tell me about this deal."
+      firstAiText="Acme Corp is in Negotiation with legal and security in the loop. Champion is strong but there's a security objection and VP Eng just joined the committee. Next steps are still blank in Salesforce; close the blocker this week or it slips to Q1."
       userText="What do I need to do before Friday?"
       aiText="Send SOC2 docs to Sarah today. Get your SE on the security call — that's the only real blocker. Log next steps in Salesforce before EOD or this slips to Q1."
+      nextQuestion="Who are the key stakeholders on the buying committee?"
     />
   </div>
   <div class="ov-copilot-window-item" data-panel="cx">
     <DealIntelligenceWindow
-      title="Account Intelligence"
+      title="CSM Copilot"
+      contextSummary="Risk: At risk · Renewal in: 47 days · ARR: $85K · Health score: 44/100"
+      firstUserText="Tell me about this account."
+      firstAiText="Health is falling — two P1s open, champion has been cold for 6 weeks. Renewal in 47 days. Webhook fix and exec re-engagement are the priorities."
       userText="What should I do before this renewal?"
       aiText="Book an exec call this week — your champion has been cold for 6 weeks. Get engineering to commit on the webhook fix, then lead the renewal with a health roadmap showing what's being fixed."
+      nextQuestion="What's driving the drop in health score?"
     />
   </div>
   <div class="ov-copilot-window-item" data-panel="product">
     <DealIntelligenceWindow
-      title="Product Intelligence"
+      title="PM Copilot"
+      contextSummary="Quarter: Q1 · Themes: 8 (3 accelerating) · Top ask: cohort analytics"
+      firstUserText="Tell me about demand this quarter."
+      firstAiText="Cohort analytics is the top theme — $180K blocked, confirmed in calls and usage. Step 3 drop-off is hurting retention; permission bugs are secondary."
       userText="What should we prioritize this quarter?"
       aiText="Ship cohort analytics first — #1 requested, $180K blocked, confirmed by both calls and usage data. Then fix the step 3 drop-off, it's killing retention. Permission bugs are noise compared to those two."
+      nextQuestion="Which segment is asking most for cohort analytics?"
     />
   </div>
 </div>
-<!-- Win Probability / Pipeline Intelligence windows -->
+<!-- Deal Forecast / Account Health / Feature Demand windows -->
 <div id="ov-winprob-portal" class="ov-copilot-window-portal" aria-hidden="true">
-  <div class="ov-copilot-window-item" data-panel="sales"><WinProbabilityWindow title="Pipeline Intelligence" /></div>
-  <div class="ov-copilot-window-item" data-panel="cx"><WinProbabilityWindow title="Deal Health" /></div>
-  <div class="ov-copilot-window-item" data-panel="product"><WinProbabilityWindow title="Pipeline Intelligence" /></div>
+  <div class="ov-copilot-window-item" data-panel="sales"><WinProbabilityWindow title="Deal Forecast" variant="deal" /></div>
+  <div class="ov-copilot-window-item" data-panel="cx"><WinProbabilityWindow title="Account Health" variant="account" /></div>
+  <div class="ov-copilot-window-item" data-panel="product"><WinProbabilityWindow title="Feature Demand" variant="feature" /></div>
 </div>
 <!-- Deal / Account / Signal Timeline windows -->
 <div id="ov-timeline-portal" class="ov-copilot-window-portal" aria-hidden="true">
   <div class="ov-copilot-window-item" data-panel="sales">
-    <InteractionTimelineWindow title="Interaction Timeline" events={teams[0].outcomes.find(o=>o.tl)?.tl ?? []} />
+    <InteractionTimelineWindow title="Deal Timeline" events={teams[0].outcomes.find(o=>o.tl)?.tl ?? []} />
   </div>
   <div class="ov-copilot-window-item" data-panel="cx">
     <InteractionTimelineWindow title="Account Timeline" events={teams[1].outcomes.find(o=>o.tl)?.tl ?? []} />
@@ -341,12 +368,12 @@ const teams = [
 </div>
 <!-- CRM Auto-update / Salesforce Sync windows (Sales, CX) -->
 <div id="ov-crm-portal" class="ov-copilot-window-portal" aria-hidden="true">
-  <div class="ov-copilot-window-item" data-panel="sales"><CRMSyncWindow title="Salesforce Sync" /></div>
-  <div class="ov-copilot-window-item" data-panel="cx"><CRMSyncWindow title="Salesforce Sync" /></div>
+  <div class="ov-copilot-window-item" data-panel="sales"><CRMSyncWindow title="CRM Auto-update" /></div>
+  <div class="ov-copilot-window-item" data-panel="cx"><CRMSyncWindow title="CRM Auto-update" /></div>
 </div>
 <!-- Data Write-back / Destinations window (Product) -->
 <div id="ov-dest-portal" class="ov-copilot-window-portal" aria-hidden="true">
-  <div class="ov-copilot-window-item" data-panel="product"><DestinationsWindow title="Destinations" /></div>
+  <div class="ov-copilot-window-item" data-panel="product"><DestinationsWindow title="Data Write-back" /></div>
 </div>
 
 <script>
@@ -1042,11 +1069,11 @@ const teams = [
   .ov-bbl-u { background:rgba(255,255,255,.05); color:var(--color-muted-foreground); }
   .ov-bbl-a { background:rgba(6,182,212,.14); color:var(--color-foreground); }
 
-  .ov-tl { display:flex; align-items:center; gap:5px; font-size:.75rem; margin-bottom:3px; line-height:1.45; }
+  .ov-tl { display:flex; align-items:flex-start; gap:6px; font-size:.75rem; margin-bottom:4px; line-height:1.45; }
   .ov-tl:last-child { margin-bottom:0; }
-  .ov-tl-dot { width:4px; height:4px; border-radius:50%; background:var(--color-primary); flex-shrink:0; }
-  .ov-tl-d { color:var(--color-muted-foreground); font-weight:600; flex-shrink:0; width:44px; }
-  .ov-tl-t { color:var(--color-muted); }
+  .ov-tl-dot { width:4px; height:4px; border-radius:50%; background:var(--color-primary); flex-shrink:0; margin-top:.4em; }
+  .ov-tl-d { color:var(--color-muted-foreground); font-weight:600; flex-shrink:0; width:44px; line-height:1.45; }
+  .ov-tl-t { color:var(--color-muted-foreground); min-width:0; }
 
   /* Mobile */
   @media (max-width:900px) {
