@@ -25,7 +25,7 @@ const teams = [
     ],
     outcomes: [
       { title:'Deal Copilot',     subtitle:'Unlimited deal Q&A and next-best actions', meta:null,                  chat:{user:'What do I need to do before Friday?', ai:"Send SOC2 docs to Sarah today. Get your SE on the security call — that's the only real blocker. Log next steps in Salesforce before EOD or this slips to Q1."} },
-      { title:'Deal Forecast',     subtitle:'Predict close likelihood and trend',      meta:'74% · trending down', chart:[20,23,27,31,35,39,42,45], body:'Down 12pts in 2 weeks. Security review still open and next steps are missing. Close the blocker this week or this deal moves to Q1.' },
+      { title:'Deal Forecast',     subtitle:'Quarter pipeline vs target · deals at risk', meta:'Q2 forecast · 3 at risk',  chart:[20,23,27,31,35,39,42,45], body:'Pipeline forecast for the quarter: target vs manual vs AI. Top deals at risk from what\'s actually said in calls.' },
       { title:'Deal Timeline',    subtitle:'Key moments, blockers, and momentum',     meta:null,                  tl:[
         {d:'Mar 4',t:'No contact for 7 days after security review'},
         {d:'Feb 24',t:'Security objection raised on Zoom call'},
@@ -348,11 +348,35 @@ const teams = [
     />
   </div>
 </div>
-<!-- Deal Forecast / Account Health / Feature Demand windows -->
+<!-- Deal Forecast / Account Health / Feature Demand windows (data from outcomes) -->
 <div id="ov-winprob-portal" class="ov-copilot-window-portal" aria-hidden="true">
-  <div class="ov-copilot-window-item" data-panel="sales"><WinProbabilityWindow title="Deal Forecast" variant="deal" /></div>
-  <div class="ov-copilot-window-item" data-panel="cx"><WinProbabilityWindow title="Account Health" variant="account" /></div>
-  <div class="ov-copilot-window-item" data-panel="product"><WinProbabilityWindow title="Feature Demand" variant="feature" /></div>
+  <div class="ov-copilot-window-item" data-panel="sales">
+    <WinProbabilityWindow
+      title="Deal Forecast"
+      variant="deal"
+      meta={teams[0].outcomes.find(o => o.chart)?.meta ?? undefined}
+      chart={teams[0].outcomes.find(o => o.chart)?.chart}
+      body={teams[0].outcomes.find(o => o.chart)?.body ?? undefined}
+    />
+  </div>
+  <div class="ov-copilot-window-item" data-panel="cx">
+    <WinProbabilityWindow
+      title="Account Health"
+      variant="account"
+      meta={teams[1].outcomes.find(o => o.chart)?.meta ?? undefined}
+      chart={teams[1].outcomes.find(o => o.chart)?.chart}
+      body={teams[1].outcomes.find(o => o.chart)?.body ?? undefined}
+    />
+  </div>
+  <div class="ov-copilot-window-item" data-panel="product">
+    <WinProbabilityWindow
+      title="Feature Demand"
+      variant="feature"
+      meta={teams[2].outcomes.find(o => o.chart)?.meta ?? undefined}
+      chart={teams[2].outcomes.find(o => o.chart)?.chart}
+      body={teams[2].outcomes.find(o => o.chart)?.body ?? undefined}
+    />
+  </div>
 </div>
 <!-- Deal / Account / Signal Timeline windows -->
 <div id="ov-timeline-portal" class="ov-copilot-window-portal" aria-hidden="true">
@@ -368,8 +392,16 @@ const teams = [
 </div>
 <!-- CRM Auto-update / Salesforce Sync windows (Sales, CX) -->
 <div id="ov-crm-portal" class="ov-copilot-window-portal" aria-hidden="true">
-  <div class="ov-copilot-window-item" data-panel="sales"><CRMSyncWindow title="CRM Auto-update" /></div>
-  <div class="ov-copilot-window-item" data-panel="cx"><CRMSyncWindow title="CRM Auto-update" /></div>
+  <div class="ov-copilot-window-item" data-panel="sales">
+    <div style="transform: scale(0.9); transform-origin: top left;">
+      <CRMSyncWindow title="CRM Auto-update" />
+    </div>
+  </div>
+  <div class="ov-copilot-window-item" data-panel="cx">
+    <div style="transform: scale(0.9); transform-origin: top left;">
+      <CRMSyncWindow title="CRM Auto-update" />
+    </div>
+  </div>
 </div>
 <!-- Data Write-back / Destinations window (Product) -->
 <div id="ov-dest-portal" class="ov-copilot-window-portal" aria-hidden="true">
