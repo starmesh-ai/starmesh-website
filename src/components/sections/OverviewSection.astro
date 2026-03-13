@@ -17,11 +17,14 @@ const teams = [
       'Explainable so you can trust and defend the output',
     ],
     sources: [
-      { app:'Zoom',       logo:'zoom.us',        title:'Call recording',     sample:'Budget is approved but procurement pushed the timeline — new VP Eng needs to sign off first.' },
-      { app:'Gong',       logo:'gong.io',         title:'Deal call notes',    sample:'Champion is strong. Security review is the only real blocker right now.' },
-      { app:'Gmail',      logo:'mail.google.com', title:'Email thread',       sample:'Before we go to signature, can you confirm your SOC2 controls and migration support?' },
-      { app:'Salesforce', logo:'salesforce.com',  title:'Opportunity update', sample:'Stage changed to Commit. Buying committee expanded to include VP Engineering.' },
-      // { app:'HubSpot',    logo:'hubspot.com',     title:'Contact activity',   sample:"VP of Engineering added to deal — first question was about data residency." }, // (hidden for spacing)
+      { app:'Zoom',       logo:'zoom.us',         title:'Call recording',      sample:'Budget is approved but procurement pushed the timeline — new VP Eng needs to sign off first.' },
+      { app:'Gong',       logo:'gong.io',         title:'Deal call notes',     sample:'Champion is strong. Security review is the only real blocker right now.' },
+      { app:'Gmail',      logo:'mail.google.com', title:'Email thread',        sample:'Before we go to signature, can you confirm your SOC2 controls and migration support?' },
+      { app:'Salesforce', logo:'salesforce.com',  title:'Opportunity update',  sample:'Stage changed to Commit. Buying committee expanded to include VP Engineering.' },
+      { app:'HubSpot',    logo:'hubspot.com',     title:'Contact activity',    sample:'VP of Engineering added to deal — first question was about data residency.' },
+      { app:'Slack',      logo:'slack.com',       title:'Deal room channel',   sample:'Security reviewed the DPA — only outstanding item is data residency confirmation.' },
+      { app:'Notion',     logo:'notion.so',       title:'Account notes',       sample:'RevOps added a Mutual Action Plan doc linked to this opportunity.' },
+      { app:'Google Drive', logo:'drive.google.com', title:'Proposal docs',   sample:'Latest MSA and order form uploaded for legal to review before signature.' },
     ],
     outcomes: [
       { title:'Deal Copilot',     subtitle:'Unlimited deal Q&A and next-best actions', meta:null,                  chat:{user:'What do I need to do before Friday?', ai:"Send SOC2 docs to Sarah today. Get your SE on the security call — that's the only real blocker. Log next steps in Salesforce before EOD or this slips to Q1."} },
@@ -47,11 +50,14 @@ const teams = [
       'Explainable so you can trust and defend the output',
     ],
     sources: [
-      { app:'Intercom', logo:'intercom.com',    title:'Support tickets',  sample:'Export issue repeats after every billing cycle close — third time this quarter.' },
-      { app:'Zendesk',  logo:'zendesk.com',     title:'Escalation case',  sample:'P1 raised by enterprise account — webhook retries failing since last deploy.' },
-      { app:'Zoom',     logo:'zoom.us',          title:'QBR recording',    sample:'Team is generally happy but onboarding still felt slow and confusing.' },
-      { app:'Gmail',    logo:'mail.google.com',  title:'Renewal email',    sample:'We need better visibility into our account health before we can commit to renewal.' },
-      // { app:'Slack',    logo:'slack.com',        title:'Customer channel', sample:"Any ETA on the permission bug? It's blocking three of our admin users right now." }, // (hidden for spacing)
+      { app:'Intercom', logo:'intercom.com',     title:'Support tickets',   sample:'Export issue repeats after every billing cycle close — third time this quarter.' },
+      { app:'Zendesk',  logo:'zendesk.com',      title:'Escalation case',   sample:'P1 raised by enterprise account — webhook retries failing since last deploy.' },
+      { app:'Zoom',     logo:'zoom.us',          title:'QBR recording',     sample:'Team is generally happy but onboarding still felt slow and confusing.' },
+      { app:'Gmail',    logo:'mail.google.com',  title:'Renewal email',     sample:'We need better visibility into our account health before we can commit to renewal.' },
+      { app:'Slack',    logo:'slack.com',        title:'Customer channel',  sample:'Any ETA on the permission bug? It’s blocking three of our admin users right now.' },
+      { app:'Statuspage', logo:'statuspage.io',  title:'Incident feed',     sample:'Incident resolved · root cause identified as misconfigured retry policy on webhooks.' },
+      { app:'SurveyMonkey', logo:'surveymonkey.com', title:'CSAT surveys',  sample:'Q4 CSAT dipped to 4.1/5 for onboarding and implementation experience.' },
+      { app:'Gainsight', logo:'gainsight.com',   title:'Health score',      sample:'Health score dropped from 74 to 58 after two unresolved P1 incidents.' },
     ],
     outcomes: [
       { title:'CSM Copilot',      subtitle:'Unlimited account Q&A and renewal guidance', meta:null,                     chat:{user:'What should I do before this renewal?', ai:"Book an exec call this week — your champion has been cold for 6 weeks. Get engineering to commit on the webhook fix, then lead the renewal with a health roadmap showing what's being fixed."} },
@@ -77,11 +83,14 @@ const teams = [
       'Explainable so you can trust and defend the output',
     ],
     sources: [
-      { app:'Gong',     logo:'gong.io',         title:'Call transcripts', sample:'Cohort-level analytics keeps coming up on enterprise calls — heard it three times this week alone.' },
-      { app:'Zoom',     logo:'zoom.us',          title:'Customer calls',   sample:'Dashboard clarity was the top pain point in every PM discovery session this quarter.' },
-      { app:'Pendo',    logo:'pendo.io',         title:'Usage events',     sample:'Drop-off spikes every time users hit the integration settings screen at step 3.' },
-      { app:'Mixpanel', logo:'mixpanel.com',     title:'Behavior cohorts', sample:'Users with two data sources connected retain 2.1× better at 30 days. Single-source users churn fast.' },
-      // { app:'Jira',     logo:'atlassian.com',    title:'Issue backlog',    sample:'Permission-related tickets jumped 40% in the two weeks after the last release.' }, // (hidden for spacing)
+      { app:'Gong',     logo:'gong.io',          title:'Call transcripts',  sample:'Cohort-level analytics keeps coming up on enterprise calls — heard it three times this week alone.' },
+      { app:'Zoom',     logo:'zoom.us',          title:'Customer calls',    sample:'Dashboard clarity was the top pain point in every PM discovery session this quarter.' },
+      { app:'Pendo',    logo:'pendo.io',         title:'Usage events',      sample:'Drop-off spikes every time users hit the integration settings screen at step 3.' },
+      { app:'Mixpanel', logo:'mixpanel.com',     title:'Behavior cohorts',  sample:'Users with two data sources connected retain 2.1× better at 30 days. Single-source users churn fast.' },
+      { app:'Jira',     logo:'atlassian.com',    title:'Issue backlog',     sample:'Permission-related tickets jumped 40% in the two weeks after the last release.' },
+      { app:'Productboard', logo:'productboard.com', title:'Feature requests', sample:'Cohort analytics has 27 separate requests tagged as “critical” from enterprise accounts.' },
+      { app:'Figma',    logo:'figma.com',        title:'Design feedback',   sample:'Dashboard exploration file has 14 comments tagged as “unclear information hierarchy”.' },
+      { app:'Amplitude', logo:'amplitude.com',   title:'Experiment data',   sample:'Treatment group with new onboarding flow retains 16% better at day 30.' },
     ],
     outcomes: [
       { title:'PM Copilot',      subtitle:'Unlimited discovery Q&A and prioritization', meta:null,                          chat:{user:'What should we prioritize this quarter?', ai:"Ship cohort analytics first — #1 requested, \$180K blocked, confirmed by both calls and usage data. Then fix the step 3 drop-off, it's killing retention. Permission bugs are noise compared to those two."} },
@@ -96,21 +105,28 @@ const teams = [
     ],
   },
 ];
+
+// High-res local logos (match IntegrationsSection); fallback to favicon when not present
+const sourceLogos: Record<string, string> = {
+  'Zoom': '/zoom-logo.svg',
+  'Gmail': '/gmail-logo.svg',
+  'Salesforce': '/salesforce-logo.svg',
+  'HubSpot': '/hubspot-logo.svg',
+  'Google Drive': '/google-drive-logo.svg',
+  'Teams': '/microsoft-teams-logo.svg',
+};
+function logoUrl(src: { app: string; logo: string }) {
+  return sourceLogos[src.app] ?? `https://www.google.com/s2/favicons?sz=64&domain=${src.logo}`;
+}
 ---
-<section id="overview" class="scroll-mt-10 py-10 md:py-14 px-6">
+<section id="how-it-works" class="scroll-mt-10 py-10 md:py-14 px-6">
   <div class="max-w-[1320px] mx-auto">
 
     <div class="ov-head">
-      <p class="ov-head-label text-xs text-muted uppercase tracking-widest mb-1 text-center">Overview</p>
-      <div class="ov-head-copy">
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-2">
-          One platform for every <span class="gradient-text">customer-facing team</span>
-        </h2>
-        <p class="text-muted-foreground text-lg max-w-2xl">
-          Conversations in — intelligence out, everywhere you work.
-        </p>
-      </div>
-
+      <p class="ov-head-label text-xs text-muted uppercase tracking-widest mb-1">HOW IT WORKS</p>
+      <h2 class="ov-head-title text-3xl md:text-4xl font-bold tracking-tight mb-3" id="ov-how-heading">
+        Interactions to <span class="gradient-text" id="ov-heading-highlight">Customer Wins</span>
+      </h2>
       <div class="ov-head-tabs">
         <div class="ov-pills" role="tablist" aria-label="Overview teams">
           {teams.map((team, i) => (
@@ -131,12 +147,12 @@ const teams = [
             <div class="ov-src-col">
               <div class="ov-col-head">Sources</div>
               <div class="ov-col-body">
-                {team.sources.map((src) => (
+                {team.sources.slice(0, 4).map((src) => (
                   <div class="ov-src-card">
                     <div class="ov-src-layout">
                       <div class="ov-src-meta">
                         <span class="ov-logo">
-                          <img src={`https://www.google.com/s2/favicons?sz=64&domain=${src.logo}`} alt={src.app} loading="lazy"
+                          <img src={logoUrl(src)} alt={src.app} loading="lazy"
                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/>
                           <span class="ov-logo-fb">{src.app.slice(0,2).toUpperCase()}</span>
                         </span>
@@ -146,6 +162,19 @@ const teams = [
                     </div>
                   </div>
                 ))}
+                {team.sources.length > 4 && (
+                  <div class="ov-src-more">
+                    <div class="ov-src-more-icons" aria-label="Additional sources">
+                      {team.sources.slice(4).map((src) => (
+                        <span class="ov-src-more-ico" title={src.app}>
+                          <img src={logoUrl(src)} alt="" loading="lazy"
+                            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/>
+                          <span class="ov-src-more-fb">{src.app.slice(0,1).toUpperCase()}</span>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -167,7 +196,7 @@ const teams = [
                     <div class="ov-engine-icons" aria-hidden="true">
                       {team.sources.slice(0, 4).map((src) => (
                         <span class="ov-engine-ico" title={src.app}>
-                          <img src={`https://www.google.com/s2/favicons?sz=64&domain=${src.logo}`} alt="" loading="lazy"
+                          <img src={logoUrl(src)} alt="" loading="lazy"
                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/>
                           <span class="ov-engine-ico-fb">{src.app.slice(0,1).toUpperCase()}</span>
                         </span>
@@ -241,36 +270,34 @@ const teams = [
               <div class="ov-col-head ov-col-head-right">Outcomes</div>
               <div class="ov-col-body">
                 {team.outcomes.map((out) => (
-                  <div class="ov-out-card"
+                  <div
+                    class="ov-out-card"
                     data-has-chat={out.chat ? 'true' : undefined}
                     data-window-title={out.chat ? out.title : undefined}
                     data-has-chart={out.chart ? 'true' : undefined}
                     data-has-tl={out.tl ? 'true' : undefined}
                     data-has-crm={out.title === 'CRM Auto-update' ? 'true' : undefined}
-                    data-has-dest={out.title === 'Data Write-back' ? 'true' : undefined}>
+                    data-has-dest={out.title === 'Data Write-back' ? 'true' : undefined}
+                  >
                     <div class="ov-out-head">
                       <div class="ov-out-titles">
                         <div class="ov-out-titleline">
                           <span class="ov-out-name">{out.title}</span>
-                          {out.subtitle && <span class="ov-out-sub">{out.subtitle}</span>}
                         </div>
                       </div>
-                      {out.meta && <span class="ov-out-meta">{out.meta}</span>}
+                      <button
+                        type="button"
+                        class="ov-out-view"
+                        aria-label={`View ${out.title}`}
+                      >
+                        View
+                      </button>
                     </div>
-                    {out.body && <p class="ov-out-body">{out.body}</p>}
-                    {out.chat && (
-                      <>
-                        <div class="ov-bbl-u">{out.chat.user}</div>
-                        <div class="ov-bbl-a">{out.chat.ai}</div>
-                      </>
-                    )}
-                    {out.tl && out.tl.map(row => (
-                      <div class="ov-tl">
-                        <span class="ov-tl-dot"></span>
-                        <span class="ov-tl-d">{row.d}</span>
-                        <span class="ov-tl-t">{row.t}</span>
+                    {out.subtitle && (
+                      <div class="ov-out-subline">
+                        <span class="ov-out-sub">{out.subtitle}</span>
                       </div>
-                    ))}
+                    )}
                   </div>
                 ))}
               </div>
@@ -414,6 +441,12 @@ const teams = [
   const svgEl   = document.getElementById('ov-lines') as SVGSVGElement | null;
   const parser  = new DOMParser();
 
+  const howItWorksHeadings: Record<string, string> = {
+    sales: 'Customer Wins',
+    cx: 'Customer Success',
+    product: 'Product Insights',
+  };
+
   function drawLines() {
     if (!svgEl) return;
     svgEl.querySelectorAll('.ov-dyn').forEach(el => el.remove());
@@ -438,7 +471,8 @@ const teams = [
     const outRX = outR.right - br.left;
     const outCY = outR.top + outR.height / 2 - br.top;
 
-    Array.from(panel.querySelectorAll<HTMLElement>('.ov-src-card')).forEach((card, i) => {
+    const srcCards = Array.from(panel.querySelectorAll<HTMLElement>('.ov-src-card'));
+    srcCards.forEach((card, i) => {
       const cr = card.getBoundingClientRect();
       injectLine(
         cr.right - br.left, cr.top + cr.height / 2 - br.top,
@@ -446,6 +480,17 @@ const teams = [
         'url(#ovGin)', '#0D9488', '#2DD4BF', i * 0.4
       );
     });
+
+    const extraSrcIcons = Array.from(panel.querySelectorAll<HTMLElement>('.ov-src-more-ico'));
+    if (extraSrcIcons.length > 0) {
+      const rightmost = extraSrcIcons[extraSrcIcons.length - 1];
+      const cr = rightmost.getBoundingClientRect();
+      injectLine(
+        cr.right - br.left, cr.top + cr.height / 2 - br.top,
+        inLX, inCY,
+        'url(#ovGin)', '#0D9488', '#2DD4BF', (srcCards.length + 1) * 0.35
+      );
+    }
 
     Array.from(panel.querySelectorAll<HTMLElement>('.ov-out-card')).forEach((card, i) => {
       const cr = card.getBoundingClientRect();
@@ -513,6 +558,8 @@ const teams = [
   function activateTab(id: string) {
     tabs.forEach(t   => t.classList.toggle('active', t.dataset.tab   === id));
     panels.forEach(p => p.classList.toggle('active', p.dataset.panel === id));
+    const highlight = document.getElementById('ov-heading-highlight');
+    if (highlight && howItWorksHeadings[id]) highlight.textContent = howItWorksHeadings[id];
     setTimeout(drawLines, 20);
     setTimeout(() => startAiTypingForActivePanel(), 40);
   }
@@ -676,30 +723,61 @@ const teams = [
     blurOverlay?.setAttribute('aria-hidden', 'true');
   }
 
-  document.querySelectorAll<HTMLElement>('.ov-out-card[data-has-chat="true"]').forEach((card) => {
-    card.addEventListener('mouseenter', () => showWindowForCard(card, copilotPortal));
-    card.addEventListener('mouseleave', () => hideWindow(copilotPortal));
+  function portalForCard(card: HTMLElement) {
+    if (card.getAttribute('data-has-chat') === 'true') return copilotPortal;
+    if (card.getAttribute('data-has-chart') === 'true') return winprobPortal;
+    if (card.getAttribute('data-has-tl') === 'true') return timelinePortal;
+    if (card.getAttribute('data-has-crm') === 'true') return crmPortal;
+    if (card.getAttribute('data-has-dest') === 'true') return destPortal;
+    return null;
+  }
+
+  let activePortal: HTMLElement | null = null;
+  let activeCard: HTMLElement | null = null;
+
+  function showFromView(card: HTMLElement) {
+    const portal = portalForCard(card);
+    if (!portal) return;
+    // Hide any other open portal first.
+    if (activePortal && activePortal !== portal) hideWindow(activePortal);
+    showWindowForCard(card, portal);
+    activePortal = portal;
+    activeCard = card;
+  }
+
+  function hideActive() {
+    if (!activePortal) return;
+    hideWindow(activePortal);
+    activePortal = null;
+    activeCard = null;
+  }
+
+  // Only show windows when interacting with the explicit "View" control.
+  document.querySelectorAll<HTMLButtonElement>('.ov-out-card .ov-out-view').forEach((btn) => {
+    const card = btn.closest<HTMLElement>('.ov-out-card');
+    if (!card) return;
+
+    btn.addEventListener('mouseenter', (e) => {
+      e.stopPropagation();
+      showFromView(card);
+    });
+    btn.addEventListener('mouseleave', (e) => {
+      e.stopPropagation();
+      hideActive();
+    });
+    btn.addEventListener('focus', () => showFromView(card));
+    btn.addEventListener('blur', () => hideActive());
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      // Toggle on click (better for touch devices).
+      if (activeCard === card && activePortal) hideActive();
+      else showFromView(card);
+    });
   });
 
-  document.querySelectorAll<HTMLElement>('.ov-out-card[data-has-chart="true"]').forEach((card) => {
-    card.addEventListener('mouseenter', () => showWindowForCard(card, winprobPortal));
-    card.addEventListener('mouseleave', () => hideWindow(winprobPortal));
-  });
-
-  document.querySelectorAll<HTMLElement>('.ov-out-card[data-has-tl="true"]').forEach((card) => {
-    card.addEventListener('mouseenter', () => showWindowForCard(card, timelinePortal));
-    card.addEventListener('mouseleave', () => hideWindow(timelinePortal));
-  });
-
-  document.querySelectorAll<HTMLElement>('.ov-out-card[data-has-crm="true"]').forEach((card) => {
-    card.addEventListener('mouseenter', () => showWindowForCard(card, crmPortal));
-    card.addEventListener('mouseleave', () => hideWindow(crmPortal));
-  });
-
-  document.querySelectorAll<HTMLElement>('.ov-out-card[data-has-dest="true"]').forEach((card) => {
-    card.addEventListener('mouseenter', () => showWindowForCard(card, destPortal));
-    card.addEventListener('mouseleave', () => hideWindow(destPortal));
-  });
+  // Click anywhere else closes.
+  document.addEventListener('click', () => hideActive());
 
   document.querySelectorAll<HTMLElement>('.ov-engine-step').forEach((step) => {
     const tip = step.querySelector<HTMLElement>('.ov-engine-tip');
@@ -744,21 +822,21 @@ const teams = [
 
 <style>
   /* Header (label full width centered, then copy left, tabs right) */
-  .ov-head { display:grid; grid-template-columns: 1fr auto; gap:8px; align-items:end; margin-bottom:8px; }
-  .ov-head-label { grid-column: 1 / -1; margin-bottom:0; }
-  .ov-head-copy { text-align:left; }
-  .ov-head-tabs { display:flex; justify-content:flex-end; }
+  .ov-head { display:flex; flex-direction:column; align-items:center; text-align:center; margin-bottom:12px; }
+  .ov-head-label { margin:0 0 4px; }
+  .ov-head-title { margin:0 0 12px; }
+  .ov-head-tabs { display:flex; justify-content:center; }
 
   /* Pills */
-  .ov-pills { display:flex; gap:.25rem; background:rgba(255,255,255,.03); border-radius:.7rem; padding:.2rem; width:fit-content; margin:0; }
+  .ov-pills { display:flex; gap:.25rem; background:rgba(255,255,255,.03); border-radius:.7rem; padding:.2rem; width:fit-content; margin:0 auto; }
   .ov-tab { border-radius:.5rem; border:1px solid transparent; padding:.35rem 1.1rem; background:transparent; color:var(--color-muted-foreground); font-weight:600; font-size:.875rem; cursor:pointer; transition:all .18s ease; }
   .ov-tab.active { background:rgba(13,148,136,.22); color:var(--color-primary-foreground); box-shadow:0 4px 14px rgba(13,148,136,.25); border-color:rgba(13,148,136,.25); }
   .ov-tab:hover:not(.active) { background:rgba(13,148,136,.08); color:var(--color-foreground); }
 
-  /* Board */
-  .ov-board { position:relative; border-radius:1.25rem; border:1px solid var(--color-border); background:var(--color-bg); overflow:hidden; box-shadow:0 0 80px rgba(13,148,136,.06), inset 0 1px 0 rgba(255,255,255,.04); }
+  /* Board — neutral container; cards provide the elevation */
+  .ov-board { position:relative; border-radius:1.25rem; border:none; background:var(--color-bg); overflow:hidden; box-shadow:none; }
   .ov-lines { position:absolute; inset:0; pointer-events:none; z-index:2; overflow:visible; }
-  .ov-dotgrid { position:absolute; inset:0; pointer-events:none; background-image:radial-gradient(rgba(255,255,255,.022) 1px,transparent 1px); background-size:22px 22px; }
+  .ov-dotgrid { position:absolute; inset:0; pointer-events:none; background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px); background-size:22px 22px; }
 
   /* Panel */
   .ov-panel { display:none; }
@@ -797,18 +875,58 @@ const teams = [
   .ov-col-head-right::after { background:linear-gradient(90deg, rgba(6,182,212,.85), rgba(6,182,212,.10)); }
   .ov-col-body { flex:1; display:flex; flex-direction:column; gap:6px; justify-content:space-evenly; padding:9px 0 11px; }
 
-  /* LEFT */
+  /* LEFT — source cards: purple tint for visibility on black */
   .ov-src-col { padding:0 0 0 18px; display:flex; flex-direction:column; }
   .ov-src-col .ov-col-body { gap:6px; }
-  .ov-src-card { padding:7px 10px; border-radius:9px; border:1px solid var(--color-border); background:rgba(255,255,255,.02); transition:border-color .2s, background .2s; }
-  .ov-src-card:hover { border-color:var(--color-primary-glow); background:rgba(13,148,136,.05); }
+  .ov-src-card {
+    padding:8px 11px;
+    border-radius:10px;
+    border:1px solid rgba(99,102,241,.28);
+    background:rgba(99,102,241,.08);
+    transition:border-color .2s, background .2s;
+    box-shadow:inset 0 1px 0 rgba(139,92,246,.06);
+  }
+  .ov-src-card:hover { border-color:rgba(129,140,248,.45); background:rgba(99,102,241,.14); }
   .ov-src-layout { display:grid; grid-template-columns:28% 72%; gap:8px; align-items:center; }
   .ov-src-meta { display:flex; flex-direction:column; align-items:flex-start; gap:4px; }
   .ov-logo { width:34px; height:34px; border-radius:7px; background:#fff; overflow:hidden; flex-shrink:0; display:flex; align-items:center; justify-content:center; padding:3px; box-sizing:border-box; }
   .ov-logo img { width:100%; height:100%; object-fit:contain; display:block; }
   .ov-logo-fb { display:none; font-size:.6rem; font-weight:800; color:#fff; background:var(--color-primary); width:100%; height:100%; align-items:center; justify-content:center; border-radius:4px; }
   .ov-src-type { font-size:.7rem; color:var(--color-primary); margin:0; line-height:1.2; font-weight:600; letter-spacing:.01em; }
-  .ov-src-sample { font-size:.75rem; color:var(--color-muted-foreground); line-height:1.45; margin:0; }
+  .ov-src-sample { font-size:.75rem; color:rgba(255,255,255,.78); line-height:1.45; margin:0; }
+  .ov-src-more {
+    margin-top:6px;
+    display:flex;
+    align-items:center;
+  }
+  .ov-src-more-icons {
+    display:flex;
+    flex-wrap:wrap;
+    gap:25px;
+  }
+  .ov-src-more-ico {
+    width:34px;
+    height:34px;
+    border-radius:7px;
+    background:#fff;
+    border:1px solid rgba(15,23,42,.12);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .ov-src-more-ico img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .ov-src-more-fb {
+    display:none;
+    font-size:.6rem;
+    font-weight:700;
+    color:#fff;
+  }
 
   /* CENTER */
   .ov-ai-col { padding:0; display:flex; flex-direction:column; align-items:stretch; }
@@ -1086,16 +1204,63 @@ const teams = [
   /* RIGHT */
   .ov-out-col { padding:0 18px 0 0; display:flex; flex-direction:column; }
   .ov-out-col .ov-col-body { gap:14px; padding:11px 0 13px; }
-  .ov-out-card { border:1px solid rgba(6,182,212,.2); border-radius:11px; background:rgba(6,182,212,.04); padding:11px 13px; transition:border-color .2s, background .2s; }
-  .ov-out-card:hover { border-color:var(--color-primary-glow-strong); background:rgba(6,182,212,.08); }
-  .ov-out-head { display:flex; align-items:center; gap:6px; margin-bottom:5px; }
+  /* RIGHT — outcome cards: purple tint for visibility on black */
+  .ov-out-card {
+    border:1px solid rgba(99,102,241,.28);
+    border-radius:12px;
+    background:rgba(99,102,241,.08);
+    padding:8px 10px 9px;
+    transition:border-color .2s, background .2s, transform .2s ease, box-shadow .2s ease;
+    display:flex;
+    flex-direction:column;
+    min-height:64px;
+    box-shadow:inset 0 1px 0 rgba(139,92,246,.06);
+  }
+  .ov-out-card:hover {
+    border-color:rgba(129,140,248,.45);
+    background:rgba(99,102,241,.14);
+    transform:translateY(-1px);
+    box-shadow:0 8px 24px rgba(99,102,241,.15), inset 0 1px 0 rgba(139,92,246,.08);
+  }
+  .ov-out-head {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    width:100%;
+  }
   .ov-out-titles { min-width:0; flex:1; }
   .ov-out-titleline { display:flex; align-items:baseline; gap:6px; min-width:0; flex-wrap:nowrap; }
-  .ov-out-name { font-size:.8125rem; font-weight:700; color:var(--color-foreground); white-space:nowrap; }
-  .ov-out-sub { font-size:.75rem; color:var(--color-muted-foreground); line-height:1.25; white-space:nowrap; min-width:0; overflow:hidden; text-overflow:ellipsis; }
-  .ov-out-sub::before { content:"—"; opacity:.55; margin-right:6px; }
-  .ov-out-meta { font-size:.75rem; color:var(--color-muted); white-space:nowrap; }
-  .ov-out-body { font-size:.75rem; color:var(--color-muted-foreground); line-height:1.45; margin:0; }
+  .ov-out-name { font-size:.8125rem; font-weight:700; color:rgba(255,255,255,.95); white-space:nowrap; }
+  .ov-out-subline { margin-top:2px; }
+  .ov-out-sub {
+    font-size:.75rem;
+    color:rgba(255,255,255,.72);
+    line-height:1.25;
+    white-space:nowrap;
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .ov-out-meta { font-size:.75rem; color:rgba(255,255,255,.65); white-space:nowrap; }
+  .ov-out-body { font-size:.75rem; color:rgba(255,255,255,.75); line-height:1.45; margin:0; }
+  .ov-out-actions { display:flex; justify-content:flex-end; align-items:center; }
+  .ov-out-view {
+    font-size:.68rem;
+    font-weight:800;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:rgba(255,255,255,.72);
+    padding:0;
+    border:0;
+    background:transparent;
+    cursor:pointer;
+    transition:color .15s ease, transform .15s ease;
+  }
+  .ov-out-view::after { content:" →"; opacity:.9; }
+  .ov-out-view:hover { color:rgba(255,255,255,.92); transform:translateY(-1px); }
+  .ov-out-view:active { transform:translateY(0); }
+  .ov-out-view:focus-visible { outline:none; box-shadow:0 0 0 2px rgba(129,140,248,.35); border-radius:8px; }
 
   .ov-bbl-u,.ov-bbl-a { font-size:.75rem; line-height:1.45; border-radius:5px; padding:4px 7px; margin-bottom:3px; }
   .ov-bbl-a { margin-bottom:0; }
@@ -1110,8 +1275,8 @@ const teams = [
 
   /* Mobile */
   @media (max-width:900px) {
-    .ov-head { grid-template-columns:1fr; align-items:start; gap:12px; margin-bottom:12px; }
-    .ov-head-tabs { justify-content:flex-start; }
+    .ov-head { margin-bottom:14px; }
+    .ov-head-tabs { justify-content:center; }
     .ov-grid { grid-template-columns:1fr; min-height:auto; }
     .ov-src-col,.ov-ai-col { border-right:none; border-bottom:1px solid var(--color-border-subtle); }
     .ov-src-col { padding:16px; }
