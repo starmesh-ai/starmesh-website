@@ -1,9 +1,12 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Navbar from '../components/Navbar.astro';
-import Footer from '../components/Footer.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/nav/Navbar.astro';
+import Footer from '../components/ui/Footer.astro';
 ---
-<Layout title="Terms of Use">
+<BaseLayout
+  title="Terms of Use — Starmesh"
+  description="Starmesh terms of use: acceptance, services, and user responsibilities."
+>
   <Navbar />
   <main class="legal-page">
     <h1>Terms of Use</h1>
@@ -85,75 +88,84 @@ import Footer from '../components/Footer.astro';
     </p>
   </main>
   <Footer />
-</Layout>
+</BaseLayout>
 
 <style>
-.legal-page {
-  max-width: 900px;
-  margin: 4rem auto 2rem auto;
-  padding: 2.5rem 2.5rem 2rem 2.5rem;
-  background: none;
-  border-radius: 0;
-  color: #F4F2FF;
-  font-family: 'Lato', sans-serif;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-.legal-page h1 {
-  font-size: 2.4rem;
-  margin-bottom: 0.5rem;
-  color: #F4F2FF;
-  font-weight: 800;
-  text-align: left;
-}
-.effective-date {
-  color: #E4D6F5;
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
-  text-align: left;
-}
-.legal-page h2 {
-  font-size: 1.5rem;
-  color: #F4F2FF;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  text-align: left;
-}
-.legal-page h3 {
-  font-size: 1.15rem;
-  color: #F4F2FF;
-  font-weight: 600;
-  margin-bottom: 0.7rem;
-  margin-top: 2.2rem;
-  text-align: left;
-}
-.legal-page p, .legal-page ul {
-  font-size: 1.12rem;
-  color: #E4D6F5;
-  margin-bottom: 0.7rem;
-}
-.legal-page ul {
-  padding-left: 1.5rem;
-  margin-bottom: 1.2rem;
-}
-.legal-page li {
-  margin-bottom: 0.5rem;
-  line-height: 1.7;
-}
-.legal-page a {
-  color: #F4F2FF;
-  text-decoration: underline;
-}
-.legal-page a:hover {
-  color: #E4D6F5;
-}
-section {
-  margin-bottom: 1rem;
-}
-@media (max-width: 600px) {
   .legal-page {
-    padding: 1.2rem 0.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 6rem 1.5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
   }
-}
+
+  .legal-page h1 {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 800;
+    margin-bottom: 0.25rem;
+    background: linear-gradient(135deg, #6366F1, #8B5CF6, #A855F7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .effective-date {
+    color: #71717A;
+    font-size: 0.9375rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .legal-page h2 {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: #FAFAFA;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.375rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .legal-page h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #FAFAFA;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .legal-page p,
+  .legal-page ul {
+    font-size: 1rem;
+    color: #A1A1AA;
+    line-height: 1.65;
+    margin-bottom: 0.75rem;
+  }
+
+  .legal-page ul {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .legal-page li {
+    margin-bottom: 0.4rem;
+  }
+
+  .legal-page a {
+    color: #818CF8;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .legal-page a:hover {
+    color: #A855F7;
+    text-decoration: underline;
+  }
+
+  @media (max-width: 640px) {
+    .legal-page {
+      padding: 5rem 1rem 3rem;
+    }
+  }
 </style> 
