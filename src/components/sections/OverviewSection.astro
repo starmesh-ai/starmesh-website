@@ -26,6 +26,7 @@ const teams = [
       { app:'Notion',     logo:'notion.so',       title:'Account notes',       sample:'RevOps added a Mutual Action Plan doc linked to this opportunity.' },
       { app:'Google Drive', logo:'drive.google.com', title:'Proposal docs',   sample:'Latest MSA and order form uploaded for legal to review before signature.' },
     ],
+    signals: ['Budget', 'Timeline', 'Exec', 'Risk', 'Next steps'],
     outcomes: [
       { title:'Deal Copilot',     subtitle:'Unlimited deal Q&A and next-best actions', meta:null,                  chat:{user:'What do I need to do before Friday?', ai:"Send SOC2 docs to Sarah today. Get your SE on the security call — that's the only real blocker. Log next steps in Salesforce before EOD or this slips to Q1."} },
       { title:'Deal Forecast',     subtitle:'Quarter pipeline vs target · deals at risk', meta:'Q2 forecast · 3 at risk',  chart:[20,23,27,31,35,39,42,45], body:'Pipeline forecast for the quarter: target vs manual vs AI. Top deals at risk from what\'s actually said in calls.' },
@@ -59,6 +60,7 @@ const teams = [
       { app:'SurveyMonkey', logo:'surveymonkey.com', title:'CSAT surveys',  sample:'Q4 CSAT dipped to 4.1/5 for onboarding and implementation experience.' },
       { app:'Gainsight', logo:'gainsight.com',   title:'Health score',      sample:'Health score dropped from 74 to 58 after two unresolved P1 incidents.' },
     ],
+    signals: ['Sentiment', 'Churn risk', 'Escalation', 'Champion', 'Health'],
     outcomes: [
       { title:'CSM Copilot',      subtitle:'Unlimited account Q&A and renewal guidance', meta:null,                     chat:{user:'What should I do before this renewal?', ai:"Book an exec call this week — your champion has been cold for 6 weeks. Get engineering to commit on the webhook fix, then lead the renewal with a health roadmap showing what's being fixed."} },
       { title:'Account Health',   subtitle:'Health score and churn risk signals',        meta:'44/100 · falling fast',  chart:[20,22,25,30,38,44,50,54], body:'Down 18pts in 30 days. Two P1s open, champion gone cold, renewal in 47 days. Without intervention this account is on a fast track to churn.' },
@@ -92,6 +94,7 @@ const teams = [
       { app:'Figma',    logo:'figma.com',        title:'Design feedback',   sample:'Dashboard exploration file has 14 comments tagged as “unclear information hierarchy”.' },
       { app:'Amplitude', logo:'amplitude.com',   title:'Experiment data',   sample:'Treatment group with new onboarding flow retains 16% better at day 30.' },
     ],
+    signals: ['Themes', 'Demand', 'Revenue', 'Friction', 'Retention'],
     outcomes: [
       { title:'PM Copilot',      subtitle:'Unlimited discovery Q&A and prioritization', meta:null,                          chat:{user:'What should we prioritize this quarter?', ai:"Ship cohort analytics first — #1 requested, \$180K blocked, confirmed by both calls and usage data. Then fix the step 3 drop-off, it's killing retention. Permission bugs are noise compared to those two."} },
       { title:'Feature Demand',  subtitle:'Themes, momentum, and revenue impact',       meta:'8 themes · 3 accelerating',  chart:[44,40,36,31,25,20,16,12], body:'Cohort analytics up 3× in 60 days — 12 enterprise mentions, $180K in deals blocked. Highest-ROI item in your backlog right now.' },
@@ -106,7 +109,7 @@ const teams = [
   },
 ];
 
-// High-res local logos (match IntegrationsSection); fallback to favicon when not present
+// High-res local logos (match IntegrationsSection); fallback to DuckDuckGo icon service (Google S2 favicon API is unreliable)
 const sourceLogos: Record<string, string> = {
   'Zoom': '/zoom-logo.svg',
   'Gmail': '/gmail-logo.svg',
@@ -116,10 +119,10 @@ const sourceLogos: Record<string, string> = {
   'Teams': '/microsoft-teams-logo.svg',
 };
 function logoUrl(src: { app: string; logo: string }) {
-  return sourceLogos[src.app] ?? `https://www.google.com/s2/favicons?sz=64&domain=${src.logo}`;
+  return sourceLogos[src.app] ?? `https://icons.duckduckgo.com/ip3/${src.logo}.ico`;
 }
 ---
-<section id="how-it-works" class="scroll-mt-10 py-10 md:py-14 px-6">
+<section id="how-it-works" class="scroll-mt-10 pt-10 md:pt-14 pb-16 md:pb-20 px-6">
   <div class="max-w-[1320px] mx-auto">
 
     <div class="ov-head">
@@ -145,7 +148,7 @@ function logoUrl(src: { app: string; logo: string }) {
 
             <!-- LEFT: source cards -->
             <div class="ov-src-col">
-              <div class="ov-col-head">Sources</div>
+              <div class="ov-col-head"><span class="ov-col-step">1</span> Extract Customer Interactions</div>
               <div class="ov-col-body">
                 {team.sources.slice(0, 4).map((src) => (
                   <div class="ov-src-card">
@@ -178,96 +181,46 @@ function logoUrl(src: { app: string; logo: string }) {
               </div>
             </div>
 
-            <!-- CENTER: How it works (clear pipeline, benefit-led) -->
+            <!-- CENTER: What Starmesh Does — Signals + app integrations -->
             <div class="ov-ai-col">
-              <div class="ov-col-head ov-col-head-center">What Starmesh Does</div>
-              <div class="ov-engine" data-engine>
-                <div class="ov-engine-step ov-engine-step-ingest" data-engine-in>
-                  <div class="ov-engine-tip" aria-hidden="true">
-                    <p class="ov-tip-title">Ingest</p>
-                    <ul>
-                      <li>Unify multiple sources into one chronological stream</li>
-                      <li>Security &amp; compliance by design</li>
-                      <li>Privacy-preserving; you control your data</li>
+              <div class="ov-col-head ov-col-head-center"><span class="ov-col-step">2</span> What Starmesh Does</div>
+              <div class="ov-engine ov-engine-signals" data-engine>
+                <!-- 1. Signals: stars image centred, Signals + list to the right -->
+                <div class="ov-signals" data-engine-out>
+                  <div class="ov-signals-left" aria-hidden="true"></div>
+                  <img class="ov-signals-img" src="https://img.icons8.com/ios/100/sparkling.png" width="100" height="100" alt="AI signals" loading="lazy" data-stars-anchor />
+                  <div class="ov-signals-content">
+                    <span class="ov-signals-label">Signals</span>
+                    <ul class="ov-signal-list" aria-label="Signal types we extract">
+                      {team.signals.map((s) => (
+                        <li class="ov-signal-item">{s}</li>
+                      ))}
                     </ul>
                   </div>
-                  <div class="ov-engine-step-top">
-                    <span class="ov-engine-step-name">Ingest</span>
-                    <div class="ov-engine-icons" aria-hidden="true">
-                      {team.sources.slice(0, 4).map((src) => (
-                        <span class="ov-engine-ico" title={src.app}>
+                </div>
+
+                <!-- 2. Cylinder container: source lines go here; one line from here to signals above -->
+                <div class="ov-cylinder" aria-label="Integrations" data-engine-in>
+                  <div class="ov-cylinder-top" aria-hidden="true"></div>
+                  <div class="ov-cylinder-body">
+                    <div class="ov-cylinder-inner">
+                      {team.sources.slice(0, 8).map((src) => (
+                        <span class="ov-cylinder-ico" title={src.app}>
                           <img src={logoUrl(src)} alt="" loading="lazy"
                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/>
-                          <span class="ov-engine-ico-fb">{src.app.slice(0,1).toUpperCase()}</span>
+                          <span class="ov-cylinder-ico-fb">{src.app.slice(0,1).toUpperCase()}</span>
                         </span>
                       ))}
                     </div>
                   </div>
-                  <p class="ov-engine-step-desc">All your conversations and CRM activity in one place — secure and under your control.</p>
-                </div>
-                <div class="ov-engine-connector" aria-hidden="true"><span class="ov-engine-connector-arrow"></span></div>
-
-                <div class="ov-engine-step ov-engine-step-ai" data-engine-in>
-                  <div class="ov-engine-tip" aria-hidden="true">
-                    <p class="ov-tip-title">Understand</p>
-                    <ul>
-                      {(team.aiTip ?? ['Extract and link signals to the right record.']).map((line) => (<li>{line}</li>))}
-                    </ul>
-                  </div>
-                  <div class="ov-engine-step-top">
-                    <span class="ov-engine-step-name">Understand</span>
-                    <span class="ov-engine-step-tag">what matters for you</span>
-                  </div>
-                  <div class="ov-ai-read" aria-label="AI reading examples">
-                    <div class="ov-ai-ind" aria-hidden="true">
-                      <span class="ov-ai-dot"></span>
-                      AI is reading…
-                    </div>
-                    {team.sources.slice(0, 4).map((src) => (
-                      <div class="ov-ai-snippet" data-full={src.sample}>
-                        <div class="ov-ai-sn-head">
-                          <span class="ov-ai-sn-app">{src.app}</span>
-                          <span class="ov-ai-sn-type">{src.title}</span>
-                        </div>
-                        <div class="ov-ai-sn-body"></div>
-                      </div>
-                    ))}
-                  </div>
-                  <p class="ov-ai-explain-label">For {team.label}:</p>
-                  <div class="ov-ai-explain" aria-label="What we extract and link for this team">
-                    <div class="ov-ai-ex-row">
-                      <span class="ov-ai-ex-k">We find</span>
-                      <span class="ov-ai-ex-v">{team.aiExplain?.extract ?? 'key signals and intent'}</span>
-                    </div>
-                    <div class="ov-ai-ex-row">
-                      <span class="ov-ai-ex-k">We tie to</span>
-                      <span class="ov-ai-ex-v">{team.aiExplain?.link ?? 'signals to the right record and timeline moment'}</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="ov-engine-connector" aria-hidden="true"><span class="ov-engine-connector-arrow"></span></div>
-
-                <div class="ov-engine-step ov-engine-step-out" data-engine-out>
-                  <div class="ov-engine-tip" aria-hidden="true">
-                    <p class="ov-tip-title">Deliver</p>
-                    <ul>
-                      <li>Guidance, scores, and timelines in one place</li>
-                      <li>Syncs to your CRM and tools automatically</li>
-                      <li>No manual logging or copy-paste</li>
-                    </ul>
-                  </div>
-                  <div class="ov-engine-step-top">
-                    <span class="ov-engine-step-name">Deliver</span>
-                    <span class="ov-engine-step-tag">into your tools</span>
-                  </div>
-                  <p class="ov-engine-step-desc">Guidance, scores, and timelines — synced to your CRM and stack so you don’t log it yourself.</p>
+                  <p class="ov-cylinder-copy">Unify sources · Security & compliance · Privacy preserving</p>
                 </div>
               </div>
             </div>
 
             <!-- RIGHT: outcome cards -->
             <div class="ov-out-col">
-              <div class="ov-col-head ov-col-head-right">Outcomes</div>
+              <div class="ov-col-head ov-col-head-right"><span class="ov-col-step">3</span> Outcomes</div>
               <div class="ov-col-body">
                 {team.outcomes.map((out) => (
                   <div
@@ -312,12 +265,12 @@ function logoUrl(src: { app: string; logo: string }) {
         <defs>
           <!-- Same gradient/stroke design as Hero.astro -->
           <linearGradient id="ovGin" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#0D9488" stop-opacity="0.3"/>
-            <stop offset="100%" stop-color="#0D9488" stop-opacity="0.7"/>
+            <stop offset="0%" stop-color="#6366F1" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#6366F1" stop-opacity="0.7"/>
           </linearGradient>
           <linearGradient id="ovGout" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#06B6D4" stop-opacity="0.7"/>
-            <stop offset="100%" stop-color="#06B6D4" stop-opacity="0.3"/>
+            <stop offset="0%" stop-color="#818CF8" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#818CF8" stop-opacity="0.3"/>
           </linearGradient>
           <filter id="ovGlow" x="-40%" y="-40%" width="180%" height="180%">
             <feGaussianBlur stdDeviation="3" result="b"/>
@@ -460,46 +413,96 @@ function logoUrl(src: { app: string; logo: string }) {
     const panel = document.querySelector<HTMLElement>('.ov-panel.active');
     if (!panel) return;
 
-    const engineIn = panel.querySelector<HTMLElement>('[data-engine-in]');
-    const engineOut = panel.querySelector<HTMLElement>('[data-engine-out]');
-    if (!engineIn || !engineOut) return;
+    const cylinder = panel.querySelector<HTMLElement>('[data-engine-in]');
+    const signals = panel.querySelector<HTMLElement>('[data-engine-out]');
+    if (!cylinder || !signals) return;
 
-    const inR = engineIn.getBoundingClientRect();
-    const outR = engineOut.getBoundingClientRect();
-    const inLX = inR.left - br.left;
-    const inCY = inR.top + inR.height / 2 - br.top;
-    const outRX = outR.right - br.left;
-    const outCY = outR.top + outR.height / 2 - br.top;
+    const cylR = cylinder.getBoundingClientRect();
+    const sigR = signals.getBoundingClientRect();
+    const cylLX = cylR.left - br.left;
+    const cylCX = cylR.left + cylR.width / 2 - br.left;
+    const cylCY = cylR.top + cylR.height / 2 - br.top;
+    const cylTopY = cylR.top - br.top;
+    const sigBottomY = sigR.bottom - br.top;
+    const sigCX = sigR.left + sigR.width / 2 - br.left;
+    const sigRightX = sigR.right - br.left;
+    const sigCY = sigR.top + sigR.height / 2 - br.top;
 
+    const purpleIn = '#6366F1';
+    const purpleInLight = '#A5B4FC';
+    const purpleOut = '#818CF8';
+    const purpleOutLight = '#C7D2FE';
+
+    // 1. All source cards + extra icons → cylinder (left center)
     const srcCards = Array.from(panel.querySelectorAll<HTMLElement>('.ov-src-card'));
     srcCards.forEach((card, i) => {
       const cr = card.getBoundingClientRect();
       injectLine(
         cr.right - br.left, cr.top + cr.height / 2 - br.top,
-        inLX, inCY,
-        'url(#ovGin)', '#0D9488', '#2DD4BF', i * 0.4
+        cylLX, cylCY,
+        'url(#ovGin)', purpleIn, purpleInLight, i * 0.4
       );
     });
-
     const extraSrcIcons = Array.from(panel.querySelectorAll<HTMLElement>('.ov-src-more-ico'));
     if (extraSrcIcons.length > 0) {
       const rightmost = extraSrcIcons[extraSrcIcons.length - 1];
       const cr = rightmost.getBoundingClientRect();
       injectLine(
         cr.right - br.left, cr.top + cr.height / 2 - br.top,
-        inLX, inCY,
-        'url(#ovGin)', '#0D9488', '#2DD4BF', (srcCards.length + 1) * 0.35
+        cylLX, cylCY,
+        'url(#ovGin)', purpleIn, purpleInLight, (srcCards.length + 1) * 0.35
       );
     }
 
+    // 2. Upward arrow: container (top center) → AI stars image (bottom center)
+    const starsImg = panel.querySelector<HTMLElement>('[data-stars-anchor]');
+    if (starsImg) {
+      const imgR = starsImg.getBoundingClientRect();
+      const starsX = imgR.left + imgR.width / 2 - br.left;
+      const starsBottomY = imgR.bottom - br.top;
+      injectUpwardArrow(cylCX, cylTopY, starsX, starsBottomY);
+    }
+
+    // 3. Signals (right center) → each outcome card (one origin, splits to multiple)
     Array.from(panel.querySelectorAll<HTMLElement>('.ov-out-card')).forEach((card, i) => {
       const cr = card.getBoundingClientRect();
       injectLine(
-        outRX, outCY,
+        sigRightX, sigCY,
         cr.left - br.left, cr.top + cr.height / 2 - br.top,
-        'url(#ovGout)', '#06B6D4', '#22D3EE', i * 0.5
+        'url(#ovGout)', purpleOut, purpleOutLight, i * 0.5
       );
     });
+  }
+
+  function injectUpwardArrow(fromX: number, fromY: number, toX: number, toY: number) {
+    if (!svgEl) return;
+    const arrowW = 10;
+    const baseY = toY + arrowW;
+    const mid = ((fromX + toX) / 2).toFixed(1);
+    const X1 = fromX.toFixed(1), Y1 = fromY.toFixed(1);
+    const X2 = toX.toFixed(1), Y2 = baseY.toFixed(1);
+    const d = `M${X1},${Y1} C${mid},${Y1} ${mid},${Y2} ${X2},${Y2}`;
+    const tipY = toY.toFixed(1);
+    const baseYStr = baseY.toFixed(1);
+    const leftX = (toX - arrowW).toFixed(1);
+    const rightX = (toX + arrowW).toFixed(1);
+    const poly = `${toX.toFixed(1)},${tipY} ${leftX},${baseYStr} ${rightX},${baseYStr}`;
+    const purple = '#6366F1';
+    const purpleLight = '#A5B4FC';
+    const doc = parser.parseFromString(`<svg xmlns="http://www.w3.org/2000/svg">
+      <g class="ov-dyn">
+        <path d="${d}" fill="none" stroke="${purple}" stroke-width="2" stroke-dasharray="6 6" stroke-opacity="0.9"/>
+        <circle r="3.5" fill="${purple}" filter="url(#ovGlow)">
+          <animateMotion dur="2.8s" repeatCount="indefinite" begin="0s" path="${d}"/>
+        </circle>
+        <circle r="2.5" fill="${purpleLight}" opacity="0.7">
+          <animateMotion dur="2.8s" repeatCount="indefinite" begin="0.35s" path="${d}"/>
+        </circle>
+        <polygon points="${poly}" fill="${purple}" stroke="${purple}" stroke-width="1.5"/>
+      </g>
+    </svg>`, 'image/svg+xml');
+    const g = doc.documentElement.firstElementChild;
+    if (g) svgEl.appendChild(document.adoptNode(g));
   }
 
   // Same line design as Hero.astro: dashed path with gradient stroke + animated flow dots with glow
@@ -814,8 +817,8 @@ function logoUrl(src: { app: string; logo: string }) {
   if (teamParam && [...tabs].some(t => t.dataset.tab === teamParam)) {
     activateTab(teamParam);
     requestAnimationFrame(() => {
-      const pills = document.querySelector('.ov-pills');
-      if (pills) window.scrollTo({ top: pills.getBoundingClientRect().top + scrollY - 80, behavior: 'smooth' });
+      const section = document.getElementById('how-it-works');
+      if (section) window.scrollTo({ top: section.getBoundingClientRect().top + scrollY - 40, behavior: 'smooth' });
     });
   }
 </script>
@@ -830,8 +833,8 @@ function logoUrl(src: { app: string; logo: string }) {
   /* Pills */
   .ov-pills { display:flex; gap:.25rem; background:rgba(255,255,255,.03); border-radius:.7rem; padding:.2rem; width:fit-content; margin:0 auto; }
   .ov-tab { border-radius:.5rem; border:1px solid transparent; padding:.35rem 1.1rem; background:transparent; color:var(--color-muted-foreground); font-weight:600; font-size:.875rem; cursor:pointer; transition:all .18s ease; }
-  .ov-tab.active { background:rgba(13,148,136,.22); color:var(--color-primary-foreground); box-shadow:0 4px 14px rgba(13,148,136,.25); border-color:rgba(13,148,136,.25); }
-  .ov-tab:hover:not(.active) { background:rgba(13,148,136,.08); color:var(--color-foreground); }
+  .ov-tab.active { background:rgba(99,102,241,.22); color:var(--color-primary-foreground); box-shadow:0 4px 14px rgba(99,102,241,.25); border-color:rgba(99,102,241,.25); }
+  .ov-tab:hover:not(.active) { background:rgba(99,102,241,.08); color:var(--color-foreground); }
 
   /* Board — neutral container; cards provide the elevation */
   .ov-board { position:relative; border-radius:1.25rem; border:none; background:var(--color-bg); overflow:hidden; box-shadow:none; }
@@ -844,20 +847,33 @@ function logoUrl(src: { app: string; logo: string }) {
   @keyframes ovFade { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
 
   /* Grid */
-  .ov-grid { display:grid; grid-template-columns:0.85fr 1.1fr 0.88fr; column-gap:16px; position:relative; z-index:1; min-height:clamp(360px, 49vh, 480px); }
+  .ov-grid { display:grid; grid-template-columns:0.85fr 1.1fr 0.88fr; column-gap:24px; position:relative; z-index:1; min-height:clamp(460px, 60vh, 580px); }
 
-  /* Column headers (premium clarity) */
+  /* Column headers (premium clarity) — title case, not forced uppercase */
   .ov-col-head {
-    padding:9px 14px 5px;
+    padding:14px 14px 10px;
     display:flex;
     align-items:center;
     justify-content:flex-start;
-    font-size:.7rem;
+    gap:10px;
+    font-size:.8125rem;
     font-weight:700;
-    letter-spacing:.06em;
-    text-transform:uppercase;
-    color:rgba(255,255,255,.78);
+    letter-spacing:.04em;
+    color:rgba(255,255,255,.82);
     position:relative;
+  }
+  .ov-col-step {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    background:rgba(99,102,241,.35);
+    color:rgba(255,255,255,.95);
+    font-size:.65rem;
+    font-weight:800;
+    flex-shrink:0;
   }
   .ov-col-head::after {
     content:'';
@@ -867,17 +883,17 @@ function logoUrl(src: { app: string; logo: string }) {
     width:22px;
     height:2px;
     border-radius:999px;
-    background:linear-gradient(90deg, rgba(13,148,136,.95), rgba(6,182,212,.10));
+    background:linear-gradient(90deg, rgba(99,102,241,.95), rgba(129,140,248,.10));
     opacity:.9;
   }
   .ov-col-head-center { justify-content:center; }
-  .ov-col-head-center::after { left:50%; transform:translateX(-50%); background:linear-gradient(90deg, rgba(13,148,136,.55), rgba(6,182,212,.55)); }
-  .ov-col-head-right::after { background:linear-gradient(90deg, rgba(6,182,212,.85), rgba(6,182,212,.10)); }
-  .ov-col-body { flex:1; display:flex; flex-direction:column; gap:6px; justify-content:space-evenly; padding:9px 0 11px; }
+  .ov-col-head-center::after { left:50%; transform:translateX(-50%); background:linear-gradient(90deg, rgba(99,102,241,.55), rgba(129,140,248,.55)); }
+  .ov-col-head-right::after { background:linear-gradient(90deg, rgba(129,140,248,.85), rgba(99,102,241,.10)); }
+  .ov-col-body { flex:1; display:flex; flex-direction:column; gap:10px; justify-content:space-evenly; padding:16px 0 18px; }
 
   /* LEFT — source cards: purple tint for visibility on black */
   .ov-src-col { padding:0 0 0 18px; display:flex; flex-direction:column; }
-  .ov-src-col .ov-col-body { gap:6px; }
+  .ov-src-col .ov-col-body { gap:10px; }
   .ov-src-card {
     padding:8px 11px;
     border-radius:10px;
@@ -936,7 +952,155 @@ function logoUrl(src: { app: string; logo: string }) {
     margin-left:auto;
     margin-right:auto;
   }
-  .ov-engine { flex:1; display:flex; flex-direction:column; justify-content:center; gap:9px; padding:11px 6px 13px; }
+  .ov-engine { flex:1; display:flex; flex-direction:column; justify-content:center; gap:16px; padding:18px 10px 24px; }
+  /* Signals middle section (What Starmesh Does) */
+  .ov-engine-signals { gap:28px; padding:24px 14px 28px; align-items:center; }
+  /* 1. Signals — stars image at centre, Signals + list to the right; pushed down slightly */
+  .ov-signals {
+    display:flex;
+    align-items:center;
+    gap:20px;
+    padding:0;
+    width:100%;
+    margin-top:24px;
+  }
+  .ov-signals-left {
+    flex:1;
+    min-width:0;
+  }
+  .ov-signals-img {
+    width:72px;
+    height:72px;
+    object-fit:contain;
+    flex-shrink:0;
+    filter:brightness(0) invert(1);
+    opacity:.92;
+  }
+  .ov-signals-content {
+    flex:1;
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .ov-signals-label {
+    font-weight:800;
+    font-size:1.05rem;
+    letter-spacing:-.03em;
+    color:rgba(255,255,255,.96);
+    line-height:1.2;
+  }
+  .ov-signal-list {
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .ov-signal-item {
+    font-size:.8rem;
+    font-weight:500;
+    letter-spacing:.02em;
+    color:rgba(255,255,255,.75);
+    padding:0;
+    line-height:1.35;
+    position:relative;
+    padding-left:16px;
+  }
+  .ov-signal-item::before {
+    content:'';
+    position:absolute;
+    left:0;
+    top:50%;
+    transform:translateY(-50%);
+    width:4px;
+    height:4px;
+    border-radius:50%;
+    background:linear-gradient(135deg, rgba(99,102,241,.9), rgba(129,140,248,.9));
+    box-shadow:0 0 8px rgba(99,102,241,.4);
+  }
+
+  /* 2. Cylinder — unified look with subtle purple tint to match section */
+  .ov-cylinder {
+    margin-top:62px;
+    margin-left:auto;
+    margin-right:auto;
+    position:relative;
+    width:100%;
+    max-width:280px;
+    filter:drop-shadow(0 0 20px rgba(99,102,241,.08));
+  }
+  .ov-cylinder-top {
+    width:100%;
+    height:14px;
+    border-radius:50%;
+    background:linear-gradient(180deg,
+      rgba(255,255,255,.22) 0%,
+      rgba(129,140,248,.12) 40%,
+      rgba(99,102,241,.06) 100%);
+    border:1px solid rgba(129,140,248,.35);
+    box-shadow:inset 0 1px 2px rgba(255,255,255,.2), 0 2px 10px rgba(0,0,0,.25);
+    margin-bottom:-7px;
+    z-index:1;
+    position:relative;
+  }
+  .ov-cylinder-body {
+    position:relative;
+    border-radius:0 0 24px 24px;
+    border:1px solid rgba(129,140,248,.28);
+    border-top:none;
+    background:linear-gradient(180deg,
+      rgba(129,140,248,.08) 0%,
+      rgba(99,102,241,.06) 8%,
+      rgba(255,255,255,.06) 25%,
+      rgba(255,255,255,.10) 50%,
+      rgba(255,255,255,.06) 75%,
+      rgba(99,102,241,.05) 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.06),
+      inset 0 0 28px rgba(0,0,0,.12),
+      inset 2px 0 10px rgba(0,0,0,.06),
+      inset -2px 0 10px rgba(0,0,0,.06),
+      0 0 0 1px rgba(99,102,241,.06);
+    padding:26px 16px 24px;
+    min-height:108px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .ov-cylinder-inner {
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:10px 12px;
+    align-items:center;
+    justify-items:center;
+  }
+  .ov-cylinder-ico {
+    width:28px;
+    height:28px;
+    border-radius:8px;
+    background:linear-gradient(145deg, rgba(255,255,255,.98), rgba(241,245,255,.95));
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:3px;
+    box-sizing:border-box;
+    border:1px solid rgba(129,140,248,.2);
+    box-shadow:0 1px 3px rgba(0,0,0,.15), inset 0 1px 0 rgba(255,255,255,.6);
+  }
+  .ov-cylinder-ico img { width:100%; height:100%; object-fit:contain; display:block; }
+  .ov-cylinder-ico-fb { display:none; font-size:.6rem; font-weight:900; color:#fff; background:var(--color-primary); width:100%; height:100%; align-items:center; justify-content:center; border-radius:5px; }
+  .ov-cylinder-copy {
+    margin:10px 0 0;
+    font-size:.7rem;
+    font-weight:600;
+    letter-spacing:.02em;
+    color:rgba(255,255,255,.65);
+    line-height:1.35;
+    text-align:center;
+  }
   .ov-engine-step-ingest .ov-engine-step-desc,
   .ov-engine-step-out .ov-engine-step-desc { margin-top:5px; }
   .ov-engine-step {
@@ -1181,10 +1345,10 @@ function logoUrl(src: { app: string; logo: string }) {
     width:4px;
     height:4px;
     border-radius:50%;
-    background:linear-gradient(135deg, #0D9488, #06B6D4);
+    background:linear-gradient(135deg, #6366F1, #818CF8);
     flex-shrink:0;
     margin-top:6px;
-    box-shadow:0 0 8px rgba(6,182,212,.35);
+    box-shadow:0 0 8px rgba(99,102,241,.35);
   }
 
   /* Blur overlay — four panels covering viewport except .ov-out-col. Instant show (no transition) so it appears with the window; transition only on hide. */
@@ -1250,15 +1414,16 @@ function logoUrl(src: { app: string; logo: string }) {
     font-weight:800;
     letter-spacing:.06em;
     text-transform:uppercase;
-    color:rgba(255,255,255,.72);
+    color:rgba(255,255,255,.85);
     padding:0;
     border:0;
     background:transparent;
     cursor:pointer;
-    transition:color .15s ease, transform .15s ease;
+    white-space:nowrap;
+    transition:color .15s ease;
   }
   .ov-out-view::after { content:" →"; opacity:.9; }
-  .ov-out-view:hover { color:rgba(255,255,255,.92); transform:translateY(-1px); }
+  .ov-out-view:hover { color:rgba(255,255,255,1); }
   .ov-out-view:active { transform:translateY(0); }
   .ov-out-view:focus-visible { outline:none; box-shadow:0 0 0 2px rgba(129,140,248,.35); border-radius:8px; }
 

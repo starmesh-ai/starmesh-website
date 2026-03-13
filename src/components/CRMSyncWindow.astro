@@ -41,7 +41,7 @@ const { title } = Astro.props;
       <!-- Global header -->
       <div class="sf-global">
         <div class="sf-global-left">
-          <div class="sf-cloud" aria-hidden="true"></div>
+          <img src="/salesforce-logo.svg" alt="" class="sf-cloud" width="24" height="18" aria-hidden="true" />
           <span class="sf-app">Salesforce</span>
         </div>
         <div class="sf-search">
@@ -150,7 +150,7 @@ const { title } = Astro.props;
               </div>
             </div>
 
-            <div class="sf-card wide">
+            <div class="sf-card wide sf-field-history">
               <div class="sf-card-top">
                 <div class="sf-card-title">
                   <span class="sf-card-ico hist" aria-hidden="true"></span>
@@ -258,14 +258,8 @@ const { title } = Astro.props;
   }
   .sf-global-left{display:flex;align-items:center;gap:8px;flex-shrink:0}
   .sf-cloud{
-    width:24px;height:18px;border-radius:9px;
-    background:linear-gradient(180deg,#2fb0ff,#1976d2);
-    position:relative;
-    box-shadow:0 1px 0 rgba(0,0,0,.10) inset;
+    width:24px;height:18px;object-fit:contain;flex-shrink:0;
   }
-  .sf-cloud:before,.sf-cloud:after{content:"";position:absolute;background:inherit;border-radius:999px}
-  .sf-cloud:before{width:12px;height:12px;left:-4px;top:3px}
-  .sf-cloud:after{width:12px;height:12px;right:-5px;top:4px}
   .sf-app{font-weight:700;font-size:14px;color:#1f2a3a}
   .sf-search{
     flex:0 1 300px;
@@ -580,6 +574,10 @@ const { title } = Astro.props;
     overflow:hidden;
   }
   .sf-card.wide{border-radius:14px;display:flex;flex-direction:column;min-height:0}
+  .sf-card.sf-field-history{
+    box-shadow:0 0 0 2px rgba(99,102,241,0.45), 0 0 24px rgba(99,102,241,0.15);
+    border:1px solid rgba(99,102,241,0.35);
+  }
   .sf-card.compact{padding:0}
   .sf-card-title{
     display:flex;
