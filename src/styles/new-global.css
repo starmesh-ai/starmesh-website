@@ -1,19 +1,45 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Inter', system-ui, sans-serif;
+  /* System font stack: SF on macOS, Segoe UI on Windows, Roboto on Android. No network request, native feel, excellent readability. Use a webfont (e.g. Inter) if you need identical look across all devices. */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --color-bg: #09090B;
   --color-card: #111114;
   --color-border: rgba(255,255,255,0.07);
   --color-accent-from: #6366F1;
   --color-accent-to: #8B5CF6;
   --color-text: #FAFAFA;
-  --color-muted: #A1A1AA;
+
+  /* Semantic palette — purple theme (change here to update site-wide) */
+  --color-primary: #6366F1;
+  --color-primary-foreground: #FAFAFA;
+  --color-foreground: #FAFAFA;
+  --color-muted: #71717A;
+  --color-muted-foreground: #A1A1AA;
+  --color-success: #4ADE80;
+  --color-warning: #FACC15;
+  --color-danger: #F97373;
+  --color-border-subtle: rgba(255,255,255,0.04);
+  --color-primary-glow: rgba(99,102,241,0.35);
+  --color-primary-glow-strong: rgba(139,92,246,0.5);
+}
+
+/* Section glow — used in Hero and CTA so the same style is guaranteed. Strong enough to be visible on dark bg. */
+.section-glow-orb {
+  width: 800px;
+  height: 400px;
+  border-radius: 9999px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(99, 102, 241, 0.22) 0%,
+    rgba(139, 92, 246, 0.12) 50%,
+    transparent 70%
+  );
 }
 
 /* Base resets */
 html { scroll-behavior: smooth; }
-body { background: #09090B; color: #FAFAFA; font-family: 'Inter', sans-serif; }
+body { background: var(--color-bg); color: var(--color-text); font-family: var(--font-sans); overflow-x: hidden; }
 *, *::before, *::after { box-sizing: border-box; }
 
 /* Gradient text utility */
@@ -24,36 +50,62 @@ body { background: #09090B; color: #FAFAFA; font-family: 'Inter', sans-serif; }
   background-clip: text;
 }
 
-/* Gradient button */
+/* Primary button — sleek, compact */
 .btn-primary {
-  background: linear-gradient(135deg, #6366F1, #8B5CF6);
+  position: relative;
+  background: linear-gradient(135deg, #4F46E5 0%, #6366F1 45%, #8B5CF6 100%);
   color: white;
   border: none;
-  border-radius: 8px;
-  padding: 0.625rem 1.5rem;
-  font-weight: 600;
-  transition: opacity 0.2s, transform 0.2s;
+  border-radius: 6px;
+  padding: 0.5rem 1.25rem;
+  font-weight: 500;
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
   text-decoration: none;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15) inset, 0 1px 2px rgba(0, 0, 0, 0.12);
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
-.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset, 0 4px 12px rgba(129, 140, 248, 0.3);
+}
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2) inset;
+}
 
+/* Ghost / secondary button */
 .btn-ghost {
   background: transparent;
-  color: #FAFAFA;
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 8px;
-  padding: 0.625rem 1.5rem;
+  color: var(--color-text);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 0.5rem 1.25rem;
   font-weight: 500;
-  transition: border-color 0.2s, transform 0.2s;
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
   text-decoration: none;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
-.btn-ghost:hover { border-color: rgba(255,255,255,0.4); transform: translateY(-1px); }
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.btn-ghost:active {
+  transform: translateY(0);
+}
 
 /* Marquee */
 @keyframes marquee {
@@ -85,13 +137,13 @@ body { background: #09090B; color: #FAFAFA; font-family: 'Inter', sans-serif; }
 
 /* Card base */
 .card {
-  background: #111114;
-  border: 1px solid rgba(255,255,255,0.07);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   transition: all 0.2s;
 }
 .card:hover {
-  border-color: rgba(99,102,241,0.35);
+  border-color: var(--color-primary-glow);
   transform: translateY(-2px);
 }
 

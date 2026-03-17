@@ -1,146 +1,54 @@
 ---
+import WinProbabilityWindow from '../WinProbabilityWindow.astro';
+import DealIntelligenceWindow from '../DealIntelligenceWindow.astro';
+import InteractionTimelineWindow from '../InteractionTimelineWindow.astro';
+import CRMSyncWindow from '../CRMSyncWindow.astro';
 ---
-<section id="benefits" class="py-24 px-6">
+<section id="features" class="py-24 px-6">
   <div class="max-w-5xl mx-auto">
     <div class="text-center mb-16">
-      <p class="text-xs text-[#71717A] uppercase tracking-widest mb-3">Platform</p>
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">Everything your team needs, nothing they won't use</h2>
+      <p class="text-xs text-[#71717A] uppercase tracking-widest mb-3">Features</p>
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">Everything your team needs, <span class="gradient-text">nothing they won't use</span></h2>
       <p class="text-[#A1A1AA] text-lg max-w-2xl mx-auto">A ready-to-use UI on top of your warehouse — or pipe signals directly into your existing BI stack. Your choice.</p>
     </div>
 
     <!-- AI Outcomes: 2-per-row -->
     <div class="mb-28">
-      <p class="text-xs text-[#52525B] uppercase tracking-widest font-semibold mb-12">Outcomes</p>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-16">
+      <div class="mb-12"></div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-16 items-start">
 
-        <!-- PWin -->
-        <div>
-          <div class="flex items-center gap-2.5 mb-1">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#818CF8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
-            <h3 class="font-semibold text-[#FAFAFA]">PWin</h3>
-            <span class="text-[12px] text-[#52525B] uppercase tracking-wider">Predicted Win Probability</span>
-          </div>
-          <p class="text-sm text-[#71717A] leading-relaxed mb-5">AI-scored deal win probability driven by what's actually said — not just stage or activity.</p>
-          <div class="rounded-xl overflow-hidden" style="background:#0c0c10; border:1px solid rgba(255,255,255,0.1); box-shadow:0 8px 40px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.03);">
-            <div class="flex items-center px-4 py-2.5 border-b border-white/[0.06]" style="background:#111118;">
-              <div class="flex gap-1.5 flex-shrink-0">
-                <span class="w-2.5 h-2.5 rounded-full" style="background:#FF5F56;"></span>
-                <span class="w-2.5 h-2.5 rounded-full" style="background:#FFBD2E;"></span>
-                <span class="w-2.5 h-2.5 rounded-full" style="background:#27C93F;"></span>
-              </div>
-              <span class="text-[11px] text-[#71717A] flex-1 text-center font-medium">Starmesh · Pipeline Intelligence</span>
-              <div style="width:52px;" class="flex-shrink-0"></div>
+        <!-- Deal Forecast — quarterly pipeline forecast from calls -->
+        <div class="flex flex-col">
+          <div class="min-h-[7.5rem]">
+            <div class="flex items-center gap-2.5 mb-1">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#818CF8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+              <h3 class="font-semibold text-[#FAFAFA]">Deal Forecast</h3>
+              <span class="text-[12px] text-[#52525B] uppercase tracking-wider">Quarterly pipeline from your calls</span>
             </div>
-            <div class="flex" style="height:272px;">
-              <div class="flex flex-col flex-shrink-0" style="width:110px; background:#0a0a0d; border-right:1px solid rgba(255,255,255,0.05);">
-                <div class="px-3 py-2 border-b border-white/[0.04]"><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold">Quarter</p></div>
-                {["Q1 2025","Q2 2025","Q3 2025","Q4 2025"].map((q,i) => (
-                  <div class={`px-3 py-2.5 border-b border-white/[0.03] ${i===1?'bg-indigo-500/10 border-l-2 border-l-indigo-500/70':''}`}>
-                    <p class={`text-[11px] ${i===1?'text-[#E4E4E7] font-semibold':'text-[#52525B]'}`}>{q}</p>
-                  </div>
-                ))}
-                <div class="px-3 pt-3 mt-auto border-t border-white/[0.04]">
-                  <p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold mb-2">Filter</p>
-                  {[{l:"All",active:true},{l:"At risk",active:false},{l:"Healthy",active:false}].map(f=>(
-                    <p class={`text-[11px] py-0.5 ${f.active?'text-[#A1A1AA] font-semibold':'text-[#3F3F46]'}`}>{f.l}</p>
-                  ))}
-                </div>
-              </div>
-              <div class="flex-1 flex flex-col overflow-hidden">
-                <div class="grid grid-cols-3 divide-x divide-white/[0.05] border-b border-white/[0.05] flex-shrink-0">
-                  <div class="px-3 py-2.5 text-center"><p class="text-base font-bold text-[#FAFAFA]">18</p><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider mt-0.5">Active</p></div>
-                  <div class="px-3 py-2.5 text-center"><p class="text-base font-bold text-indigo-400">0.67</p><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider mt-0.5">Avg PWin</p></div>
-                  <div class="px-3 py-2.5 text-center"><p class="text-base font-bold text-red-400">3</p><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider mt-0.5">At risk</p></div>
-                </div>
-                <div class="flex-1 divide-y divide-white/[0.04] overflow-hidden">
-                  {[
-                    {name:"Acme Corp",  stage:"Negotiation",pwin:74,risk:"medium"},
-                    {name:"FinCo Ltd",  stage:"Closing",    pwin:88,risk:"low"   },
-                    {name:"Meridian",   stage:"Discovery",  pwin:41,risk:"high"  },
-                    {name:"Brightwave", stage:"Demo",       pwin:79,risk:"low"   },
-                  ].map(r=>(
-                    <div class="flex items-center px-3 py-2.5 gap-2">
-                      <div class="flex-1 min-w-0"><p class="text-[12px] font-medium text-[#E4E4E7] truncate">{r.name}</p><p class="text-[10px] text-[#52525B]">{r.stage}</p></div>
-                      <div class="flex items-center gap-1.5 flex-shrink-0">
-                        <div class="w-12 h-1.5 rounded-full bg-white/[0.06]"><div class={`h-1.5 rounded-full ${r.pwin>=60?'bg-indigo-500':'bg-red-500'} opacity-70`} style={`width:${r.pwin}%`}></div></div>
-                        <span class={`text-[11px] font-mono font-bold w-6 text-right ${r.pwin>=60?'text-indigo-400':'text-red-400'}`}>{r.pwin}%</span>
-                      </div>
-                      <span class={`text-[10px] px-1.5 py-0.5 rounded border font-medium w-12 text-center flex-shrink-0 ${r.risk==='high'?'text-red-400 bg-red-500/10 border-red-500/20':r.risk==='medium'?'text-yellow-400 bg-yellow-500/10 border-yellow-500/20':'text-green-400 bg-green-500/10 border-green-500/20'}`}>{r.risk}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <p class="text-sm text-[#A1A1AA] leading-relaxed mb-5">Quarter forecast: target vs manual vs AI. See which deals are at risk — all driven by what's actually said in calls, not just stage.</p>
           </div>
+          <WinProbabilityWindow
+            title="Deal Forecast"
+            variant="deal"
+            compact
+          />
         </div>
 
-        <!-- EWI -->
-        <div>
-          <div class="flex items-center gap-2.5 mb-1">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/></svg>
-            <h3 class="font-semibold text-[#FAFAFA]">EWI</h3>
-            <span class="text-[12px] text-[#52525B] uppercase tracking-wider">Early Warning Indicator</span>
-          </div>
-          <p class="text-sm text-[#71717A] leading-relaxed mb-5">Catch at-risk deals weeks before they miss forecast using leading signals from every conversation.</p>
-          <div class="rounded-xl overflow-hidden" style="background:#0c0c10; border:1px solid rgba(255,255,255,0.1); box-shadow:0 8px 40px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.03);">
-            <div class="flex items-center px-4 py-2.5 border-b border-white/[0.06]" style="background:#111118;">
-              <div class="flex gap-1.5 flex-shrink-0">
-                <span class="w-2.5 h-2.5 rounded-full" style="background:#FF5F56;"></span>
-                <span class="w-2.5 h-2.5 rounded-full" style="background:#FFBD2E;"></span>
-                <span class="w-2.5 h-2.5 rounded-full" style="background:#27C93F;"></span>
-              </div>
-              <span class="text-[11px] text-[#71717A] flex-1 text-center font-medium">Starmesh · Risk Alerts</span>
-              <div style="width:52px;" class="flex-shrink-0"></div>
+        <!-- Risk Alerts — same design system as Deal Forecast, intuitive at a glance -->
+        <div class="flex flex-col">
+          <div class="min-h-[7.5rem]">
+            <div class="flex items-center gap-2.5 mb-1">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/></svg>
+              <h3 class="font-semibold text-[#FAFAFA]">Risk Alerts</h3>
+              <span class="text-[12px] text-[#52525B] uppercase tracking-wider">Early warning from your calls</span>
             </div>
-            <div class="flex" style="height:272px;">
-              <div class="flex flex-col flex-shrink-0" style="width:110px; background:#0a0a0d; border-right:1px solid rgba(255,255,255,0.05);">
-                <div class="px-3 py-2 border-b border-white/[0.04]"><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold">Severity</p></div>
-                {[
-                  {l:"All flagged",n:"4",tc:"text-[#A1A1AA]",active:true },
-                  {l:"High",       n:"2",tc:"text-red-400",  active:false},
-                  {l:"Medium",     n:"1",tc:"text-orange-400",active:false},
-                  {l:"Low",        n:"1",tc:"text-yellow-400",active:false},
-                ].map(f=>(
-                  <div class={`px-3 py-2.5 border-b border-white/[0.03] flex items-center justify-between ${f.active?'bg-red-500/[0.06] border-l-2 border-l-red-500/60':''}`}>
-                    <p class={`text-[11px] ${f.active?'text-[#E4E4E7] font-semibold':'text-[#52525B]'}`}>{f.l}</p>
-                    <span class={`text-[10px] font-mono font-bold ${f.tc}`}>{f.n}</span>
-                  </div>
-                ))}
-                <div class="px-3 py-2 mt-auto border-t border-white/[0.04] flex items-center gap-1.5">
-                  <span class="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse flex-shrink-0"></span>
-                  <p class="text-[10px] text-red-400 font-semibold">Live</p>
-                </div>
-              </div>
-              <div class="flex-1 flex flex-col overflow-hidden">
-                <div class="flex items-center justify-between px-3 py-1.5 border-b border-white/[0.05] flex-shrink-0" style="background:rgba(255,255,255,0.01);">
-                  <span class="text-[11px] text-[#A1A1AA] font-medium">Active alerts</span>
-                  <span class="text-[10px] text-red-400 bg-red-500/10 border border-red-500/20 px-1.5 py-0.5 rounded-full font-semibold">4 flagged</span>
-                </div>
-                <div class="flex-1 divide-y divide-white/[0.04] overflow-hidden">
-                  {[
-                    {deal:"D-2847",name:"Acme Corp", signals:["Momentum drop","Champion silent"], severity:"high",  time:"2h ago"},
-                    {deal:"D-3104",name:"FinCo Ltd", signals:["Pricing pressure","No next step"], severity:"high",  time:"5h ago"},
-                    {deal:"D-2901",name:"Meridian",  signals:["Competitor raised","Legal stalled"],severity:"medium",time:"1d ago"},
-                    {deal:"D-3198",name:"Brightwave",signals:["Budget concern raised"],            severity:"low",   time:"2d ago"},
-                  ].map(r=>(
-                    <div class="px-3 py-2.5">
-                      <div class="flex items-center justify-between mb-1.5">
-                        <div class="flex items-center gap-1.5">
-                          <span class={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${r.severity==='high'?'bg-red-400':r.severity==='medium'?'bg-orange-400':'bg-yellow-400'}`}></span>
-                          <span class="text-[12px] font-semibold text-[#FAFAFA]">{r.name}</span>
-                          <span class="text-[10px] font-mono text-indigo-400/60">{r.deal}</span>
-                        </div>
-                        <span class="text-[10px] text-[#52525B]">{r.time}</span>
-                      </div>
-                      <div class="flex gap-1 flex-wrap pl-3">
-                        {r.signals.map(s=>(<span class="text-[10px] px-1.5 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] text-[#A1A1AA]">{s}</span>))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <p class="text-sm text-[#A1A1AA] leading-relaxed mb-5">Catch at-risk deals before they slip. Signals from every conversation — champion went quiet, pricing pushback, no next step — so you know who needs attention and why.</p>
           </div>
+          <WinProbabilityWindow
+            title="Risk Alerts"
+            variant="risk"
+            compact
+          />
         </div>
 
         <!-- Deal Health -->
@@ -150,7 +58,7 @@
             <h3 class="font-semibold text-[#FAFAFA]">Deal Health</h3>
             <span class="text-[12px] text-[#52525B] uppercase tracking-wider">Deal-level health score</span>
           </div>
-          <p class="text-sm text-[#71717A] leading-relaxed mb-5">A live composite score of momentum, stakeholder engagement, MAP quality, and competitive exposure.</p>
+          <p class="text-sm text-[#A1A1AA] leading-relaxed mb-5">A live composite score of momentum, stakeholder engagement, MAP quality, and competitive exposure.</p>
           <div class="rounded-xl overflow-hidden" style="background:#0c0c10; border:1px solid rgba(255,255,255,0.1); box-shadow:0 8px 40px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.03);">
             <div class="flex items-center px-4 py-2.5 border-b border-white/[0.06]" style="background:#111118;">
               <div class="flex gap-1.5 flex-shrink-0">
@@ -165,13 +73,16 @@
               <div class="flex flex-col flex-shrink-0" style="width:110px; background:#0a0a0d; border-right:1px solid rgba(255,255,255,0.05);">
                 <div class="px-3 py-2 border-b border-white/[0.04]"><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold">Deals</p></div>
                 {[
-                  {name:"Acme Corp", score:71,sc:"text-green-400", active:true },
-                  {name:"FinCo Ltd", score:88,sc:"text-green-400", active:false},
-                  {name:"Meridian",  score:34,sc:"text-red-400",   active:false},
-                  {name:"Brightwave",score:62,sc:"text-yellow-400",active:false},
+                  {deal:"D-2847",name:"Acme Corp", score:74,sc:"text-green-400", active:true },
+                  {deal:"D-3104",name:"FinCo Ltd", score:88,sc:"text-green-400", active:false},
+                  {deal:"D-2901",name:"Meridian",  score:34,sc:"text-red-400",   active:false},
+                  {deal:"D-3198",name:"Brightwave",score:62,sc:"text-yellow-400",active:false},
                 ].map(d=>(
                   <div class={`px-3 py-2.5 border-b border-white/[0.03] flex items-center justify-between gap-1 ${d.active?'bg-green-500/[0.06] border-l-2 border-l-green-500/50':''}`}>
-                    <p class={`text-[11px] truncate ${d.active?'text-[#E4E4E7] font-semibold':'text-[#52525B]'}`}>{d.name}</p>
+                    <div class="min-w-0 flex-1">
+                      <p class={`text-[11px] truncate ${d.active?'text-[#E4E4E7] font-semibold':'text-[#52525B]'}`}>{d.name}</p>
+                      <p class="text-[10px] font-mono text-[#52525B]">{d.deal}</p>
+                    </div>
                     <span class={`text-[10px] font-mono font-bold flex-shrink-0 ${d.sc}`}>{d.score}</span>
                   </div>
                 ))}
@@ -185,10 +96,13 @@
                   </div>
                 </div>
                 <div class="flex items-center justify-between px-4 py-3 border-b border-white/[0.05] flex-shrink-0">
-                  <div class="flex items-baseline gap-1"><span class="text-4xl font-bold text-green-400">71</span><span class="text-sm text-[#52525B]">/100</span></div>
+                  <div>
+                    <p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold mb-0.5">Health score</p>
+                    <div class="flex items-baseline gap-1"><span class="text-4xl font-bold text-green-400">74</span><span class="text-sm text-[#52525B]"> out of 100</span></div>
+                  </div>
                   <svg viewBox="0 0 44 44" class="w-12 h-12 -rotate-90">
                     <circle cx="22" cy="22" r="17" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="4"/>
-                    <circle cx="22" cy="22" r="17" fill="none" stroke="#4ade80" stroke-width="4" stroke-opacity="0.65" stroke-dasharray={`${71*106.8/100} 106.8`} stroke-linecap="round"/>
+                    <circle cx="22" cy="22" r="17" fill="none" stroke="#4ade80" stroke-width="4" stroke-opacity="0.65" stroke-dasharray={`${74*106.8/100} 106.8`} stroke-linecap="round"/>
                   </svg>
                 </div>
                 <div class="flex-1 px-4 py-3 space-y-2 overflow-hidden">
@@ -212,14 +126,14 @@
           </div>
         </div>
 
-        <!-- Rep Performance -->
+        <!-- Rep Performance — every number labeled so users don't have to think -->
         <div>
           <div class="flex items-center gap-2.5 mb-1">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"/></svg>
             <h3 class="font-semibold text-[#FAFAFA]">Rep Performance</h3>
-            <span class="text-[12px] text-[#52525B] uppercase tracking-wider">Conversation quality insights</span>
+            <span class="text-[12px] text-[#52525B] uppercase tracking-wider">Conversation quality from calls</span>
           </div>
-          <p class="text-sm text-[#71717A] leading-relaxed mb-5">Benchmark each rep on objection handling, next-step hygiene, talk ratio, and buyer engagement across their entire book.</p>
+          <p class="text-sm text-[#A1A1AA] leading-relaxed mb-5">Benchmark each rep on objection handling, next-step hygiene, talk ratio, and buyer engagement across their entire book.</p>
           <div class="rounded-xl overflow-hidden" style="background:#0c0c10; border:1px solid rgba(255,255,255,0.1); box-shadow:0 8px 40px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.03);">
             <div class="flex items-center px-4 py-2.5 border-b border-white/[0.06]" style="background:#111118;">
               <div class="flex gap-1.5 flex-shrink-0">
@@ -239,37 +153,44 @@
                   </div>
                 ))}
                 <div class="px-3 pt-3 mt-auto border-t border-white/[0.04]">
-                  <p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold mb-1.5">Team avg</p>
+                  <p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold mb-0.5">Team score (avg)</p>
                   <p class="text-xl font-bold text-blue-400">76</p>
                   <p class="text-[9px] text-[#3F3F46]">out of 100</p>
                 </div>
               </div>
               <div class="flex-1 flex flex-col overflow-hidden">
                 <div class="grid grid-cols-3 divide-x divide-white/[0.05] border-b border-white/[0.05] flex-shrink-0">
-                  <div class="px-3 py-2.5 text-center"><p class="text-base font-bold text-[#FAFAFA]">4</p><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider mt-0.5">Reps</p></div>
-                  <div class="px-3 py-2.5 text-center"><p class="text-base font-bold text-blue-400">76</p><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider mt-0.5">Avg</p></div>
-                  <div class="px-3 py-2.5 text-center"><p class="text-base font-bold text-green-400">92</p><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider mt-0.5">Top</p></div>
+                  <div class="px-3 py-2.5 text-center"><p class="text-base font-bold text-[#FAFAFA]">4</p><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider mt-0.5">Reps in team</p></div>
+                  <div class="px-3 py-2.5 text-center"><p class="text-base font-bold text-blue-400">76</p><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider mt-0.5">Avg score out of 100</p></div>
+                  <div class="px-3 py-2.5 text-center"><p class="text-base font-bold text-green-400">92</p><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider mt-0.5">Top score out of 100</p></div>
                 </div>
-                <div class="flex-1 divide-y divide-white/[0.04] overflow-hidden">
-                  {[
-                    {rank:"1",ini:"SK",name:"Sarah K.", score:92,obj:"A",steps:"A",sc:"text-green-400", ac:"bg-green-500/15 border-green-500/25"},
-                    {rank:"2",ini:"JM",name:"Jordan M.",score:81,obj:"B",steps:"A",sc:"text-blue-400",  ac:"bg-blue-500/15 border-blue-500/25"},
-                    {rank:"3",ini:"MT",name:"Mike T.",  score:74,obj:"B",steps:"C",sc:"text-yellow-400",ac:"bg-yellow-500/15 border-yellow-500/25"},
-                    {rank:"4",ini:"AR",name:"Aiden R.", score:58,obj:"C",steps:"D",sc:"text-orange-400",ac:"bg-orange-500/15 border-orange-500/25"},
-                  ].map(r=>(
-                    <div class="flex items-center px-3 py-2.5 gap-2">
-                      <span class="text-[10px] text-[#52525B] w-3 flex-shrink-0">{r.rank}</span>
-                      <div class={`w-6 h-6 rounded-full border flex items-center justify-center flex-shrink-0 ${r.ac}`}><span class={`text-[10px] font-bold ${r.sc}`}>{r.ini}</span></div>
-                      <span class="text-[12px] font-medium text-[#E4E4E7] flex-1 min-w-0 truncate">{r.name}</span>
-                      <div class="flex items-center gap-1.5 flex-shrink-0">
-                        <div class="w-10 h-1.5 rounded-full bg-white/[0.06]"><div class={`h-1.5 rounded-full opacity-70 ${r.score>=80?'bg-green-500':r.score>=65?'bg-blue-500':r.score>=55?'bg-yellow-500':'bg-orange-500'}`} style={`width:${r.score}%`}></div></div>
-                        <span class={`text-[11px] font-bold font-mono w-5 text-right ${r.sc}`}>{r.score}</span>
+                <div class="flex-1 flex flex-col overflow-hidden">
+                  <div class="grid grid-cols-[1fr_auto_auto_auto] gap-2 px-3 py-1.5 border-b border-white/[0.04] flex-shrink-0 bg-white/[0.02]">
+                    <span class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold">Rep</span>
+                    <span class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold w-14 text-right">Quality score</span>
+                    <span class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold w-5 text-center" title="Objection handling grade">Obj</span>
+                    <span class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold w-5 text-center" title="Next-step hygiene grade">Steps</span>
+                  </div>
+                  <div class="flex-1 divide-y divide-white/[0.04] overflow-hidden">
+                    {[
+                      {rank:"1",ini:"SK",name:"Sarah K.", score:92,obj:"A",steps:"A",sc:"text-green-400", ac:"bg-green-500/15 border-green-500/25"},
+                      {rank:"2",ini:"JM",name:"Jordan M.",score:81,obj:"B",steps:"A",sc:"text-blue-400",  ac:"bg-blue-500/15 border-blue-500/25"},
+                      {rank:"3",ini:"MT",name:"Mike T.",  score:74,obj:"B",steps:"C",sc:"text-yellow-400",ac:"bg-yellow-500/15 border-yellow-500/25"},
+                      {rank:"4",ini:"AR",name:"Aiden R.", score:58,obj:"C",steps:"D",sc:"text-orange-400",ac:"bg-orange-500/15 border-orange-500/25"},
+                    ].map(r=>(
+                      <div class="flex items-center px-3 py-2 gap-2">
+                        <span class="text-[10px] text-[#52525B] w-3 flex-shrink-0">{r.rank}</span>
+                        <div class={`w-6 h-6 rounded-full border flex items-center justify-center flex-shrink-0 ${r.ac}`}><span class={`text-[10px] font-bold ${r.sc}`}>{r.ini}</span></div>
+                        <span class="text-[12px] font-medium text-[#E4E4E7] flex-1 min-w-0 truncate">{r.name}</span>
+                        <div class="flex items-center gap-1.5 flex-shrink-0 w-14 justify-end">
+                          <div class="w-10 h-1.5 rounded-full bg-white/[0.06]"><div class={`h-1.5 rounded-full opacity-70 ${r.score>=80?'bg-green-500':r.score>=65?'bg-blue-500':r.score>=55?'bg-yellow-500':'bg-orange-500'}`} style={`width:${r.score}%`}></div></div>
+                          <span class={`text-[11px] font-bold font-mono w-5 text-right ${r.sc}`} title="Conversation quality score out of 100">{r.score}</span>
+                        </div>
+                        <span class={`text-[10px] w-5 h-5 rounded flex items-center justify-center font-bold flex-shrink-0 ${r.obj==='A'?'bg-green-500/15 text-green-400':r.obj==='B'?'bg-blue-500/15 text-blue-400':r.obj==='C'?'bg-yellow-500/15 text-yellow-400':'bg-red-500/15 text-red-400'}`} title="Objection handling">{r.obj}</span>
+                        <span class={`text-[10px] w-5 h-5 rounded flex items-center justify-center font-bold flex-shrink-0 ${r.steps==='A'?'bg-green-500/15 text-green-400':r.steps==='B'?'bg-blue-500/15 text-blue-400':r.steps==='C'?'bg-yellow-500/15 text-yellow-400':'bg-red-500/15 text-red-400'}`} title="Next-step hygiene">{r.steps}</span>
                       </div>
-                      <div class="flex gap-1 flex-shrink-0">
-                        {[r.obj,r.steps].map(g=>(<span class={`text-[10px] w-5 h-5 rounded flex items-center justify-center font-bold ${g==='A'?'bg-green-500/15 text-green-400':g==='B'?'bg-blue-500/15 text-blue-400':g==='C'?'bg-yellow-500/15 text-yellow-400':'bg-red-500/15 text-red-400'}`}>{g}</span>))}
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -282,7 +203,7 @@
 
     <!-- Core Platform Features: full-width feature rows -->
     <div class="mb-24">
-      <p class="text-xs text-[#52525B] uppercase tracking-widest font-semibold mb-16">Features</p>
+      <div class="mb-16"></div>
       <div class="flex flex-col gap-28">
 
         <!-- 1. Deal Intelligence Chat -->
@@ -303,94 +224,29 @@
                 "Context-aware — knows stage, stakeholders, and history",
               ].map(b => (
                 <li class="flex items-start gap-3">
-                  <svg class="w-4 h-4 text-indigo-400 flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                  <svg class="w-4 h-4 text-primary flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
                   <span class="text-sm text-[#A1A1AA]">{b}</span>
                 </li>
               ))}
             </ul>
           </div>
-          <!-- Right: screenshot -->
+          <!-- Right: Deal Copilot window (same as overview) -->
           <div class="flex-1 min-w-0">
-            <div class="rounded-xl overflow-hidden" style="background:#0c0c10; border:1px solid rgba(255,255,255,0.1); box-shadow:0 16px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03), 0 0 80px rgba(99,102,241,.06);">
-              <div class="flex items-center px-4 py-3 border-b border-white/[0.06]" style="background:#111118;">
-                <div class="flex gap-1.5 flex-shrink-0">
-                  <span class="w-3 h-3 rounded-full" style="background:#FF5F56;"></span>
-                  <span class="w-3 h-3 rounded-full" style="background:#FFBD2E;"></span>
-                  <span class="w-3 h-3 rounded-full" style="background:#27C93F;"></span>
-                </div>
-                <span class="text-[12px] text-[#71717A] flex-1 text-center font-medium">Starmesh · Deal Intelligence</span>
-                <div style="width:54px;" class="flex-shrink-0"></div>
-              </div>
-              <div class="flex" style="height:360px;">
-                <div class="flex flex-col flex-shrink-0" style="width:160px; background:#0a0a0d; border-right:1px solid rgba(255,255,255,0.05);">
-                  <div class="px-3 py-2.5 border-b border-white/[0.04]"><p class="text-[10px] text-[#3F3F46] uppercase tracking-wider font-bold">Deals</p></div>
-                  {[
-                    {name:"Acme Corp",  tag:"74%",tc:"text-indigo-400",active:true },
-                    {name:"FinCo Ltd",  tag:"88%",tc:"text-green-400", active:false},
-                    {name:"Meridian",   tag:"41%",tc:"text-red-400",   active:false},
-                    {name:"Brightwave", tag:"79%",tc:"text-green-400", active:false},
-                    {name:"Ironclad",   tag:"63%",tc:"text-indigo-400",active:false},
-                  ].map(d=>(
-                    <div class={`px-3 py-3 border-b border-white/[0.03] flex items-center justify-between gap-2 ${d.active?'bg-indigo-500/10 border-l-2 border-l-indigo-500/70':''}`}>
-                      <p class={`text-[12px] truncate ${d.active?'text-[#E4E4E7] font-semibold':'text-[#52525B]'}`}>{d.name}</p>
-                      <span class={`text-[11px] font-mono font-bold flex-shrink-0 ${d.tc}`}>{d.tag}</span>
-                    </div>
-                  ))}
-                </div>
-                <div class="flex-1 flex flex-col overflow-hidden">
-                  <div class="flex items-center justify-between px-4 py-2 border-b border-white/[0.05]" style="background:rgba(255,255,255,0.01);">
-                    <div class="flex items-center gap-2">
-                      <span class="text-[13px] font-semibold text-[#FAFAFA]">Acme Corp</span>
-                      <span class="text-[11px] font-mono text-indigo-400/60">D-2847</span>
-                    </div>
-                    <div class="flex gap-1">
-                      <span class="text-[11px] px-1.5 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] text-[#71717A]">Negotiation</span>
-                      <span class="text-[11px] px-1.5 py-0.5 rounded bg-yellow-500/10 border border-yellow-500/20 text-yellow-400">At risk</span>
-                    </div>
-                  </div>
-                  <div class="flex-1 px-4 py-4 space-y-3 overflow-hidden">
-                    <div class="flex justify-end">
-                      <p class="text-[13px] text-[#A1A1AA] bg-white/[0.05] border border-white/[0.07] rounded-xl rounded-br-sm px-3 py-2 leading-relaxed max-w-[80%]">What's blocking the Acme deal?</p>
-                    </div>
-                    <div class="flex gap-2.5">
-                      <div class="w-5 h-5 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <svg width="8" height="8" viewBox="0 0 10 10" fill="none"><path d="M5 1l1.18 2.39 2.64.38-1.91 1.86.45 2.63L5 7l-2.36 1.26.45-2.63L1.18 3.77l2.64-.38L5 1z" fill="#818CF8"/></svg>
-                      </div>
-                      <div class="flex-1">
-                        <p class="text-[13px] text-[#E4E4E7] bg-indigo-500/[0.07] border border-indigo-500/15 rounded-xl rounded-tl-sm px-3 py-2 leading-relaxed mb-2">Procurement is the main blocker — CFO sign-off flagged on the Mar 3 call. Legal went silent after Feb 28. Champion is still warm but hasn't driven urgency internally.</p>
-                        <div class="flex gap-1.5 flex-wrap">
-                          {["Mar 3 · Zoom","Feb 28 · Gmail","Feb 21 · Zoom"].map(s=>(<span class="text-[11px] px-1.5 py-0.5 rounded bg-white/[0.04] border border-white/[0.05] text-[#71717A]">↗ {s}</span>))}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="flex justify-end">
-                      <p class="text-[13px] text-[#A1A1AA] bg-white/[0.05] border border-white/[0.07] rounded-xl rounded-br-sm px-3 py-2 leading-relaxed max-w-[80%]">Who's the internal champion?</p>
-                    </div>
-                    <div class="flex gap-2.5 items-center">
-                      <div class="w-5 h-5 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center flex-shrink-0">
-                        <svg width="8" height="8" viewBox="0 0 10 10" fill="none"><path d="M5 1l1.18 2.39 2.64.38-1.91 1.86.45 2.63L5 7l-2.36 1.26.45-2.63L1.18 3.77l2.64-.38L5 1z" fill="#818CF8"/></svg>
-                      </div>
-                      <div class="bg-indigo-500/[0.07] border border-indigo-500/15 rounded-xl rounded-tl-sm px-3 py-2.5 flex items-center gap-1.5">
-                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-bounce" style="animation-delay:0s"></span>
-                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-bounce" style="animation-delay:0.15s"></span>
-                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-bounce" style="animation-delay:0.3s"></span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="px-4 py-3 border-t border-white/[0.05] flex items-center gap-2">
-                    <div class="flex-1 text-[12px] text-[#3F3F46] bg-white/[0.03] border border-white/[0.05] rounded-lg px-3 py-2">Ask about any deal, rep, or account…</div>
-                    <div class="w-7 h-7 rounded-lg bg-indigo-500/20 border border-indigo-500/25 flex items-center justify-center flex-shrink-0">
-                      <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 6L2 2V5.5L7 6L2 6.5V10Z" fill="#818CF8"/></svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <DealIntelligenceWindow
+              title="Deal Copilot"
+              contextSummary="Stage: Negotiation · Risk: At risk · Deal value: $120K · Expected close: Mar 15"
+              firstUserText="Tell me about this deal."
+              firstAiText="Acme Corp is in Negotiation with legal and security in the loop. Champion is strong but there's a security objection and VP Eng just joined the committee. Next steps are still blank in Salesforce; close the blocker this week or it slips to Q1."
+              userText="What do I need to do before Friday?"
+              aiText="Send SOC2 docs to Sarah today. Get your SE on the security call — that's the only real blocker. Log next steps in Salesforce before EOD or this slips to Q1."
+              nextQuestion="Who are the key stakeholders on the buying committee?"
+              scroll={false}
+            />
           </div>
         </div>
 
         <!-- 2. Interaction Timeline -->
-        <div class="flex flex-col lg:flex-row-reverse items-start gap-12">
+        <div class="flex flex-col lg:flex-row-reverse items-start gap-12 lg:gap-20">
           <div class="lg:w-[38%] flex-shrink-0 lg:pt-6">
             <div class="flex items-center gap-2.5 mb-3">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2dd4bf" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v6h4m6-2a10 10 0 1 1-20 0 10 10 0 0 1 20 0Z"/></svg>
@@ -412,69 +268,16 @@
               ))}
             </ul>
           </div>
-          <div class="flex-1 min-w-0">
-            <div class="rounded-xl overflow-hidden" style="background:#0c0c10; border:1px solid rgba(255,255,255,0.1); box-shadow:0 16px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03), 0 0 80px rgba(45,212,191,.04);">
-              <div class="flex items-center px-4 py-3 border-b border-white/[0.06]" style="background:#111118;">
-                <div class="flex gap-1.5 flex-shrink-0">
-                  <span class="w-3 h-3 rounded-full" style="background:#FF5F56;"></span>
-                  <span class="w-3 h-3 rounded-full" style="background:#FFBD2E;"></span>
-                  <span class="w-3 h-3 rounded-full" style="background:#27C93F;"></span>
-                </div>
-                <span class="text-[12px] text-[#71717A] flex-1 text-center font-medium">Starmesh · Interaction Timeline</span>
-                <div style="width:54px;" class="flex-shrink-0"></div>
-              </div>
-              <div class="flex" style="height:360px;">
-                <div class="flex flex-col flex-shrink-0" style="width:160px; background:#0a0a0d; border-right:1px solid rgba(255,255,255,0.05);">
-                  <div class="px-3 py-2.5 border-b border-white/[0.04]"><p class="text-[10px] text-[#3F3F46] uppercase tracking-wider font-bold">Deals</p></div>
-                  {[
-                    {name:"Acme Corp",  tag:"5 events",active:true },
-                    {name:"FinCo Ltd",  tag:"3 events",active:false},
-                    {name:"Meridian",   tag:"2 events",active:false},
-                    {name:"Brightwave", tag:"4 events",active:false},
-                    {name:"Ironclad",   tag:"6 events",active:false},
-                  ].map(d=>(
-                    <div class={`px-3 py-3 border-b border-white/[0.03] ${d.active?'bg-teal-500/[0.06] border-l-2 border-l-teal-500/50':''}`}>
-                      <p class={`text-[12px] truncate ${d.active?'text-[#E4E4E7] font-semibold':'text-[#52525B]'}`}>{d.name}</p>
-                      <p class="text-[10px] text-[#3F3F46] mt-0.5">{d.tag}</p>
-                    </div>
-                  ))}
-                </div>
-                <div class="flex-1 flex flex-col overflow-hidden">
-                  <div class="flex items-center justify-between px-4 py-2 border-b border-white/[0.05]" style="background:rgba(255,255,255,0.01);">
-                    <span class="text-[13px] font-semibold text-[#FAFAFA]">Acme Corp · Timeline</span>
-                    <div class="flex gap-1">
-                      {["All","Calls","Email","CRM"].map((f,i)=>(
-                        <span class={`text-[11px] px-2 py-0.5 rounded border ${i===0?'border-teal-500/30 bg-teal-500/10 text-teal-400':'border-white/[0.06] text-[#52525B]'}`}>{f}</span>
-                      ))}
-                    </div>
-                  </div>
-                  <div class="grid grid-cols-3 divide-x divide-white/[0.05] border-b border-white/[0.05] flex-shrink-0">
-                    <div class="px-3 py-2.5 text-center"><p class="text-base font-bold text-[#FAFAFA]">5</p><p class="text-[10px] text-[#3F3F46] uppercase tracking-wider mt-0.5">Events</p></div>
-                    <div class="px-3 py-2.5 text-center"><p class="text-base font-bold text-teal-400">3</p><p class="text-[10px] text-[#3F3F46] uppercase tracking-wider mt-0.5">Calls</p></div>
-                    <div class="px-3 py-2.5 text-center"><p class="text-base font-bold text-red-400">1</p><p class="text-[10px] text-[#3F3F46] uppercase tracking-wider mt-0.5">Risk flags</p></div>
-                  </div>
-                  <div class="flex-1 p-4 overflow-hidden">
-                    <div class="relative pl-5 border-l border-white/[0.06] space-y-4">
-                      {[
-                        {date:"Mar 5", source:"Zoom", title:"Procurement review call",  tag:"Risk: high",   tc:"text-red-400",    bc:"bg-red-500/10 border-red-500/20",       dot:"bg-red-400"},
-                        {date:"Mar 3", source:"Gmail",title:"Legal contract sent",       tag:"No response",  tc:"text-yellow-400", bc:"bg-yellow-500/10 border-yellow-500/20", dot:"bg-yellow-400"},
-                        {date:"Feb 28",source:"Zoom", title:"Champion 1:1",              tag:"Momentum ↑",   tc:"text-green-400",  bc:"bg-green-500/10 border-green-500/20",   dot:"bg-green-400"},
-                        {date:"Feb 22",source:"Gmail",title:"Pricing proposal sent",     tag:"Opened 3×",    tc:"text-blue-400",   bc:"bg-blue-500/10 border-blue-500/20",     dot:"bg-blue-400"},
-                        {date:"Feb 15",source:"Zoom", title:"Technical evaluation call", tag:"MEDDICC: 68%", tc:"text-indigo-400", bc:"bg-indigo-500/10 border-indigo-500/20", dot:"bg-indigo-400"},
-                      ].map(e=>(
-                        <div class="relative flex items-center gap-3 min-w-0">
-                          <div class={`absolute -left-[1.45rem] w-2.5 h-2.5 rounded-full flex-shrink-0 ${e.dot}`} style="border:2px solid #0a0a0d;"></div>
-                          <span class="text-[11px] text-[#71717A] w-12 flex-shrink-0">{e.date}</span>
-                          <span class="text-[11px] text-[#71717A] px-1.5 rounded bg-white/[0.04] border border-white/[0.05] flex-shrink-0">{e.source}</span>
-                          <span class="text-[12px] text-[#A1A1AA] flex-1 truncate min-w-0">{e.title}</span>
-                          <span class={`text-[11px] px-1.5 py-0.5 rounded border flex-shrink-0 ${e.bc} ${e.tc}`}>{e.tag}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="flex-1 min-w-0 lg:pt-6 flex lg:justify-end">
+            <InteractionTimelineWindow
+              title="Deal Timeline"
+              events={[
+                { d: 'Mar 4', t: 'No contact for 7 days after security review' },
+                { d: 'Feb 24', t: 'Security objection raised on Zoom call' },
+                { d: 'Feb 10', t: 'VP Eng joined buying committee · asks about data residency and SOC2' },
+                { d: 'Jan 28', t: 'Stage → Commit · next steps still blank in Salesforce' },
+              ]}
+            />
           </div>
         </div>
 
@@ -501,74 +304,83 @@
               ))}
             </ul>
           </div>
-          <div class="flex-1 min-w-0">
-            <div class="rounded-xl overflow-hidden" style="background:#0c0c10; border:1px solid rgba(255,255,255,0.1); box-shadow:0 16px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03), 0 0 80px rgba(192,132,252,.04);">
-              <div class="flex items-center px-4 py-3 border-b border-white/[0.06]" style="background:#111118;">
-                <div class="flex gap-1.5 flex-shrink-0">
-                  <span class="w-3 h-3 rounded-full" style="background:#FF5F56;"></span>
-                  <span class="w-3 h-3 rounded-full" style="background:#FFBD2E;"></span>
-                  <span class="w-3 h-3 rounded-full" style="background:#27C93F;"></span>
-                </div>
-                <span class="text-[12px] text-[#71717A] flex-1 text-center font-medium">Starmesh · Salesforce Sync</span>
-                <div style="width:54px;" class="flex-shrink-0"></div>
-              </div>
-              <div class="flex" style="height:360px;">
-                <div class="flex flex-col flex-shrink-0" style="width:160px; background:#0a0a0d; border-right:1px solid rgba(255,255,255,0.05);">
-                  <div class="px-3 py-2.5 border-b border-white/[0.04]"><p class="text-[10px] text-[#3F3F46] uppercase tracking-wider font-bold">Object</p></div>
-                  {[
-                    {name:"Opportunity",active:true },
-                    {name:"Contact",    active:false},
-                    {name:"Account",    active:false},
-                  ].map(o=>(
-                    <div class={`px-3 py-3 border-b border-white/[0.03] ${o.active?'bg-violet-500/[0.06] border-l-2 border-l-violet-500/50':''}`}>
-                      <p class={`text-[12px] ${o.active?'text-[#E4E4E7] font-semibold':'text-[#52525B]'}`}>{o.name}</p>
-                    </div>
-                  ))}
-                  <div class="px-3 py-4 mt-auto border-t border-white/[0.04]">
-                    <div class="flex items-center gap-1.5 mb-2">
-                      <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-50"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
-                      </span>
-                      <span class="text-[11px] text-green-400 font-semibold">Syncing</span>
-                    </div>
-                    <p class="text-[10px] text-[#52525B]">124 opps updated</p>
-                    <p class="text-[10px] text-[#3F3F46]">Last sync: 2m ago</p>
-                  </div>
-                </div>
-                <div class="flex-1 flex flex-col overflow-hidden">
-                  <div class="flex items-center justify-between px-4 py-2 border-b border-white/[0.05]" style="background:rgba(255,255,255,0.01);">
-                    <span class="text-[13px] font-semibold text-[#FAFAFA]">Acme Corp · Enterprise · Q2</span>
-                    <span class="text-[11px] text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-0.5 rounded-full font-semibold">5 fields written</span>
-                  </div>
-                  <div class="px-4 py-2 border-b border-white/[0.04] flex-shrink-0" style="background:rgba(255,255,255,0.01);">
-                    <div class="flex gap-3 text-[10px] text-[#52525B]">
-                      <span>Source: Mar 5 · Zoom call</span>
-                      <span>·</span>
-                      <span>Written: just now</span>
-                    </div>
-                  </div>
-                  <div class="flex-1 divide-y divide-white/[0.04] overflow-hidden">
-                    {[
-                      {field:"Win_Probability__c",   value:"74%",        vc:"text-green-400" },
-                      {field:"Deal_Risk__c",          value:"at_risk",    vc:"text-red-400"   },
-                      {field:"Slip_Risk_Flag__c",     value:"elevated",   vc:"text-orange-400"},
-                      {field:"Competitor_Mention__c", value:"Chorus · 3×",vc:"text-yellow-400"},
-                      {field:"Next_Step_Defined__c",  value:"true ✓",     vc:"text-green-400" },
-                      {field:"Champion_Status__c",    value:"warm",       vc:"text-green-400" },
-                    ].map(r=>(
-                      <div class="flex items-center px-4 py-3 gap-3">
-                        <span class="text-[11px] font-mono text-[#71717A] flex-1 truncate">{r.field}</span>
-                        <span class={`text-[12px] font-semibold font-mono flex-shrink-0 ${r.vc}`}>{r.value}</span>
-                        <span class="text-[12px] text-green-400 flex-shrink-0">✓</span>
-                      </div>
-                    ))}
-                  </div>
+          <div class="flex-1 min-w-0" id="crm-feature-container">
+
+            <!-- Scale down visually, but keep layout height compact -->
+            <div
+              class="relative w-full"
+              id="crm-feature-wrap"
+              style="height: 588.8px;"
+            >
+              <div
+                class="absolute left-0 top-0"
+                id="crm-feature-inner"
+                style="
+                  transform: scale(0.68);
+                  transform-origin: top left;
+                "
+              >
+                <div style="width:980px; height:640px;">
+                  <CRMSyncWindow title="CRM Auto-update" />
                 </div>
               </div>
             </div>
           </div>
         </div>
+
+        <script>
+          // Keep the full CRM window visible without causing horizontal page scroll.
+          // We scale down until it fits the available container width.
+          (() => {
+            const container = document.getElementById('crm-feature-container');
+            const wrap = document.getElementById('crm-feature-wrap');
+            const inner = document.getElementById('crm-feature-inner');
+            if (!container || !wrap || !inner) return;
+
+            const BASE_W = 980;
+            const BASE_H = 640;
+            const MAX_SCALE = 0.68; // allow it to be nice and large on big screens
+
+            const apply = () => {
+              let w = container.clientWidth;
+              
+              // Allow breaking out of the column to use available screen space on the right,
+              // keeping a 24px margin from the viewport edge to avoid horizontal scroll.
+              if (container.getBoundingClientRect) {
+                const rect = container.getBoundingClientRect();
+                if (rect.left > 0 && rect.left < window.innerWidth) {
+                  const screenSpace = window.innerWidth - rect.left - 24;
+                  w = Math.max(w, screenSpace);
+                }
+              }
+
+              if (w <= 0) {
+                // Fallback if layout hasn't settled
+                w = Math.max(0, window.innerWidth - 48);
+              }
+              
+              const s = Math.min(MAX_SCALE, w / BASE_W);
+              
+              // Apply exactly the scale and exactly the height needed
+              inner.style.transform = `scale(${s})`;
+              wrap.style.height = `${BASE_H * s}px`;
+            };
+
+            apply();
+            
+            // Re-apply on any layout changes
+            window.addEventListener('resize', apply, { passive: true });
+            window.addEventListener('orientationchange', apply, { passive: true });
+            if ('ResizeObserver' in window) {
+              new ResizeObserver(apply).observe(container);
+            }
+            
+            // Catch late reflows on mobile/stacked
+            requestAnimationFrame(apply);
+            setTimeout(apply, 100);
+            setTimeout(apply, 400);
+          })();
+        </script>
 
         <!-- 4. Write-back to Any System -->
         <div class="flex flex-col lg:flex-row-reverse items-start gap-12">

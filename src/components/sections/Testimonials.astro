@@ -1,74 +1,69 @@
 ---
 const testimonials = [
   {
-    quote: "Starmesh flags disengagement across my 150+ accounts automatically — I only step in where it matters. Retention has never been cleaner.",
-    name: "Shabib",
-    role: "CSM",
-    company: "BirdEye",
-    initial: "S",
+    quote: "We’re spotting deal risks better and faster with Starmesh AI analyzing all our calls, emails, and support tickets.",
+    role: "Director of RevOps",
+    company: "FinTech serving credit unions",
   },
   {
-    quote: "Rep notes were always inconsistent. Starmesh standardized our call data so pipeline reports finally reflect reality, not what reps remembered to log.",
-    name: "Richard",
-    role: "Sales Operations",
-    company: "Eltropy",
-    initial: "R",
+    quote: "Bringing sales calls, support tickets, and CX conversations together makes early churn indicators impossible to miss.",
+    role: "VP of CS",
+    company: "Retail SaaS Platform",
   },
   {
-    quote: "Enterprise deals stall quietly. Starmesh surfaces pricing pressure and champion silence weeks before we'd normally catch it.",
-    name: "David",
-    role: "VP of Sales",
-    company: "Vectra",
-    initial: "D",
+    quote: "Our product teams finally see the feature requests that were buried inside sales calls and support tickets.",
+    role: "Director of Product",
+    company: "Enterprise software company",
   },
   {
-    quote: "We were losing deals we thought were won. Starmesh surfaced the signals we missed — win rate improved significantly within two quarters.",
-    name: "Priya",
-    role: "Director of Revenue Operations",
-    company: "CommerceIQ",
-    initial: "P",
+    quote: "Mapping Salesforce deals with customer Zoom calls and emails used to be painful. Starmesh makes it super easy.",
+    role: "CRO",
+    company: "B2B SaaS",
   },
   {
-    quote: "We used to guess what resonated with enterprise buyers. Now we have a structured view of every objection and competitor mention across every discovery call.",
-    name: "Steve",
-    role: "Head of Marketing",
-    company: "OpenText",
-    initial: "S",
+    quote: "We’re not locked into a single tool like Gong or Chorus. All our interaction data flows directly into our warehouse, which gives us a lot more flexibility.",
+    role: "VP Sales Ops",
+    company: "Enterprise SaaS",
+  },
+  {
+    quote: "Deal Copilot is amazing! We can ask open-ended questions on any deal making our sales planning calls so much more effective.",
+    role: "VP of RevOps",
+    company: "Cybersecurity Company",
+  },
+  {
+    quote: "Sales, success, and product are finally looking at the same customer signals instead of three different versions of reality.",
+    role: "CEO",
+    company: "B2B SaaS for Fintech",
   },
 ];
 ---
-<section id="testimonials" class="py-24 px-6">
+<section id="testimonials" class="py-20 px-6">
   <div class="max-w-5xl mx-auto">
-    <div class="text-center mb-14">
-      <p class="text-xs text-[#71717A] uppercase tracking-widest mb-3">What teams are saying</p>
+    <div class="text-center mb-10">
       <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-        Trusted by revenue teams at
+        What teams are <span class="gradient-text">saying</span>
       </h2>
-      <!-- Company name pills -->
-      <div class="flex items-center justify-center gap-3 flex-wrap mt-4">
-        {["BirdEye", "Eltropy", "Vectra", "CommerceIQ", "OpenText"].map(c => (
-          <span class="px-3 py-1 rounded-full border border-white/[0.08] bg-white/[0.03] text-sm text-[#A1A1AA] font-medium">{c}</span>
-        ))}
-      </div>
+      <p class="text-lg text-[#A1A1AA] max-w-2xl mx-auto">
+        Sales, customer success, and product teams are turning fragmented customer interactions into actionable intelligence.
+      </p>
     </div>
 
-    <div class="flex gap-5 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-hide">
+    <div class="testimonials-scroll flex gap-4 overflow-x-auto overflow-y-hidden pb-2 pt-3">
       {testimonials.map((t) => (
-        <div class="card p-6 flex flex-col flex-none w-80 snap-start">
+        <div class="card p-4 flex flex-col flex-none w-64 min-w-0">
 
           <!-- Quote -->
-          <blockquote class="text-sm text-[#A1A1AA] leading-relaxed flex-1 mb-6">
+          <blockquote class="text-sm text-[#A1A1AA] leading-snug flex-1 mb-3">
             "{t.quote}"
           </blockquote>
 
-          <!-- Attribution -->
-          <div class="flex items-center gap-3 pt-4 border-t border-white/[0.06]">
-            <div class="w-9 h-9 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center flex-shrink-0">
-              <span class="text-xs font-bold text-indigo-400">{t.initial}</span>
+          <!-- Attribution: role + company only (anonymous) -->
+          <div class="flex items-center gap-2.5 pt-3 border-t border-white/[0.06]">
+            <div class="w-7 h-7 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center flex-shrink-0" aria-hidden="true">
+              <span class="text-[10px] font-bold text-indigo-400">{t.role.charAt(0)}</span>
             </div>
-            <div>
-              <p class="text-sm font-semibold text-[#FAFAFA]">{t.name}</p>
-              <p class="text-xs text-[#A1A1AA]">{t.role} · {t.company}</p>
+            <div class="min-w-0">
+              <p class="text-[11px] text-[#71717A]">{t.role} · {t.company}</p>
             </div>
           </div>
         </div>
@@ -76,3 +71,14 @@ const testimonials = [
     </div>
   </div>
 </section>
+
+<style>
+  /* Hide horizontal scrollbar; content still scrolls via wheel, touch, drag */
+  .testimonials-scroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .testimonials-scroll::-webkit-scrollbar {
+    display: none;
+  }
+</style>
