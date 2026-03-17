@@ -477,7 +477,9 @@ function logoUrl(src: { app: string; logo: string }) {
     if (starsImg) {
       const imgR = starsImg.getBoundingClientRect();
       const starsX = imgR.left + imgR.width / 2 - br.left;
-      const starsBottomY = imgR.bottom - br.top;
+      // Stop the path slightly before the logo so the dashed stroke + animated dot
+      // don't visually intrude into the logo.
+      const starsBottomY = imgR.bottom - br.top - 10;
       // Use the actual cylinder for the center point and top Y
       const actualCyl = panel.querySelector<HTMLElement>('.ov-cylinder');
       if (actualCyl) {
