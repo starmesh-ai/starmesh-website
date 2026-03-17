@@ -1,0 +1,84 @@
+---
+const testimonials = [
+  {
+    quote: "We’re spotting deal risks better and faster with Starmesh AI analyzing all our calls, emails, and support tickets.",
+    role: "Director of RevOps",
+    company: "FinTech serving credit unions",
+  },
+  {
+    quote: "Bringing sales calls, support tickets, and CX conversations together makes early churn indicators impossible to miss.",
+    role: "VP of CS",
+    company: "Retail SaaS Platform",
+  },
+  {
+    quote: "Our product teams finally see the feature requests that were buried inside sales calls and support tickets.",
+    role: "Director of Product",
+    company: "Enterprise software company",
+  },
+  {
+    quote: "Mapping Salesforce deals with customer Zoom calls and emails used to be painful. Starmesh makes it super easy.",
+    role: "CRO",
+    company: "B2B SaaS",
+  },
+  {
+    quote: "We’re not locked into a single tool like Gong or Chorus. All our interaction data flows directly into our warehouse, which gives us a lot more flexibility.",
+    role: "VP Sales Ops",
+    company: "Enterprise SaaS",
+  },
+  {
+    quote: "Deal Copilot is amazing! We can ask open-ended questions on any deal making our sales planning calls so much more effective.",
+    role: "VP of RevOps",
+    company: "Cybersecurity Company",
+  },
+  {
+    quote: "Sales, success, and product are finally looking at the same customer signals instead of three different versions of reality.",
+    role: "CEO",
+    company: "B2B SaaS for Fintech",
+  },
+];
+---
+<section id="testimonials" class="py-20 px-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+        What teams are <span class="gradient-text">saying</span>
+      </h2>
+      <p class="text-lg text-[#A1A1AA] max-w-2xl mx-auto">
+        Sales, customer success, and product teams are turning fragmented customer interactions into actionable intelligence.
+      </p>
+    </div>
+
+    <div class="testimonials-scroll flex gap-4 overflow-x-auto overflow-y-hidden pb-2 pt-3">
+      {testimonials.map((t) => (
+        <div class="card p-4 flex flex-col flex-none w-64 min-w-0">
+
+          <!-- Quote -->
+          <blockquote class="text-sm text-[#A1A1AA] leading-snug flex-1 mb-3">
+            "{t.quote}"
+          </blockquote>
+
+          <!-- Attribution: role + company only (anonymous) -->
+          <div class="flex items-center gap-2.5 pt-3 border-t border-white/[0.06]">
+            <div class="w-7 h-7 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center flex-shrink-0" aria-hidden="true">
+              <span class="text-[10px] font-bold text-indigo-400">{t.role.charAt(0)}</span>
+            </div>
+            <div class="min-w-0">
+              <p class="text-[11px] text-[#71717A]">{t.role} · {t.company}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Hide horizontal scrollbar; content still scrolls via wheel, touch, drag */
+  .testimonials-scroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .testimonials-scroll::-webkit-scrollbar {
+    display: none;
+  }
+</style>

@@ -1,0 +1,153 @@
+---
+const tabs = [
+  {
+    id: "sales",
+    label: "Sales",
+    description: "Turn every call and email into a structured signal that drives pipeline confidence.",
+    benefits: [
+      { title: "Early Deal Risk Detection", body: "Surface at-risk deals weeks before they slip — based on what's actually said, not just CRM fields." },
+      { title: "Forecast Confidence", body: "Score forecast accuracy from conversation signals, not just rep gut feel and stage dates." },
+      { title: "Objective Pipeline Signals", body: "Replace subjective call notes with structured, consistent data your whole RevOps team can trust." },
+      { title: "Fewer Surprise Slips", body: "Get ahead of deals going dark by catching negative sentiment and stalled engagement early." },
+      { title: "Consistent MEDDICC / Qualification Tracking", body: "Automatically track whether key qualification criteria were discussed on every call." },
+      { title: "Visibility Beyond CRM Fields", body: "See what's actually happening in deals — competitor mentions, pricing pushback, champion engagement." },
+      { title: "Identify Expansion Opportunities Early", body: "Spot upsell signals from customers who mention new use cases or growing teams." },
+      { title: "Reduce Manual Forecast Debates", body: "Give leadership structured, auditable evidence behind every call and pipeline update." },
+    ],
+  },
+  {
+    id: "cx",
+    label: "CX",
+    description: "Catch churn before it happens and build renewal confidence from real account signals.",
+    benefits: [
+      { title: "Early Churn Warning", body: "Detect dissatisfaction and disengagement in calls weeks before a customer churns or escalates." },
+      { title: "Renewal Risk Visibility", body: "Score every account's renewal health based on support tickets, call sentiment, and engagement trends." },
+      { title: "Account Health Clarity", body: "A single, consistent health score built from conversation data — not just product usage." },
+      { title: "Escalation Impact on Revenue", body: "Quantify how support escalations correlate with churn and contraction across your book." },
+      { title: "Expansion Signals from Usage & Conversations", body: "Identify customers who mention growing teams or new needs before they ever ask for a quote." },
+      { title: "Unified View Across Support + Sales", body: "See what CS and sales are hearing from the same account in one structured dataset." },
+      { title: "Proactive Renewal Conversations", body: "Know exactly which accounts need outreach — backed by sentiment and engagement data — before it's too late." },
+      { title: "Reduced Surprise Churn", body: "No more 'we had no idea they were unhappy.' Every signal, surfaced and structured in your warehouse." },
+    ],
+  },
+  {
+    id: "product",
+    label: "Product",
+    description: "Stop guessing what to build next. Get structured signal from every customer conversation.",
+    benefits: [
+      { title: "Voice-of-Customer Trends", body: "Track what customers talk about across every sales call and support interaction — at scale." },
+      { title: "Feature Demand Signals", body: "Automatically extract and count feature requests from calls, ranked by frequency and deal size." },
+      { title: "Product Friction Detection", body: "Surface the exact moments where customers say something doesn't work, is confusing, or is missing." },
+      { title: "Competitive Mentions Tracking", body: "Know which competitors come up, in which segments, and how often — straight from customer conversations." },
+      { title: "Root Causes of Churn", body: "Understand why customers left beyond 'price' — linked back to the actual conversations they had." },
+      { title: "Expansion Drivers", body: "Identify which product capabilities lead customers to expand — and double down on them." },
+      { title: "Customer Objection Patterns", body: "See recurring objections by segment, rep, and deal size so product and marketing can address them." },
+      { title: "Feedback Across Sales + Support", body: "Unify feedback from pre-sales calls, onboarding, and support into one structured product intelligence layer." },
+    ],
+  },
+];
+---
+<section id="benefits" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-8">
+      <p class="text-xs text-[#71717A] uppercase tracking-widest mb-3">Benefits</p>
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+        What every customer-facing team <span class="gradient-text">actually gains</span>
+      </h2>
+      <p class="text-[#A1A1AA] text-lg max-w-2xl mx-auto">When conversations become structured data, every team stops guessing and starts acting on what customers actually said.</p>
+    </div>
+
+    <!-- Tab inputs (hidden) -->
+    {tabs.map((tab, i) => (
+      <input type="radio" name="use-case-tab" id={`tab-${tab.id}`} class="sr-only" checked={i === 0} />
+    ))}
+
+    <!-- Tab labels (same design as How it works) -->
+    <div class="benefits-pills" role="tablist" aria-label="Benefits by team">
+      {tabs.map((tab, i) => (
+        <label for={`tab-${tab.id}`} class={`benefits-tab tab-label ${i === 0 ? 'active' : ''}`} data-tab={tab.id}>
+          {tab.label}
+        </label>
+      ))}
+    </div>
+
+    <!-- Tab panels -->
+    {tabs.map((tab) => (
+      <div class="tab-panel hidden" data-panel={tab.id}>
+        <p class="text-center text-[#A1A1AA] mb-6 text-base max-w-2xl mx-auto">{tab.description}</p>
+        <div class="w-full max-w-4xl mx-auto">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-6">
+          {tab.benefits.map((b) => (
+            <div class="flex gap-3">
+              <svg class="mt-0.5 flex-shrink-0" width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8l3.5 3.5L13 4" stroke="#818CF8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div>
+                <p class="text-sm font-semibold text-[#E4E4E7] mb-0.5">{b.title}</p>
+                <p class="text-xs text-[#A1A1AA] leading-relaxed">{b.body}</p>
+              </div>
+            </div>
+          ))}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  const inputs = document.querySelectorAll('input[name="use-case-tab"]');
+  const panels = document.querySelectorAll('.tab-panel') as NodeListOf<HTMLElement>;
+  const labels = document.querySelectorAll('.tab-label') as NodeListOf<HTMLElement>;
+
+  function showTab(tabId: string) {
+    panels.forEach(p => { p.style.display = 'none'; });
+    labels.forEach(l => l.classList.remove('active'));
+    const panel = document.querySelector(`.tab-panel[data-panel="${tabId}"]`) as HTMLElement;
+    const label = document.querySelector(`.tab-label[data-tab="${tabId}"]`) as HTMLElement;
+    if (panel) panel.style.display = 'block';
+    if (label) label.classList.add('active');
+  }
+
+  inputs.forEach(input => {
+    input.addEventListener('change', () => {
+      showTab((input as HTMLInputElement).id.replace('tab-', ''));
+    });
+  });
+
+  showTab('sales');
+</script>
+
+<style>
+  .benefits-pills {
+    display: flex;
+    gap: .25rem;
+    background: rgba(255,255,255,.03);
+    border-radius: .7rem;
+    padding: .2rem;
+    width: fit-content;
+    margin: 0 auto 1.25rem;
+  }
+  .benefits-tab {
+    border-radius: .5rem;
+    border: 1px solid transparent;
+    padding: .35rem 1.1rem;
+    background: transparent;
+    color: var(--color-muted-foreground);
+    font-weight: 600;
+    font-size: .875rem;
+    cursor: pointer;
+    transition: all .18s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .benefits-tab.active {
+    background: rgba(99,102,241,.22);
+    color: var(--color-primary-foreground);
+    box-shadow: 0 4px 14px rgba(99,102,241,.25);
+    border-color: rgba(99,102,241,.25);
+  }
+  .benefits-tab:hover:not(.active) {
+    background: rgba(99,102,241,.08);
+    color: var(--color-foreground);
+  }
+</style>

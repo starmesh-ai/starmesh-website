@@ -1,0 +1,215 @@
+---
+const showPipelineDiagram = false; // set to true to show Pipeline Network Diagram
+---
+<section class="relative min-h-screen flex flex-col justify-center items-center pt-24 px-6 overflow-hidden">
+  <!-- Background: dot grid + glow (same .section-glow-orb as CTA) -->
+  <div class="absolute inset-0 z-[1] pointer-events-none" aria-hidden="true">
+    <div class="absolute inset-0" style="background-image: radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px); background-size: 28px 28px;"></div>
+    <div class="absolute inset-0 flex items-center justify-center">
+      <div class="section-glow-orb"></div>
+    </div>
+  </div>
+
+  <div class="relative z-[2] max-w-6xl mx-auto text-center bg-transparent">
+
+    <!-- Claim badges -->
+    <div class="flex items-center justify-center gap-3 flex-wrap mb-8">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-green-500/20 bg-green-500/5 text-xs font-medium text-green-400">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Guaranteed +20% revenue
+      </span>
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-teal-500/20 bg-teal-500/5 text-xs font-medium text-teal-400">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        +35% better retention
+      </span>
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-xs font-medium text-cyan-400">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        23% higher forecast accuracy
+      </span>
+    </div>
+
+    <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.15] tracking-tight mb-6">
+      Drive Revenue & Retention with<br>
+      <span class="gradient-text">AI That Learns from Every <span class="whitespace-nowrap">Customer Interaction</span></span>
+    </h1>
+
+    <p class="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-10 leading-relaxed">
+      Unify all customer data from CRM, email, support, call, product usage<br>
+      in your own warehouse — not inside a single app — to define flexible <span class="whitespace-nowrap">customer signals.</span>
+    </p>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-14">
+      <a href="/contact" class="btn-primary">Request demo</a>
+      <a href="#how-it-works" class="btn-ghost">How it works</a>
+    </div>
+
+    <!-- Pipeline Network Diagram hidden when showPipelineDiagram is false -->
+    {showPipelineDiagram && (
+    <div class="relative rounded-2xl border border-border overflow-hidden bg-card" style="box-shadow: 0 0 80px rgba(13,148,136,0.07), inset 0 1px 0 rgba(255,255,255,0.04);">
+      <!-- Inner dot grid -->
+      <div class="absolute inset-0 pointer-events-none" style="background-image: radial-gradient(rgba(255,255,255,0.025) 1px, transparent 1px); background-size: 24px 24px;"></div>
+
+      <svg viewBox="0 0 820 290" xmlns="http://www.w3.org/2000/svg" class="w-full relative">
+        <defs>
+          <!-- Glow filter for nodes -->
+          <filter id="glow-sm" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="glow-center" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="8" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <!-- Path gradients -->
+          <linearGradient id="pg-in" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#0D9488" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#0D9488" stop-opacity="0.7"/>
+          </linearGradient>
+          <linearGradient id="pg-out" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#06B6D4" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#06B6D4" stop-opacity="0.3"/>
+          </linearGradient>
+          <!-- Center radial glow -->
+          <radialGradient id="cg" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#0D9488" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="#0D9488" stop-opacity="0"/>
+          </radialGradient>
+          <!-- Logo clip paths (all icons 32×32) -->
+          <clipPath id="h-c1"><rect x="24"  y="26"  width="32" height="32" rx="6"/></clipPath>
+          <clipPath id="h-c2"><rect x="24"  y="86"  width="32" height="32" rx="6"/></clipPath>
+          <clipPath id="h-c3"><rect x="24"  y="146" width="32" height="32" rx="6"/></clipPath>
+          <clipPath id="h-c4"><rect x="24"  y="206" width="32" height="32" rx="6"/></clipPath>
+          <clipPath id="h-c5"><rect x="674" y="56"  width="32" height="32" rx="6"/></clipPath>
+          <clipPath id="h-c6"><rect x="674" y="119" width="32" height="32" rx="6"/></clipPath>
+          <clipPath id="h-c7"><rect x="674" y="182" width="32" height="32" rx="6"/></clipPath>
+        </defs>
+
+        <!-- Center ambient glow -->
+        <circle cx="410" cy="135" r="110" fill="url(#cg)"/>
+
+        <!-- ── SOURCE NODES ── -->
+        <!-- Zoom -->
+        <g>
+<image href="/zoom-logo.svg" x="24" y="26" width="32" height="32" clip-path="url(#h-c1)"/>
+          <text x="100" y="47" text-anchor="middle" fill="#FAFAFA" font-size="12" font-weight="500" font-family="sans-serif">Zoom</text>
+        </g>
+        <!-- Salesforce -->
+        <g>
+<image href="/salesforce-logo.svg" x="24" y="86" width="32" height="32" clip-path="url(#h-c2)"/>
+          <text x="100" y="107" text-anchor="middle" fill="#FAFAFA" font-size="12" font-weight="500" font-family="sans-serif">Salesforce</text>
+        </g>
+        <!-- Teams -->
+        <g>
+<image href="/microsoft-teams-logo.svg" x="24" y="146" width="32" height="32" clip-path="url(#h-c3)"/>
+          <text x="100" y="167" text-anchor="middle" fill="#FAFAFA" font-size="12" font-weight="500" font-family="sans-serif">Teams</text>
+        </g>
+        <!-- Gmail -->
+        <g>
+<image href="/gmail-logo.svg" x="24" y="206" width="32" height="32" clip-path="url(#h-c4)"/>
+          <text x="100" y="227" text-anchor="middle" fill="#FAFAFA" font-size="12" font-weight="500" font-family="sans-serif">Gmail</text>
+        </g>
+
+        <!-- ── INPUT PATHS (source → center) ── -->
+        <path id="pi1" d="M 150,42  C 285,42  285,135 330,135" fill="none" stroke="url(#pg-in)" stroke-width="1.5" stroke-dasharray="5 5"/>
+        <path id="pi2" d="M 150,102 C 285,102 295,135 330,135" fill="none" stroke="url(#pg-in)" stroke-width="1.5" stroke-dasharray="5 5"/>
+        <path id="pi3" d="M 150,162 C 285,162 295,135 330,135" fill="none" stroke="url(#pg-in)" stroke-width="1.5" stroke-dasharray="5 5"/>
+        <path id="pi4" d="M 150,222 C 285,222 285,135 330,135" fill="none" stroke="url(#pg-in)" stroke-width="1.5" stroke-dasharray="5 5"/>
+
+        <!-- Animated flow dots (input) -->
+        <circle r="3.5" fill="#0D9488" filter="url(#glow-sm)"><animateMotion dur="2.4s" repeatCount="indefinite" begin="0s"><mpath href="#pi1"/></animateMotion></circle>
+        <circle r="3.5" fill="#0D9488" filter="url(#glow-sm)"><animateMotion dur="2.4s" repeatCount="indefinite" begin="0.6s"><mpath href="#pi2"/></animateMotion></circle>
+        <circle r="3.5" fill="#0D9488" filter="url(#glow-sm)"><animateMotion dur="2.4s" repeatCount="indefinite" begin="1.2s"><mpath href="#pi3"/></animateMotion></circle>
+        <circle r="3.5" fill="#0D9488" filter="url(#glow-sm)"><animateMotion dur="2.4s" repeatCount="indefinite" begin="1.8s"><mpath href="#pi4"/></animateMotion></circle>
+        <!-- Second wave -->
+        <circle r="2.5" fill="#2DD4BF" opacity="0.6"><animateMotion dur="2.4s" repeatCount="indefinite" begin="0.3s"><mpath href="#pi1"/></animateMotion></circle>
+        <circle r="2.5" fill="#2DD4BF" opacity="0.6"><animateMotion dur="2.4s" repeatCount="indefinite" begin="0.9s"><mpath href="#pi2"/></animateMotion></circle>
+        <circle r="2.5" fill="#2DD4BF" opacity="0.6"><animateMotion dur="2.4s" repeatCount="indefinite" begin="1.5s"><mpath href="#pi3"/></animateMotion></circle>
+        <circle r="2.5" fill="#2DD4BF" opacity="0.6"><animateMotion dur="2.4s" repeatCount="indefinite" begin="2.1s"><mpath href="#pi4"/></animateMotion></circle>
+
+        <!-- ── CENTER NODE (AI Analysis Card) ── -->
+        <!-- Card with glow -->
+        <rect x="330" y="56" width="160" height="158" rx="9" fill="#0f0f12" stroke="rgba(13,148,136,0.45)" stroke-width="1.5" filter="url(#glow-center)"/>
+        <!-- Title bar -->
+        <rect x="330" y="56" width="160" height="27" rx="9" fill="#111118"/>
+        <rect x="330" y="70" width="160" height="13" fill="#111118"/>
+        <line x1="330" y1="83" x2="490" y2="83" stroke="rgba(13,148,136,0.2)" stroke-width="0.75"/>
+        <!-- Status dot + title -->
+        <circle cx="343" cy="70" r="3" fill="#2DD4BF"/>
+        <text x="352" y="74" fill="#A1A1AA" font-size="9.5" font-family="sans-serif" font-weight="600">Starmesh AI · Analyzing</text>
+        <!-- Row: pwin_score -->
+        <text x="340" y="97" fill="#A1A1AA" font-size="8.5" font-family="sans-serif">pwin_score</text>
+        <text x="483" y="97" fill="#2DD4BF" font-size="9" font-family="sans-serif" text-anchor="end" font-weight="600">0.74</text>
+        <line x1="340" y1="103" x2="483" y2="103" stroke="rgba(255,255,255,0.04)" stroke-width="0.75"/>
+        <!-- Row: slip_risk -->
+        <text x="340" y="116" fill="#A1A1AA" font-size="8.5" font-family="sans-serif">slip_risk</text>
+        <text x="483" y="116" fill="#F87171" font-size="9" font-family="sans-serif" text-anchor="end" font-weight="600">elevated</text>
+        <line x1="340" y1="122" x2="483" y2="122" stroke="rgba(255,255,255,0.04)" stroke-width="0.75"/>
+        <!-- Row: pricing_pres. -->
+        <text x="340" y="135" fill="#A1A1AA" font-size="8.5" font-family="sans-serif">pricing_pres.</text>
+        <text x="483" y="135" fill="#FACC15" font-size="9" font-family="sans-serif" text-anchor="end" font-weight="600">moderate</text>
+        <line x1="340" y1="141" x2="483" y2="141" stroke="rgba(255,255,255,0.04)" stroke-width="0.75"/>
+        <!-- Row: competitor -->
+        <text x="340" y="154" fill="#A1A1AA" font-size="8.5" font-family="sans-serif">competitor</text>
+        <text x="483" y="154" fill="#FB923C" font-size="9" font-family="sans-serif" text-anchor="end" font-weight="600">Gong · 3×</text>
+        <line x1="340" y1="160" x2="483" y2="160" stroke="rgba(255,255,255,0.04)" stroke-width="0.75"/>
+        <!-- Row: next_steps -->
+        <text x="340" y="173" fill="#A1A1AA" font-size="8.5" font-family="sans-serif">next_steps</text>
+        <text x="483" y="173" fill="#2DD4BF" font-size="9" font-family="sans-serif" text-anchor="end" font-weight="600">defined</text>
+        <!-- Risk flag -->
+        <line x1="330" y1="181" x2="490" y2="181" stroke="rgba(239,68,68,0.2)" stroke-width="0.75"/>
+        <path d="M340 196 L344 189 L348 196 Z" fill="none" stroke="#F87171" stroke-width="0.85" stroke-linejoin="round"/>
+        <text x="352" y="196" fill="#F87171" font-size="8.5" font-family="sans-serif" font-weight="500">Deal at risk of slip · D-2847</text>
+
+        <!-- ── OUTPUT PATHS (center → destinations) ── -->
+        <path id="po1" d="M 490,135 C 565,135 565,72  668,72"  fill="none" stroke="url(#pg-out)" stroke-width="1.5" stroke-dasharray="5 5"/>
+        <path id="po2" d="M 490,135 C 565,135 565,135 668,135" fill="none" stroke="#06B6D4" stroke-opacity="0.75" stroke-width="1.5" stroke-dasharray="5 5"/>
+        <path id="po3" d="M 490,135 C 565,135 565,198 668,198" fill="none" stroke="url(#pg-out)" stroke-width="1.5" stroke-dasharray="5 5"/>
+
+        <!-- Animated flow dots (output) -->
+        <circle r="3.5" fill="#06B6D4" filter="url(#glow-sm)"><animateMotion dur="2.4s" repeatCount="indefinite" begin="0.4s"><mpath href="#po1"/></animateMotion></circle>
+        <circle r="3.5" fill="#06B6D4" filter="url(#glow-sm)"><animateMotion dur="2.4s" repeatCount="indefinite" begin="1.0s"><mpath href="#po2"/></animateMotion></circle>
+        <circle r="3.5" fill="#06B6D4" filter="url(#glow-sm)"><animateMotion dur="2.4s" repeatCount="indefinite" begin="1.6s"><mpath href="#po3"/></animateMotion></circle>
+        <circle r="2.5" fill="#22D3EE" opacity="0.6"><animateMotion dur="2.4s" repeatCount="indefinite" begin="0.8s"><mpath href="#po1"/></animateMotion></circle>
+        <circle r="2.5" fill="#22D3EE" opacity="0.6"><animateMotion dur="2.4s" repeatCount="indefinite" begin="1.4s"><mpath href="#po2"/></animateMotion></circle>
+        <circle r="2.5" fill="#22D3EE" opacity="0.6"><animateMotion dur="2.4s" repeatCount="indefinite" begin="2.0s"><mpath href="#po3"/></animateMotion></circle>
+
+        <!-- ── DESTINATION NODES ── -->
+        <!-- BigQuery -->
+        <g>
+<image href="/google-cloud-logo.svg" x="674" y="56" width="32" height="32" clip-path="url(#h-c5)"/>
+          <text x="752" y="77" text-anchor="middle" fill="#FAFAFA" font-size="12" font-weight="500" font-family="sans-serif">BigQuery</text>
+        </g>
+        <!-- Snowflake -->
+        <g>
+<image href="/snowflake-logo.svg" x="674" y="119" width="32" height="32" clip-path="url(#h-c6)"/>
+          <text x="752" y="140" text-anchor="middle" fill="#FAFAFA" font-size="12" font-weight="500" font-family="sans-serif">Snowflake</text>
+        </g>
+        <!-- Databricks -->
+        <g>
+<image href="/databricks-logo.svg" x="674" y="182" width="32" height="32" clip-path="url(#h-c7)"/>
+          <text x="752" y="203" text-anchor="middle" fill="#FAFAFA" font-size="12" font-weight="500" font-family="sans-serif">Databricks</text>
+        </g>
+
+        <!-- Section labels -->
+        <text x="84"  y="268" text-anchor="middle" fill="#71717A" font-size="10" font-family="sans-serif" font-weight="500" letter-spacing="0.5">DATA SOURCES</text>
+        <text x="410" y="268" text-anchor="middle" fill="#71717A" font-size="10" font-family="sans-serif" font-weight="500" letter-spacing="0.5">AI PROCESSING</text>
+        <text x="734" y="268" text-anchor="middle" fill="#71717A" font-size="10" font-family="sans-serif" font-weight="500" letter-spacing="0.5">WAREHOUSE</text>
+      </svg>
+
+      <!-- Status bar -->
+      <div class="border-t border-white/[0.04] px-6 py-2.5 flex items-center gap-6 flex-wrap">
+        <div class="flex items-center gap-2">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-50"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
+          </span>
+          <span class="text-xs text-muted-foreground">Pipeline active</span>
+        </div>
+        <span class="text-xs text-muted-foreground">|</span>
+        <span class="text-xs text-muted-foreground">2,841 conversations processed today</span>
+        <span class="text-xs text-muted-foreground ml-auto hidden sm:block">BigQuery · Snowflake · Databricks</span>
+      </div>
+    </div>
+    )}
+  </div>
+</section>

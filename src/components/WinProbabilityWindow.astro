@@ -1,0 +1,307 @@
+---
+interface Props {
+  title: string;
+  variant: 'deal' | 'account' | 'feature' | 'risk';
+  meta?: string;
+  chart?: number[];
+  body?: string;
+  /** When true, fits grid (272px height, full width); used in Platform outcomes. */
+  compact?: boolean;
+}
+const { title, variant, meta: metaProp, chart: chartProp, body: bodyProp, compact = false } = Astro.props;
+
+// Parsed PWin from meta (e.g. "74% · trending down" → pwinValue: "74%", trend: "trending down")
+const dealMeta = metaProp ?? '74% · trending down';
+const dealPwinValue = dealMeta.split('·')[0]?.trim() ?? '74%';
+const dealTrend = dealMeta.includes('·') ? dealMeta.split('·').slice(1).join('·').trim() : '';
+
+// Deal: bar chart scale (max = target 2.4M)
+const dealTarget = 2.4;
+const dealManual = 1.9;
+const dealAI = 1.7;
+const dealBarPct = (v: number) => Math.round((v / dealTarget) * 100);
+const dealTopAtRisk = [
+  { name: 'Meridian', stage: 'Discovery', win: 41, risk: 'high', riskClass: 'text-red-400 bg-red-500/10 border-red-500/20' },
+  { name: 'Acme Corp', stage: 'Negotiation', win: 74, risk: 'medium', riskClass: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20' },
+  { name: 'Brightwave', stage: 'Demo', win: 79, risk: 'low', riskClass: 'text-green-400 bg-green-500/10 border-green-500/20' },
+];
+
+// Account: single-number focus copy
+const accountHeadline = '5 at churn risk — act this week';
+const accountBullets = [
+  'Acme Corp · renewal in 47 days, champion cold',
+  'Brightwave · health falling, renewal in 18 days',
+  '2 more in 30–90 day window need attention',
+];
+const accountList = [
+  { name: 'Acme Corp', renewal: '47 days', health: 44, risk: 'high', riskClass: 'text-red-400 bg-red-500/10 border-red-500/20' },
+  { name: 'FinCo Ltd', renewal: '82 days', health: 78, risk: 'low', riskClass: 'text-green-400 bg-green-500/10 border-green-500/20' },
+  { name: 'Meridian', renewal: '120 days', health: 91, risk: 'low', riskClass: 'text-green-400 bg-green-500/10 border-green-500/20' },
+  { name: 'Brightwave', renewal: '18 days', health: 58, risk: 'medium', riskClass: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20' },
+];
+
+// Feature: narrative + compact list
+const featureNarrative = 'Cohort analytics up 3× in 60 days — 12 enterprise mentions, $180K blocked. Highest-ROI item in your backlog right now.';
+const featureThemes = [
+  { name: 'Cohort analytics', meta: '12 mentions · 3× in 60d', score: 92, trend: '↑', trendClass: 'text-green-400 bg-green-500/10 border-green-500/20' },
+  { name: 'Step 3 drop-off', meta: '34% exit · retention', score: 78, trend: '↑', trendClass: 'text-green-400 bg-green-500/10 border-green-500/20' },
+  { name: 'Dashboard clarity', meta: '6 mentions · stable', score: 55, trend: '—', trendClass: 'text-[#71717A] bg-white/5 border-white/10' },
+  { name: 'Permission bugs', meta: 'Tickets +40% · low impact', score: 28, trend: '—', trendClass: 'text-[#71717A] bg-white/5 border-white/10' },
+];
+
+// Risk Alerts: deals flagged from conversation signals — plain language, instant scan
+const riskHeadline = '4 deals need attention';
+const riskSub = 'From your calls · last 24h';
+const riskSidebarFilters = [
+  { label: 'All flagged', count: 4, active: true },
+  { label: 'High', count: 2, severityClass: 'text-red-400' },
+  { label: 'Medium', count: 1, severityClass: 'text-orange-400' },
+  { label: 'Low', count: 1, severityClass: 'text-yellow-400' },
+];
+const riskAlerts = [
+  { deal: 'D-2847', name: 'Acme Corp', signals: ['Champion went quiet', 'Momentum drop'], severity: 'high' as const, severityClass: 'text-red-400 bg-red-500/10 border-red-500/20', time: '2h ago' },
+  { deal: 'D-3104', name: 'FinCo Ltd', signals: ['Pricing pushback', 'No next step set'], severity: 'high' as const, severityClass: 'text-red-400 bg-red-500/10 border-red-500/20', time: '5h ago' },
+  { deal: 'D-2901', name: 'Meridian', signals: ['Competitor mentioned', 'Legal stalled'], severity: 'medium' as const, severityClass: 'text-orange-400 bg-orange-500/10 border-orange-500/20', time: '1d ago' },
+  { deal: 'D-3198', name: 'Brightwave', signals: ['Budget concern raised'], severity: 'low' as const, severityClass: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20', time: '2d ago' },
+];
+---
+<!-- Deal Forecast (PWin), Account Health, or Feature Demand — content varies by variant -->
+<div class:list={["rounded-xl overflow-hidden", compact ? "w-full max-w-full" : "w-full max-w-[620px]"]} style="background:#0c0c10; border:1px solid rgba(255,255,255,0.1); box-shadow:0 16px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03), 0 0 80px rgba(13,148,136,.06);">
+  <div class:list={["flex items-center px-4 border-b border-white/[0.06]", compact ? "py-2.5" : "py-3"]} style="background:#111118;">
+    <div class="flex gap-1.5 flex-shrink-0">
+      <span class:list={["rounded-full", compact ? "w-2.5 h-2.5" : "w-3 h-3"]} style="background:#FF5F56;"></span>
+      <span class:list={["rounded-full", compact ? "w-2.5 h-2.5" : "w-3 h-3"]} style="background:#FFBD2E;"></span>
+      <span class:list={["rounded-full", compact ? "w-2.5 h-2.5" : "w-3 h-3"]} style="background:#27C93F;"></span>
+    </div>
+    <span class:list={["text-[#71717A] flex-1 text-center font-medium", compact ? "text-[11px]" : "text-[12px]"]}>Starmesh · {title}</span>
+    <div class="flex-shrink-0" style={compact ? "width:52px;" : "width:54px;"}></div>
+  </div>
+  <div class="flex" style={compact ? "height:272px;" : "height:420px;"}>
+    <!-- Sidebar -->
+    <div class="flex flex-col flex-shrink-0" style={compact ? "width:110px; background:#0a0a0d; border-right:1px solid rgba(255,255,255,0.05);" : "width:132px; background:#0a0a0d; border-right:1px solid rgba(255,255,255,0.05);"}>
+      {variant === 'deal' && (
+        <>
+          <div class="px-3 py-2 border-b border-white/[0.04]"><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold">Quarter</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">Q1 2025</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03] bg-teal-500/10 border-l-2 border-l-teal-500/70"><p class="text-[11px] text-[#E4E4E7] font-semibold">Q2 2025</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">Q3 2025</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">Q4 2025</p></div>
+          <div class="px-3 pt-3 mt-auto border-t border-white/[0.04]">
+            <p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold mb-2">Filter</p>
+            <p class="text-[11px] py-0.5 text-[#A1A1AA] font-semibold">All</p>
+            <p class="text-[11px] py-0.5 text-[#3F3F46]">At risk</p>
+            <p class="text-[11px] py-0.5 text-[#3F3F46]">Healthy</p>
+          </div>
+        </>
+      )}
+      {variant === 'account' && (
+        <>
+          <div class="px-3 py-2 border-b border-white/[0.04]"><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold">Renewal window</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">90+ days</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03] bg-teal-500/10 border-l-2 border-l-teal-500/70"><p class="text-[11px] text-[#E4E4E7] font-semibold">30–90 days</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">0–30 days</p></div>
+          <div class="px-3 pt-3 mt-auto border-t border-white/[0.04]">
+            <p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold mb-2">Filter</p>
+            <p class="text-[11px] py-0.5 text-[#A1A1AA] font-semibold">All</p>
+            <p class="text-[11px] py-0.5 text-[#3F3F46]">Churn risk</p>
+            <p class="text-[11px] py-0.5 text-[#3F3F46]">Healthy</p>
+          </div>
+        </>
+      )}
+      {variant === 'feature' && (
+        <>
+          <div class="px-3 py-2 border-b border-white/[0.04]"><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold">Quarter</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">Q1 2025</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03] bg-teal-500/10 border-l-2 border-l-teal-500/70"><p class="text-[11px] text-[#E4E4E7] font-semibold">Q2 2025</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">Q3 2025</p></div>
+          <div class="px-3 pt-3 mt-auto border-t border-white/[0.04]">
+            <p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold mb-2">Segment</p>
+            <p class="text-[11px] py-0.5 text-[#A1A1AA] font-semibold">All</p>
+            <p class="text-[11px] py-0.5 text-[#3F3F46]">Enterprise</p>
+            <p class="text-[11px] py-0.5 text-[#3F3F46]">SMB</p>
+          </div>
+        </>
+      )}
+      {variant === 'risk' && (
+        <>
+          <div class="px-3 py-2 border-b border-white/[0.04]"><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold">Severity</p></div>
+          {riskSidebarFilters.map((f) => (
+            <div class={`px-3 py-2.5 border-b border-white/[0.03] flex items-center justify-between gap-1 ${f.active ? 'bg-red-500/10 border-l-2 border-l-red-500/60' : ''}`}>
+              <p class={`text-[11px] truncate ${f.active ? 'text-[#E4E4E7] font-semibold' : 'text-[#52525B]'}`}>{f.label}</p>
+              <span class={`text-[10px] font-mono font-bold flex-shrink-0 ${f.active ? 'text-[#A1A1AA]' : (f.severityClass ?? 'text-[#71717A]')}`}>{f.count}</span>
+            </div>
+          ))}
+          <div class="px-3 py-2 mt-auto border-t border-white/[0.04] flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse flex-shrink-0" aria-hidden="true"></span>
+            <p class="text-[10px] text-red-400 font-semibold">Live</p>
+          </div>
+        </>
+      )}
+    </div>
+    <!-- Main content -->
+    <div class="flex-1 flex flex-col min-h-0 overflow-hidden">
+      {variant === 'deal' && (
+        <div class:list={["flex flex-col", compact && "min-h-0 overflow-y-auto"]}>
+          {bodyProp && !compact && (
+            <p class="px-4 pt-4 pb-3 text-[11px] text-[#A1A1AA] leading-relaxed">{bodyProp}</p>
+          )}
+          <!-- Chart-first: bar chart Target vs Manual vs AI (quarter forecast) -->
+          <div class:list={["flex-shrink-0", compact ? "px-3 pt-2 pb-2" : "px-4 pt-4 pb-3"]}>
+            <p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold mb-2">Forecast vs target</p>
+            <div class={compact ? "space-y-1.5" : "space-y-2.5"}>
+              <div class="flex items-center gap-3">
+                <span class="text-[10px] text-[#71717A] w-14 flex-shrink-0">Target</span>
+                <div class={`flex-1 rounded bg-white/[0.06] overflow-hidden ${compact ? "h-4" : "h-5"}`}>
+                  <div class="h-full rounded bg-[#E4E4E7]" style={`width:${dealBarPct(dealTarget)}%`}></div>
+                </div>
+                <span class="text-[11px] font-mono font-bold text-[#FAFAFA] w-10 text-right">$2.4M</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="text-[10px] text-[#71717A] w-14 flex-shrink-0">Manual</span>
+                <div class={`flex-1 rounded bg-white/[0.06] overflow-hidden ${compact ? "h-4" : "h-5"}`}>
+                  <div class="h-full rounded bg-[#A1A1AA]" style={`width:${dealBarPct(dealManual)}%`}></div>
+                </div>
+                <span class="text-[11px] font-mono font-bold text-[#A1A1AA] w-10 text-right">$1.9M</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="text-[10px] text-[#71717A] w-14 flex-shrink-0">AI</span>
+                <div class={`flex-1 rounded bg-white/[0.06] overflow-hidden ${compact ? "h-4" : "h-5"}`}>
+                  <div class="h-full rounded bg-teal-500" style={`width:${dealBarPct(dealAI)}%`}></div>
+                </div>
+                <span class="text-[11px] font-mono font-bold text-teal-400 w-10 text-right">$1.7M</span>
+              </div>
+            </div>
+          </div>
+          <!-- Top 3 at risk (PWin per deal) -->
+          <div class:list={["flex-shrink-0", compact ? "px-3 pb-2" : "px-4 pb-3"]}>
+            <p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold mb-2">Top 3 at risk</p>
+            <div class="divide-y divide-white/[0.04] rounded border border-white/[0.06] overflow-hidden">
+              {dealTopAtRisk.map((d) => (
+                <div class:list={["flex items-center gap-2 bg-white/[0.02]", compact ? "px-2.5 py-1.5" : "px-3 py-2"]}>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-[12px] font-medium text-[#E4E4E7] truncate">{d.name}</p>
+                    <p class="text-[10px] text-[#52525B]">{d.stage}</p>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0" title="PWin (predicted win probability)">
+                    <span class="text-[9px] text-[#52525B] uppercase tracking-wider w-8 text-right flex-shrink-0">PWin</span>
+                    <div class="w-10 h-1.5 rounded-full bg-white/[0.06]">
+                      <div class="h-1.5 rounded-full bg-teal-500 opacity-70" style={`width:${d.win}%`}></div>
+                    </div>
+                    <span class={`text-[11px] font-mono font-bold w-6 text-right ${d.win < 50 ? 'text-red-400' : 'text-[#E4E4E7]'}`}>{d.win}%</span>
+                  </div>
+                  <span class={`text-[10px] px-1.5 py-0.5 rounded border font-medium w-14 text-center flex-shrink-0 ${d.riskClass}`}>{d.risk}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+      {variant === 'account' && (
+        <>
+          <!-- Single-number focus: headline + bullets + expand (meta/body from Overview when passed) -->
+          <div class="px-4 pt-4 pb-2 flex-shrink-0">
+            {metaProp ? <p class="text-lg font-bold text-teal-400 mb-3">{metaProp}</p> : <p class="text-lg font-bold text-[#FAFAFA] mb-3">{accountHeadline}</p>}
+            {bodyProp && <p class="text-[11px] text-[#A1A1AA] leading-relaxed mb-3">{bodyProp}</p>}
+            {!metaProp && <p class="text-[11px] text-[#71717A] mb-3">AI health 62 avg · 24 accounts in window</p>}
+            <ul class="space-y-1.5">
+              {accountBullets.map((b) => (
+                <li class="text-[12px] text-[#E4E4E7] flex gap-2">
+                  <span class="text-teal-400 flex-shrink-0">·</span>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="px-4 flex-1 min-h-0 flex flex-col">
+            <details class="group mt-2 flex-shrink-0">
+              <summary class="text-[11px] text-teal-400 font-medium cursor-pointer list-none inline-flex items-center gap-1 hover:text-teal-300">
+                <span class="group-open:rotate-90 transition-transform">▶</span>
+                View all accounts
+              </summary>
+              <div class="mt-2 divide-y divide-white/[0.04] rounded border border-white/[0.06] overflow-auto max-h-[180px]">
+                {accountList.map((a) => (
+                  <div class="flex items-center px-3 py-2 gap-2 bg-white/[0.02]">
+                    <div class="flex-1 min-w-0">
+                      <p class="text-[12px] font-medium text-[#E4E4E7] truncate">{a.name}</p>
+                      <p class="text-[10px] text-[#52525B]">Renewal in {a.renewal}</p>
+                    </div>
+                    <div class="flex items-center gap-1.5 flex-shrink-0">
+                      <div class="w-10 h-1.5 rounded-full bg-white/[0.06]">
+                        <div class="h-1.5 rounded-full bg-teal-500 opacity-70" style={`width:${a.health}%`}></div>
+                      </div>
+                      <span class="text-[11px] font-mono font-bold w-5 text-right text-[#E4E4E7]">{a.health}</span>
+                    </div>
+                    <span class={`text-[10px] px-1.5 py-0.5 rounded border font-medium w-14 text-center flex-shrink-0 ${a.riskClass}`}>{a.risk}</span>
+                  </div>
+                ))}
+              </div>
+            </details>
+          </div>
+        </>
+      )}
+      {variant === 'feature' && (
+        <>
+          <!-- Narrative + compact table (body/meta from Overview when passed) -->
+          <div class="px-4 pt-4 pb-3 flex-shrink-0">
+            {metaProp && <p class="text-sm font-bold text-teal-400 mb-2">{metaProp}</p>}
+            <p class="text-[12px] text-[#E4E4E7] leading-relaxed">{bodyProp ?? featureNarrative}</p>
+          </div>
+          <div class="px-4 flex-1 min-h-0 overflow-auto">
+            <p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold mb-2">Themes</p>
+            <div class="divide-y divide-white/[0.04] rounded border border-white/[0.06] overflow-hidden">
+              {featureThemes.map((t) => (
+                <div class="flex items-center px-3 py-2 gap-2 bg-white/[0.02]">
+                  <div class="flex-1 min-w-0">
+                    <p class="text-[12px] font-medium text-[#E4E4E7] truncate">{t.name}</p>
+                    <p class="text-[10px] text-[#52525B]">{t.meta}</p>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <div class="w-10 h-1.5 rounded-full bg-white/[0.06]">
+                      <div class="h-1.5 rounded-full bg-teal-500 opacity-70" style={`width:${t.score}%`}></div>
+                    </div>
+                    <span class={`text-[11px] font-mono font-bold w-6 text-right ${t.score >= 70 ? 'text-teal-400' : 'text-[#A1A1AA]'}`}>{t.score}</span>
+                  </div>
+                  <span class={`text-[10px] px-1.5 py-0.5 rounded border font-medium flex-shrink-0 ${t.trendClass}`}>{t.trend}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+      {variant === 'risk' && (
+        <div class="flex flex-col flex-1 min-h-0 overflow-hidden">
+          <!-- One number + one line: instant understanding -->
+          <div class:list={["flex-shrink-0", compact ? "px-3 pt-2 pb-1.5" : "px-4 pt-4 pb-2"]}>
+            <p class="text-base font-bold text-[#FAFAFA]">{riskHeadline}</p>
+            <p class="text-[11px] text-[#71717A] mt-0.5">{riskSub}</p>
+          </div>
+          <!-- Who + why: deal name, severity, plain-language signals, time -->
+          <div class:list={["flex-1 min-h-0 overflow-hidden", compact ? "px-3 pb-2" : "px-4 pb-3"]}>
+            <div class="divide-y divide-white/[0.04]">
+              {(compact ? riskAlerts.slice(0, 3) : riskAlerts).map((r) => (
+                <div class:list={["flex flex-col gap-1", compact ? "py-1.5" : "py-2"]}>
+                  <div class="flex items-center justify-between gap-2 flex-wrap">
+                    <div class="flex items-center gap-2 min-w-0">
+                      <span class="text-[12px] font-semibold text-[#E4E4E7] truncate">{r.name}</span>
+                      <span class="text-[10px] font-mono text-[#52525B] flex-shrink-0">{r.deal}</span>
+                    </div>
+                    <span class={`text-[10px] px-1.5 py-0.5 rounded border font-medium flex-shrink-0 capitalize ${r.severityClass}`}>{r.severity}</span>
+                  </div>
+                  <div class="flex flex-wrap gap-1">
+                    {(compact ? r.signals.slice(0, 1) : r.signals).map((s) => (
+                      <span class="text-[10px] px-1.5 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] text-[#A1A1AA]">{s}</span>
+                    ))}
+                    {compact && r.signals.length > 1 && (
+                      <span class="text-[10px] px-1.5 py-0.5 rounded bg-white/[0.02] border border-white/[0.06] text-[#71717A]">+{r.signals.length - 1}</span>
+                    )}
+                    <span class="text-[10px] text-[#52525B]">· {r.time}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+</div>

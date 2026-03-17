@@ -1,16 +1,19 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Navbar from '../components/Navbar.astro';
-import Footer from '../components/Footer.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/nav/Navbar.astro';
+import Footer from '../components/ui/Footer.astro';
 ---
 
-<Layout title="Request Demo - Starmesh">
+<BaseLayout
+	title="Request Demo — Starmesh"
+	description="Request demo of Starmesh conversation intelligence for revenue teams."
+>
 	<Navbar />
 	<main class="contact-page">
 		<div class="contact-header">
-			<h1>Request Demo</h1>
+			<h1 class="contact-title">Request Demo</h1>
 		</div>
-		
+
 		<div class="contact-form-container">
 			<form id="contactForm" class="contact-form">
 				<div class="form-row">
@@ -39,7 +42,7 @@ import Footer from '../components/Footer.astro';
 				</div>
 
 				<div class="button-container">
-					<button type="submit" class="submit-button">
+					<button type="submit" class="btn-primary">
 						<span class="button-text">Submit</span>
 						<div class="button-loader hidden"></div>
 					</button>
@@ -52,18 +55,17 @@ import Footer from '../components/Footer.astro';
 
 			<div id="thankYouMessage" class="thank-you-message hidden">
 				<h3>Thank you for your interest!</h3>
-				<a href="https://calendly.com/YOUR-LINK" class="calendly-button" target="_blank">Schedule a Call</a>
+				<a href="https://calendly.com/YOUR-LINK" class="btn-primary inline-block mt-4" target="_blank" rel="noopener">Schedule a Call</a>
 			</div>
 		</div>
 	</main>
 	<Footer />
-</Layout>
+</BaseLayout>
 
 <style>
 	.contact-page {
 		min-height: 100vh;
-		padding: 2.5rem 1.5rem 1rem;
-		background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(139, 92, 246, 0.05) 100%);
+		padding: 6rem 1.5rem 4rem;
 		position: relative;
 		overflow-x: hidden;
 		display: flex;
@@ -76,17 +78,18 @@ import Footer from '../components/Footer.astro';
 	.contact-header {
 		text-align: center;
 		width: 100%;
-		margin: 0 auto 1rem;
+		margin: 0 auto 1.5rem;
 		padding: 0 1rem;
 		box-sizing: border-box;
 	}
 
-	.contact-header h1 {
+	.contact-title {
 		font-size: clamp(2em, 4vw, 3em);
-		font-weight: 600;
-		background: linear-gradient(90deg, #E4D6F5 0%, #8B5CF6 100%);
+		font-weight: 700;
+		background: linear-gradient(135deg, #6366F1, #8B5CF6, #A855F7);
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
+		background-clip: text;
 	}
 
 	.contact-form-container {
@@ -94,9 +97,9 @@ import Footer from '../components/Footer.astro';
 		max-width: 600px;
 		margin: 0 auto;
 		padding: 1.5rem;
-		background: rgba(255, 255, 255, 0.02);
-		border-radius: 1rem;
-		border: 1px solid rgba(255, 255, 255, 0.1);
+		background: #111114;
+		border-radius: 12px;
+		border: 1px solid rgba(255, 255, 255, 0.07);
 		box-sizing: border-box;
 	}
 
@@ -120,31 +123,39 @@ import Footer from '../components/Footer.astro';
 		gap: 0.25rem;
 	}
 
-	label {
-		color: #B3acf2;
-		font-size: 1rem;
+	.contact-form label {
+		color: #A1A1AA;
+		font-size: 0.9375rem;
 		font-weight: 500;
 	}
 
-	input, textarea {
+	.contact-form input,
+	.contact-form textarea {
 		width: 100%;
 		box-sizing: border-box;
-		padding: 0.75rem;
-		border-radius: 0.5rem;
-		border: 1px solid rgba(139, 92, 246, 0.3);
-		background: rgba(255, 255, 255, 0.05);
-		color: #fff;
+		padding: 0.75rem 0.875rem;
+		border-radius: 8px;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		background: rgba(255, 255, 255, 0.04);
+		color: #FAFAFA;
 		font-size: 1rem;
-		transition: all 0.2s ease;
+		font-family: 'Inter', system-ui, sans-serif;
+		transition: border-color 0.2s, box-shadow 0.2s;
 	}
 
-	input:focus, textarea:focus {
+	.contact-form input::placeholder,
+	.contact-form textarea::placeholder {
+		color: #71717A;
+	}
+
+	.contact-form input:focus,
+	.contact-form textarea:focus {
 		outline: none;
-		border-color: #8B5CF6;
-		box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+		border-color: rgba(129, 140, 248, 0.7);
+		box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.25);
 	}
 
-	textarea {
+	.contact-form textarea {
 		resize: vertical;
 		min-height: 70px;
 		max-height: 150px;
@@ -158,32 +169,32 @@ import Footer from '../components/Footer.astro';
 	}
 
 	.checkbox-text {
-		font-size: 1rem;
-		color: #B3acf2;
+		font-size: 0.9375rem;
+		color: #A1A1AA;
 		font-weight: 500;
 	}
 
-	input[type="checkbox"] {
+	.contact-form input[type="checkbox"] {
 		width: 1.125rem;
 		height: 1.125rem;
 		padding: 0;
-		border-radius: 0.25rem;
+		border-radius: 4px;
 		cursor: pointer;
 		appearance: none;
 		-webkit-appearance: none;
-		background: rgba(255, 255, 255, 0.05);
-		border: 1px solid rgba(139, 92, 246, 0.3);
+		background: rgba(255, 255, 255, 0.06);
+		border: 1px solid rgba(255, 255, 255, 0.15);
 		position: relative;
 		vertical-align: middle;
-		transition: all 0.2s ease;
+		transition: border-color 0.2s, background 0.2s;
 	}
 
-	input[type="checkbox"]:checked {
-		background: #8B5CF6;
-		border-color: #8B5CF6;
+	.contact-form input[type="checkbox"]:checked {
+		background: linear-gradient(135deg, #6366F1, #8B5CF6);
+		border-color: rgba(129, 140, 248, 0.8);
 	}
 
-	input[type="checkbox"]:checked::after {
+	.contact-form input[type="checkbox"]:checked::after {
 		content: '';
 		position: absolute;
 		left: 4px;
@@ -195,13 +206,13 @@ import Footer from '../components/Footer.astro';
 		transform: rotate(45deg);
 	}
 
-	input[type="checkbox"]:hover {
-		border-color: #8B5CF6;
+	.contact-form input[type="checkbox"]:hover {
+		border-color: rgba(129, 140, 248, 0.7);
 	}
 
-	input[type="checkbox"]:focus {
+	.contact-form input[type="checkbox"]:focus {
 		outline: none;
-		box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+		box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.3);
 	}
 
 	.button-container {
@@ -210,29 +221,16 @@ import Footer from '../components/Footer.astro';
 		margin-top: 0.25rem;
 	}
 
-	.submit-button {
-		background: #8B5CF6;
-		color: white;
-		font-size: 1rem;
-		padding: 0.75rem 2.5rem;
-		border-radius: 0.5rem;
-		border: none;
-		cursor: pointer;
-		transition: all 0.2s ease;
-		font-weight: 500;
-		min-width: 120px;
-		font-family: 'Lato', sans-serif;
-		letter-spacing: 0.01em;
-	}
-
-	.submit-button:hover {
-		background: #7C3AED;
-		transform: translateY(-2px);
-		box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+	.button-container .btn-primary {
+		min-width: 100px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
 	}
 
 	.error-message {
-		color: #ef4444;
+		color: #F87171;
 		font-size: 0.75rem;
 		margin-top: 0.25rem;
 	}
@@ -243,30 +241,15 @@ import Footer from '../components/Footer.astro';
 	}
 
 	.thank-you-message h3 {
-		color: #E4D6F5;
+		color: #FAFAFA;
 		font-size: 1.5rem;
+		font-weight: 600;
 		margin-bottom: 1rem;
 	}
 
 	.thank-you-message p {
-		color: #B3acf2;
+		color: #A1A1AA;
 		margin-bottom: 1.5rem;
-	}
-
-	.calendly-button {
-		display: inline-block;
-		background: #8B5CF6;
-		color: white;
-		padding: 0.75rem 1.5rem;
-		border-radius: 0.5rem;
-		text-decoration: none;
-		transition: all 0.2s ease;
-	}
-
-	.calendly-button:hover {
-		background: #7C3AED;
-		transform: translateY(-2px);
-		box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
 	}
 
 	.hidden {
@@ -275,14 +258,14 @@ import Footer from '../components/Footer.astro';
 
 	@media (max-width: 768px) {
 		.contact-page {
-			padding: 1.5rem 0.75rem 1rem;
+			padding: 5rem 1rem 3rem;
 		}
 	}
 
 	@media (max-width: 640px) {
 		.contact-form-container {
-			padding: 1rem;
-			border-radius: 0.75rem;
+			padding: 1.25rem;
+			border-radius: 12px;
 		}
 
 		.form-row {
@@ -290,19 +273,20 @@ import Footer from '../components/Footer.astro';
 			gap: 0.75rem;
 		}
 
-		input, textarea {
-			padding: 0.625rem;
-			font-size: 16px; /* Prevent iOS zoom */
+		.contact-form input,
+		.contact-form textarea {
+			padding: 0.625rem 0.75rem;
+			font-size: 16px;
 		}
 
-		input[type="checkbox"] {
+		.contact-form input[type="checkbox"] {
 			width: 1rem;
 			height: 1rem;
 		}
 
-		input[type="checkbox"]:checked::after {
+		.contact-form input[type="checkbox"]:checked::after {
 			left: 3px;
-			top: 0px;
+			top: 0;
 			width: 4px;
 			height: 8px;
 		}
@@ -310,17 +294,17 @@ import Footer from '../components/Footer.astro';
 
 	@media (max-width: 480px) {
 		.contact-page {
-			padding: 1.5rem 0.5rem 1rem;
+			padding: 5rem 0.75rem 2rem;
 		}
 	}
 
 	@media (max-height: 700px) {
 		.contact-page {
-			padding-top: 1rem;
+			padding-top: 4rem;
 		}
 
 		.contact-header {
-			margin-bottom: 0.5rem;
+			margin-bottom: 0.75rem;
 		}
 	}
 
@@ -344,8 +328,9 @@ import Footer from '../components/Footer.astro';
 		text-align: center;
 		margin-top: 1rem;
 		padding: 0.75rem;
-		background: rgba(239, 68, 68, 0.1);
-		border-radius: 0.5rem;
+		background: rgba(248, 113, 113, 0.1);
+		border-radius: 8px;
+		color: #F87171;
 	}
 
 	.hidden {
