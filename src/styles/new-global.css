@@ -39,7 +39,7 @@
 
 /* Base resets */
 html { scroll-behavior: smooth; }
-body { background: var(--color-bg); color: var(--color-text); font-family: var(--font-sans); }
+body { background: var(--color-bg); color: var(--color-text); font-family: var(--font-sans); overflow-x: hidden; }
 *, *::before, *::after { box-sizing: border-box; }
 
 /* Gradient text utility */

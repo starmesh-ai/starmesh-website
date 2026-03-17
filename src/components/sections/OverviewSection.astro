@@ -26,7 +26,7 @@ const teams = [
       { app:'Notion',     logo:'notion.so',       title:'Account notes',       sample:'RevOps added a Mutual Action Plan doc linked to this opportunity.' },
       { app:'Google Drive', logo:'drive.google.com', title:'Proposal docs',   sample:'Latest MSA and order form uploaded for legal to review before signature.' },
     ],
-    signals: ['Budget', 'Timeline', 'Exec', 'Risk', 'Next steps'],
+    signals: ['Risks', 'Opportunities', 'Stakeholders', 'Momentum', 'Health'],
     outcomes: [
       { title:'Deal Copilot',     subtitle:'Unlimited deal Q&A and next-best actions', meta:null,                  chat:{user:'What do I need to do before Friday?', ai:"Send SOC2 docs to Sarah today. Get your SE on the security call — that's the only real blocker. Log next steps in Salesforce before EOD or this slips to Q1."} },
       { title:'Deal Forecast',     subtitle:'Quarter pipeline vs target · deals at risk', meta:'Q2 forecast · 3 at risk',  chart:[20,23,27,31,35,39,42,45], body:'Pipeline forecast for the quarter: target vs manual vs AI. Top deals at risk from what\'s actually said in calls.' },
@@ -94,7 +94,7 @@ const teams = [
       { app:'Figma',    logo:'figma.com',        title:'Design feedback',   sample:'Dashboard exploration file has 14 comments tagged as “unclear information hierarchy”.' },
       { app:'Amplitude', logo:'amplitude.com',   title:'Experiment data',   sample:'Treatment group with new onboarding flow retains 16% better at day 30.' },
     ],
-    signals: ['Themes', 'Demand', 'Revenue', 'Friction', 'Retention'],
+    signals: ['Risks', 'Opportunities', 'Stakeholders', 'Momentum', 'Health'],
     outcomes: [
       { title:'PM Copilot',      subtitle:'Unlimited discovery Q&A and prioritization', meta:null,                          chat:{user:'What should we prioritize this quarter?', ai:"Ship cohort analytics first — #1 requested, \$180K blocked, confirmed by both calls and usage data. Then fix the step 3 drop-off, it's killing retention. Permission bugs are noise compared to those two."} },
       { title:'Feature Demand',  subtitle:'Themes, momentum, and revenue impact',       meta:'8 themes · 3 accelerating',  chart:[44,40,36,31,25,20,16,12], body:'Cohort analytics up 3× in 60 days — 12 enterprise mentions, $180K in deals blocked. Highest-ROI item in your backlog right now.' },
@@ -192,14 +192,13 @@ function logoUrl(src: { app: string; logo: string }) {
                 <!-- 1. Signals: stars image centred, Signals + list to the right -->
                 <div class="ov-signals" data-engine-out>
                   <div class="ov-signals-left" aria-hidden="true"></div>
-                  <div class="ov-signals-logo-wrapper" data-stars-anchor>
-                    <div class="ov-signals-logo-inner">
-                      <img class="ov-signals-logo" src="/images/starmesh-logo.png" alt="Starmesh" loading="lazy" />
+                  <div class="ov-signals-logo-wrapper">
+                    <div class="ov-signals-logo-inner" data-stars-anchor>
+                      <img class="ov-signals-logo" src="/images/starmesh-logo-white.png" alt="Starmesh" loading="lazy" decoding="async" />
                     </div>
                     <img class="ov-signals-stars" src="https://img.icons8.com/ios/100/sparkling.png" width="100" height="100" alt="AI signals" loading="lazy" />
                   </div>
                   <div class="ov-signals-content">
-                    <span class="ov-signals-label">Signals</span>
                     <ul class="ov-signal-list" aria-label="Signal types we extract">
                       {team.signals.map((s) => (
                         <li class="ov-signal-item">{s}</li>
@@ -861,6 +860,11 @@ function logoUrl(src: { app: string; logo: string }) {
   .ov-lines { position:absolute; inset:0; pointer-events:none; z-index:2; overflow:visible; }
   .ov-dotgrid { position:absolute; inset:0; pointer-events:none; background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px); background-size:22px 22px; }
 
+  /* Hide decorative connection gradients only when the layout stacks */
+  @media (max-width: 900px) {
+    .ov-lines { display:none; }
+  }
+
   /* Panel */
   .ov-panel { display:none; }
   .ov-panel.active { display:block; animation:ovFade .25s ease; }
@@ -924,7 +928,7 @@ function logoUrl(src: { app: string; logo: string }) {
     margin-top:2px;
     padding:8px 11px;
     border-radius:10px;
-    border:1px dashed rgba(129,140,248,.45);
+    border:1px solid rgba(129,140,248,.45);
     background:rgba(99,102,241,.14);
     display:flex;
     align-items:center;
@@ -1001,16 +1005,19 @@ function logoUrl(src: { app: string; logo: string }) {
   .ov-engine-signals { gap:20px; padding:12px 14px 16px; align-items:center; }
   /* 1. Signals — stars image at centre, Signals + list to the right; pushed down slightly */
   .ov-signals {
-    display:flex;
+    display:grid;
+    /* Slight left bias so the centered logo + signals feel optically centered */
+    grid-template-columns: 0.88fr auto 1.12fr;
     align-items:center;
-    gap:20px;
+    column-gap:20px;
     padding:0;
     width:100%;
     margin-top:12px;
     justify-content:center;
   }
   .ov-signals-left {
-    display:none;
+    display:block;
+    min-width:0;
   }
   .ov-signals-logo-wrapper {
     position:relative;
@@ -1019,8 +1026,8 @@ function logoUrl(src: { app: string; logo: string }) {
     align-items:center;
     justify-content:center;
     z-index:2;
-    padding:10px;
-    width: 200px;
+    padding:12px 10px;
+    width: clamp(88px, 9vw, 100px);
   }
   .ov-signals-logo-inner {
     display:flex;
@@ -1029,9 +1036,11 @@ function logoUrl(src: { app: string; logo: string }) {
     position:relative;
     z-index:2;
     width: 100%;
+    transform: translateX(-10px);
   }
   .ov-signals-logo {
     width:100%;
+    max-width:100px;
     height:auto;
     object-fit:contain;
     filter:drop-shadow(0 0 24px rgba(99,102,241,.6)) drop-shadow(0 0 12px rgba(255,255,255,.2));
@@ -1043,22 +1052,19 @@ function logoUrl(src: { app: string; logo: string }) {
     width:42px;
     height:42px;
     object-fit:contain;
-    /* Make the stars purple so they contrast against the white logo */
-    filter: brightness(0) saturate(100%) invert(43%) sepia(87%) saturate(2976%) hue-rotate(224deg) brightness(98%) contrast(93%) drop-shadow(0 0 8px rgba(99,102,241,.6));
+    /* Match the logo color (white) */
+    filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(255,255,255,.22));
     opacity:1;
     z-index:3;
-    animation:ovStarsPulse 3s ease-in-out infinite;
-  }
-  @keyframes ovStarsPulse {
-    0%,100% { transform:scale(1) rotate(0deg); opacity:.8; }
-    50% { transform:scale(1.15) rotate(5deg); opacity:1; filter: brightness(0) saturate(100%) invert(67%) sepia(47%) saturate(3990%) hue-rotate(204deg) brightness(101%) contrast(96%) drop-shadow(0 0 12px rgba(129,140,248,.8)); }
+    animation:none;
   }
   .ov-signals-content {
-    flex:1;
+    grid-column:3;
     min-width:0;
     display:flex;
     flex-direction:column;
     gap:10px;
+    justify-self:start;
   }
   .ov-signals-label {
     font-weight:800;
@@ -1109,7 +1115,7 @@ function logoUrl(src: { app: string; logo: string }) {
     align-items:center;
     justify-content:center;
     gap:20px;
-    padding-left: 32px; /* Shift the entire wrapper right to align cylinder with logo */
+    padding-left: 56px; /* Shift the entire wrapper right to align cylinder with logo */
   }
   .ov-cylinder {
     position:relative;
@@ -1161,23 +1167,24 @@ function logoUrl(src: { app: string; logo: string }) {
     justify-content:center;
     gap:8px 10px;
     align-items:center;
-    max-width:120px; /* Forces 3 icons per row (3 * 26px + 2 * 10px = 98px) */
+    max-width:108px;
   }
   .ov-cylinder-ico {
-    width:26px;
-    height:26px;
-    border-radius:8px;
+    width:22px;
+    height:22px;
+    border-radius:7px;
     background:linear-gradient(145deg, rgba(255,255,255,.98), rgba(241,245,255,.95));
     overflow:hidden;
     display:flex;
     align-items:center;
     justify-content:center;
-    padding:3px;
+    padding:2px;
     box-sizing:border-box;
     border:1px solid rgba(129,140,248,.2);
     box-shadow:0 1px 3px rgba(0,0,0,.15), inset 0 1px 0 rgba(255,255,255,.6);
   }
-  .ov-cylinder-ico img { width:100%; height:100%; object-fit:contain; display:block; }
+  /* Keep the original tile look, just smaller tiles */
+  .ov-cylinder-ico img { width:90%; height:90%; object-fit:contain; display:block; }
   .ov-cylinder-ico-fb { display:none; font-size:.6rem; font-weight:900; color:#fff; background:var(--color-primary); width:100%; height:100%; align-items:center; justify-content:center; border-radius:5px; }
   
   .ov-cylinder-text {

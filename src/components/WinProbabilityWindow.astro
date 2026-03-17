@@ -66,7 +66,7 @@ const riskAlerts = [
 ];
 ---
 <!-- Deal Forecast (PWin), Account Health, or Feature Demand — content varies by variant -->
-<div class:list={["rounded-xl overflow-hidden", compact ? "w-full max-w-full" : "w-[620px] flex-shrink-0"]} style="background:#0c0c10; border:1px solid rgba(255,255,255,0.1); box-shadow:0 16px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03), 0 0 80px rgba(13,148,136,.06);">
+<div class:list={["rounded-xl overflow-hidden", compact ? "w-full max-w-full" : "w-full max-w-[620px]"]} style="background:#0c0c10; border:1px solid rgba(255,255,255,0.1); box-shadow:0 16px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03), 0 0 80px rgba(13,148,136,.06);">
   <div class:list={["flex items-center px-4 border-b border-white/[0.06]", compact ? "py-2.5" : "py-3"]} style="background:#111118;">
     <div class="flex gap-1.5 flex-shrink-0">
       <span class:list={["rounded-full", compact ? "w-2.5 h-2.5" : "w-3 h-3"]} style="background:#FF5F56;"></span>
@@ -269,16 +269,16 @@ const riskAlerts = [
         </>
       )}
       {variant === 'risk' && (
-        <div class:list={["flex flex-col flex-1 min-h-0 overflow-hidden", compact && "overflow-y-auto"]}>
+        <div class="flex flex-col flex-1 min-h-0 overflow-hidden">
           <!-- One number + one line: instant understanding -->
           <div class:list={["flex-shrink-0", compact ? "px-3 pt-2 pb-1.5" : "px-4 pt-4 pb-2"]}>
             <p class="text-base font-bold text-[#FAFAFA]">{riskHeadline}</p>
             <p class="text-[11px] text-[#71717A] mt-0.5">{riskSub}</p>
           </div>
           <!-- Who + why: deal name, severity, plain-language signals, time -->
-          <div class:list={["flex-1 min-h-0 overflow-y-auto", compact ? "px-3 pb-2" : "px-4 pb-3"]}>
+          <div class:list={["flex-1 min-h-0 overflow-hidden", compact ? "px-3 pb-2" : "px-4 pb-3"]}>
             <div class="divide-y divide-white/[0.04]">
-              {riskAlerts.map((r) => (
+              {(compact ? riskAlerts.slice(0, 3) : riskAlerts).map((r) => (
                 <div class:list={["flex flex-col gap-1", compact ? "py-1.5" : "py-2"]}>
                   <div class="flex items-center justify-between gap-2 flex-wrap">
                     <div class="flex items-center gap-2 min-w-0">
@@ -288,9 +288,12 @@ const riskAlerts = [
                     <span class={`text-[10px] px-1.5 py-0.5 rounded border font-medium flex-shrink-0 capitalize ${r.severityClass}`}>{r.severity}</span>
                   </div>
                   <div class="flex flex-wrap gap-1">
-                    {r.signals.map((s) => (
+                    {(compact ? r.signals.slice(0, 1) : r.signals).map((s) => (
                       <span class="text-[10px] px-1.5 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] text-[#A1A1AA]">{s}</span>
                     ))}
+                    {compact && r.signals.length > 1 && (
+                      <span class="text-[10px] px-1.5 py-0.5 rounded bg-white/[0.02] border border-white/[0.06] text-[#71717A]">+{r.signals.length - 1}</span>
+                    )}
                     <span class="text-[10px] text-[#52525B]">· {r.time}</span>
                   </div>
                 </div>

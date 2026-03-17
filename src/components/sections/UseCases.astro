@@ -49,7 +49,7 @@ const tabs = [
 ---
 <section id="benefits" class="py-24 px-6">
   <div class="max-w-6xl mx-auto">
-    <div class="text-center mb-12">
+    <div class="text-center mb-8">
       <p class="text-xs text-[#71717A] uppercase tracking-widest mb-3">Benefits</p>
       <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">
         What every customer-facing team <span class="gradient-text">actually gains</span>
@@ -74,7 +74,7 @@ const tabs = [
     <!-- Tab panels -->
     {tabs.map((tab) => (
       <div class="tab-panel hidden" data-panel={tab.id}>
-        <p class="text-center text-[#A1A1AA] mb-10 text-base max-w-2xl mx-auto">{tab.description}</p>
+        <p class="text-center text-[#A1A1AA] mb-6 text-base max-w-2xl mx-auto">{tab.description}</p>
         <div class="w-full max-w-4xl mx-auto">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-6">
           {tab.benefits.map((b) => (
@@ -126,7 +126,7 @@ const tabs = [
     border-radius: .7rem;
     padding: .2rem;
     width: fit-content;
-    margin: 0 auto 2.5rem;
+    margin: 0 auto 1.25rem;
   }
   .benefits-tab {
     border-radius: .5rem;

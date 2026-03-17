@@ -7,8 +7,10 @@ interface Props {
   userText: string;
   aiText: string;
   nextQuestion: string;
+  /** When false, disables the internal scroll area (used in Features section). */
+  scroll?: boolean;
 }
-const { title, contextSummary, firstUserText, firstAiText, userText, aiText, nextQuestion } = Astro.props;
+const { title, contextSummary, firstUserText, firstAiText, userText, aiText, nextQuestion, scroll = true } = Astro.props;
 const dealIds = [
   { id: 'D-12', active: true },
   { id: 'D-47', active: false },
@@ -18,7 +20,7 @@ const dealIds = [
 ];
 ---
 <!-- Copilot window — context (status, amount, close); deal IDs only in sidebar; generic then specific Q&A; input shows unique next question -->
-<div class="ov-deal-intel-window rounded-xl overflow-hidden w-[620px] flex-shrink-0" style="background:#0c0c10; border:1px solid rgba(255,255,255,0.1); box-shadow:0 16px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03), 0 0 80px rgba(13,148,136,.06);">
+<div class="ov-deal-intel-window rounded-xl overflow-hidden w-full max-w-[620px]" style="background:#0c0c10; border:1px solid rgba(255,255,255,0.1); box-shadow:0 16px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03), 0 0 80px rgba(13,148,136,.06);">
   <div class="flex items-center px-4 py-3 border-b border-white/[0.06]" style="background:#111118;">
     <div class="flex gap-1.5 flex-shrink-0">
       <span class="w-3 h-3 rounded-full" style="background:#FF5F56;"></span>
@@ -47,7 +49,7 @@ const dealIds = [
       <div class="px-3 py-2.5 border-b border-white/[0.04] bg-white/[0.02]">
         <p class="text-[11px] text-[#71717A]">{contextSummary}</p>
       </div>
-      <div class="flex-1 px-4 py-4 space-y-3 overflow-auto">
+      <div class:list={["flex-1 px-4 py-4 space-y-3", scroll ? "overflow-auto" : "overflow-hidden"]}>
         <div class="flex justify-end">
           <p class="text-[13px] text-[#A1A1AA] bg-white/[0.05] border border-white/[0.07] rounded-xl rounded-br-sm px-3 py-2 leading-relaxed max-w-[85%]">{firstUserText}</p>
         </div>

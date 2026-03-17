@@ -15,7 +15,7 @@ import CRMSyncWindow from '../CRMSyncWindow.astro';
     <!-- AI Outcomes: 2-per-row -->
     <div class="mb-28">
       <div class="mb-12"></div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-16 items-start">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-16 items-start">
 
         <!-- Deal Forecast — quarterly pipeline forecast from calls -->
         <div class="flex flex-col">
@@ -240,13 +240,14 @@ import CRMSyncWindow from '../CRMSyncWindow.astro';
               userText="What do I need to do before Friday?"
               aiText="Send SOC2 docs to Sarah today. Get your SE on the security call — that's the only real blocker. Log next steps in Salesforce before EOD or this slips to Q1."
               nextQuestion="Who are the key stakeholders on the buying committee?"
+              scroll={false}
             />
           </div>
         </div>
 
         <!-- 2. Interaction Timeline -->
-        <div class="flex flex-col lg:flex-row-reverse items-start gap-16 lg:gap-20">
-          <div class="lg:w-[38%] flex-shrink-0 lg:pt-6 lg:pl-10">
+        <div class="flex flex-col lg:flex-row-reverse items-start gap-12 lg:gap-20">
+          <div class="lg:w-[38%] flex-shrink-0 lg:pt-6">
             <div class="flex items-center gap-2.5 mb-3">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2dd4bf" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v6h4m6-2a10 10 0 1 1-20 0 10 10 0 0 1 20 0Z"/></svg>
               <span class="text-xs text-[#2dd4bf] uppercase tracking-widest font-bold">Interaction Timeline</span>
@@ -267,7 +268,7 @@ import CRMSyncWindow from '../CRMSyncWindow.astro';
               ))}
             </ul>
           </div>
-          <div class="flex-1 min-w-0 lg:pt-6">
+          <div class="flex-1 min-w-0 lg:pt-6 flex lg:justify-end">
             <InteractionTimelineWindow
               title="Deal Timeline"
               events={[
@@ -303,22 +304,83 @@ import CRMSyncWindow from '../CRMSyncWindow.astro';
               ))}
             </ul>
           </div>
-          <div class="flex-1 min-w-0">
+          <div class="flex-1 min-w-0" id="crm-feature-container">
 
             <!-- Scale down visually, but keep layout height compact -->
-            <div class="relative w-full" style="height: calc(640px * 0.7);">
+            <div
+              class="relative w-full"
+              id="crm-feature-wrap"
+              style="height: 588.8px;"
+            >
               <div
                 class="absolute left-0 top-0"
+                id="crm-feature-inner"
                 style="
-                  transform: scale(0.73);
+                  transform: scale(0.68);
                   transform-origin: top left;
                 "
               >
-                <CRMSyncWindow title="CRM Auto-update" />
+                <div style="width:980px; height:640px;">
+                  <CRMSyncWindow title="CRM Auto-update" />
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        <script>
+          // Keep the full CRM window visible without causing horizontal page scroll.
+          // We scale down until it fits the available container width.
+          (() => {
+            const container = document.getElementById('crm-feature-container');
+            const wrap = document.getElementById('crm-feature-wrap');
+            const inner = document.getElementById('crm-feature-inner');
+            if (!container || !wrap || !inner) return;
+
+            const BASE_W = 980;
+            const BASE_H = 640;
+            const MAX_SCALE = 0.68; // allow it to be nice and large on big screens
+
+            const apply = () => {
+              let w = container.clientWidth;
+              
+              // Allow breaking out of the column to use available screen space on the right,
+              // keeping a 24px margin from the viewport edge to avoid horizontal scroll.
+              if (container.getBoundingClientRect) {
+                const rect = container.getBoundingClientRect();
+                if (rect.left > 0 && rect.left < window.innerWidth) {
+                  const screenSpace = window.innerWidth - rect.left - 24;
+                  w = Math.max(w, screenSpace);
+                }
+              }
+
+              if (w <= 0) {
+                // Fallback if layout hasn't settled
+                w = Math.max(0, window.innerWidth - 48);
+              }
+              
+              const s = Math.min(MAX_SCALE, w / BASE_W);
+              
+              // Apply exactly the scale and exactly the height needed
+              inner.style.transform = `scale(${s})`;
+              wrap.style.height = `${BASE_H * s}px`;
+            };
+
+            apply();
+            
+            // Re-apply on any layout changes
+            window.addEventListener('resize', apply, { passive: true });
+            window.addEventListener('orientationchange', apply, { passive: true });
+            if ('ResizeObserver' in window) {
+              new ResizeObserver(apply).observe(container);
+            }
+            
+            // Catch late reflows on mobile/stacked
+            requestAnimationFrame(apply);
+            setTimeout(apply, 100);
+            setTimeout(apply, 400);
+          })();
+        </script>
 
         <!-- 4. Write-back to Any System -->
         <div class="flex flex-col lg:flex-row-reverse items-start gap-12">
