@@ -24,8 +24,8 @@ const free = [
 
 // Free runs on sample data inside Claude via the public Starmesh plugin.
 const TRY_IN_CLAUDE_URL = 'https://github.com/starmesh-ai/starmesh-claude-plugin#install';
-// Price and seats are agreed on a call. Swap in a scheduling link when there is one.
-const BOOK_CALL_URL = 'mailto:abhinav@starmesh.ai?subject=' + encodeURIComponent('Book a call: Starmesh pricing');
+// Price and seats are agreed on a call we set up by email.
+const CONTACT_URL = 'mailto:abhinav@starmesh.ai?subject=' + encodeURIComponent('Starmesh pricing');
 ---
 <BaseLayout
   title="Pricing — Starmesh"
@@ -104,12 +104,12 @@ const BOOK_CALL_URL = 'mailto:abhinav@starmesh.ai?subject=' + encodeURIComponent
 
             <div class="px-8 py-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center gap-4" style="background:rgba(255,255,255,.01);">
               <a
-                href={BOOK_CALL_URL}
+                href={CONTACT_URL}
                 class="btn-primary w-full sm:w-auto flex-shrink-0 text-center"
               >
-                Book a call
+                Contact us
               </a>
-              <p class="text-[#52525B] text-sm text-center sm:text-left">Price and seats are set on the call. No commitment — we'll walk you through a live demo first.</p>
+              <p class="text-[#52525B] text-sm text-center sm:text-left">We'll reply to set up a call, where price and seats are agreed. No commitment — we'll walk you through a live demo first.</p>
             </div>
 
           </div>
