@@ -14,10 +14,22 @@ const enterprise = [
   { text: 'Audit logging & compliance controls' },
   { text: 'SLA-backed support with named contacts' },
 ];
+
+const free = [
+  { text: 'Sample sales book — 30 deals, 3 reps, real-sounding calls' },
+  { text: 'Ask in Claude or ChatGPT' },
+  { text: 'Every answer cites the call or record behind it' },
+  { text: 'No card, no time limit' },
+];
+
+// Free runs on sample data inside Claude via the public Starmesh plugin.
+const TRY_IN_CLAUDE_URL = 'https://github.com/starmesh-ai/starmesh-claude-plugin#install';
+// Price and seats are agreed on a call we set up by email.
+const CONTACT_URL = 'mailto:abhinav@starmesh.ai?subject=' + encodeURIComponent('Starmesh pricing');
 ---
 <BaseLayout
   title="Pricing — Starmesh"
-  description="Simple, transparent pricing for conversation intelligence. Built for revenue and data teams."
+  description="Try Starmesh free on sample data in Claude. Enterprise pricing for your own data is set on a call."
 >
   <Navbar />
   <main class="pt-16">
@@ -28,11 +40,40 @@ const enterprise = [
           <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">
             Built for <span class="gradient-text">enterprise teams</span>
           </h1>
-          <p class="text-[#A1A1AA] text-lg max-w-xl mx-auto">Starmesh deploys alongside your existing data stack. Pricing is usage-based — we'll give you a number after understanding your use case.</p>
+          <p class="text-[#A1A1AA] text-lg max-w-xl mx-auto">Try Starmesh free on sample data. For your own CRM, calls and email, pricing is usage-based — we'll give you a number on a call after understanding your use case.</p>
+          <p class="text-[#71717A] text-sm mt-4">Works in Claude and ChatGPT.</p>
         </div>
 
-        <div class="max-w-2xl mx-auto">
-          <div class="rounded-2xl overflow-hidden" style="border:1px solid rgba(129,140,248,.55); background:#0a0a0d; box-shadow:0 0 80px rgba(129,140,248,.25), inset 0 1px 0 rgba(255,255,255,.04);">
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.6fr] gap-6 items-stretch">
+          <div class="rounded-2xl overflow-hidden flex flex-col" style="border:1px solid rgba(255,255,255,.08); background:#0a0a0d;">
+            <div class="px-8 py-8 border-b border-white/[0.06]">
+              <p class="text-xs text-[#A1A1AA] uppercase tracking-widest font-bold mb-3">Free</p>
+              <div class="flex items-baseline gap-2 mb-2">
+                <span class="text-5xl font-bold text-[#FAFAFA] tracking-tight">$0</span>
+              </div>
+              <p class="text-[#71717A] text-sm">Sample data in Claude · no time limit</p>
+            </div>
+            <div class="px-8 py-8 flex-1">
+              <p class="text-xs text-[#52525B] uppercase tracking-widest font-semibold mb-6">What's included</p>
+              <ul class="grid grid-cols-1 gap-3">
+                {free.map(f => (
+                  <li class="flex items-start gap-3">
+                    <span class="text-primary flex-shrink-0 mt-1">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                    <span class="text-sm text-[#A1A1AA] leading-snug">{f.text}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div class="px-8 py-6 border-t border-white/[0.06]" style="background:rgba(255,255,255,.01);">
+              <a href={TRY_IN_CLAUDE_URL} target="_blank" rel="noopener" class="btn-ghost w-full justify-center text-center">
+                Try it in Claude
+              </a>
+            </div>
+          </div>
+
+          <div class="rounded-2xl overflow-hidden flex flex-col" style="border:1px solid rgba(129,140,248,.55); background:#0a0a0d; box-shadow:0 0 80px rgba(129,140,248,.25), inset 0 1px 0 rgba(255,255,255,.04);">
 
             <div class="px-8 py-8 border-b border-white/[0.06]">
               <div class="flex items-start justify-between gap-4">
@@ -47,7 +88,7 @@ const enterprise = [
               </div>
             </div>
 
-            <div class="px-8 py-8">
+            <div class="px-8 py-8 flex-1">
               <p class="text-xs text-[#52525B] uppercase tracking-widest font-semibold mb-6">What's included</p>
               <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {enterprise.map(f => (
@@ -63,12 +104,12 @@ const enterprise = [
 
             <div class="px-8 py-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center gap-4" style="background:rgba(255,255,255,.01);">
               <a
-                href="mailto:abhinav@starmesh.ai"
+                href={CONTACT_URL}
                 class="btn-primary w-full sm:w-auto flex-shrink-0 text-center"
               >
-                Talk to sales
+                Contact us
               </a>
-              <p class="text-[#52525B] text-sm text-center sm:text-left">No commitment required — we'll walk you through a live demo first.</p>
+              <p class="text-[#52525B] text-sm text-center sm:text-left">We'll reply to set up a call, where price and seats are agreed. No commitment — we'll walk you through a live demo first.</p>
             </div>
 
           </div>
