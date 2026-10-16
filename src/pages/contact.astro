@@ -5,13 +5,13 @@ import Footer from '../components/ui/Footer.astro';
 ---
 
 <BaseLayout
-	title="Request Demo — Starmesh"
+	title="Talk to sales — Starmesh"
 	description="Request demo of Starmesh conversation intelligence for revenue teams."
 >
 	<Navbar />
 	<main class="contact-page">
 		<div class="contact-header">
-			<h1 class="contact-title">Request Demo</h1>
+			<h1 class="contact-title">Talk to sales</h1>
 		</div>
 
 		<div class="contact-form-container">
@@ -33,6 +33,8 @@ import Footer from '../components/ui/Footer.astro';
 					<label for="useCase">What are you hoping to use Starmesh for? *</label>
 					<textarea id="useCase" name="Use Case" rows="3" required></textarea>
 				</div>
+
+				<input type="hidden" id="source" name="Source" value="website">
 
 				<div class="form-group">
 					<label class="checkbox-label">
@@ -351,6 +353,20 @@ import Footer from '../components/ui/Footer.astro';
 	const buttonLoader = submitButton.querySelector('.button-loader') as HTMLElement;
 	const formError = document.getElementById('formError');
 
+	// Links from the pricing page, the Claude sign-in page and the app: ?source=&email=
+	const params = new URLSearchParams(window.location.search);
+	const sourceInput = document.getElementById('source') as HTMLInputElement;
+	const useCaseInput = document.getElementById('useCase') as HTMLTextAreaElement;
+	if (params.get('source') && sourceInput) {
+		sourceInput.value = params.get('source') as string;
+		if (useCaseInput && !useCaseInput.value) {
+			useCaseInput.value = "I'd like to use Starmesh on my own CRM and calls.";
+		}
+	}
+	if (params.get('email')) {
+		emailInput.value = params.get('email') as string;
+	}
+
 	function isWorkEmail(email: string): boolean {
 		const personalDomains = [
 			'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 
@@ -394,6 +410,7 @@ import Footer from '../components/ui/Footer.astro';
 			const data = {
 				name: formData.get('Full Name'),
 				email: formData.get('Work Email'),
+				source: formData.get('Source'),
 				useCase: formData.get('Use Case'),
 				liveChat: formData.get('Live Chat?') === 'on',
 				timestamp: new Date().toISOString()
