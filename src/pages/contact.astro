@@ -12,7 +12,23 @@ import Footer from '../components/ui/Footer.astro';
 	<main class="contact-page">
 		<div class="contact-header">
 			<h1 class="contact-title">Talk to sales</h1>
+			<p class="contact-sub">Tell us about your team and we'll set up Starmesh on your own CRM and calls.</p>
 		</div>
+
+		<div class="contact-layout">
+		<aside class="contact-aside">
+			<h2>What happens next</h2>
+			<ol class="contact-steps">
+				<li><b>We reply within one business day</b> to agree on plan, seats and price.</li>
+				<li><b>You connect your sources</b> CRM, call recorder and email, in a few minutes.</li>
+				<li><b>Ask your deals anything</b> in Claude or ChatGPT, on your own data.</li>
+			</ol>
+			<ul class="contact-points">
+				<li>Salesforce and Attio CRM</li>
+				<li>Zoom, Granola, Gong and Microsoft Teams calls</li>
+				<li>Gmail and Google Calendar</li>
+			</ul>
+		</aside>
 
 		<div class="contact-form-container">
 			<form id="contactForm" class="contact-form">
@@ -26,6 +42,24 @@ import Footer from '../components/ui/Footer.astro';
 						<label for="email">Work Email *</label>
 						<input type="email" id="email" name="Work Email" required>
 						<span class="error-message" id="emailError"></span>
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group">
+						<label for="company">Company</label>
+						<input type="text" id="company" name="Company">
+					</div>
+
+					<div class="form-group">
+						<label for="teamSize">Team size</label>
+						<select id="teamSize" name="Team Size">
+							<option value="">Select</option>
+							<option>1-5</option>
+							<option>6-20</option>
+							<option>21-100</option>
+							<option>100+</option>
+						</select>
 					</div>
 				</div>
 
@@ -60,6 +94,7 @@ import Footer from '../components/ui/Footer.astro';
 				<a href="https://calendly.com/YOUR-LINK" class="btn-primary inline-block mt-4" target="_blank" rel="noopener">Schedule a Call</a>
 			</div>
 		</div>
+		</div>
 	</main>
 	<Footer />
 </BaseLayout>
@@ -92,6 +127,91 @@ import Footer from '../components/ui/Footer.astro';
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
 		background-clip: text;
+	}
+
+	.contact-sub {
+		max-width: 44rem;
+		margin: 0.5rem auto 0;
+		color: #A1A1AA;
+		font-size: 1.0625rem;
+		line-height: 1.5;
+	}
+
+	.contact-layout {
+		display: grid;
+		grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+		gap: 2rem;
+		align-items: start;
+		width: 100%;
+		max-width: 1000px;
+	}
+
+	.contact-aside h2 {
+		margin: 0 0 1rem;
+		font-size: 1.125rem;
+		font-weight: 600;
+		color: #FAFAFA;
+	}
+
+	.contact-steps {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: grid;
+		gap: 1rem;
+		counter-reset: step;
+	}
+
+	.contact-steps li {
+		position: relative;
+		padding-left: 2.5rem;
+		counter-increment: step;
+		color: #A1A1AA;
+		line-height: 1.5;
+	}
+
+	.contact-steps li::before {
+		content: counter(step);
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 1.75rem;
+		height: 1.75rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		border: 1px solid rgba(129, 140, 248, 0.5);
+		color: #C7D2FE;
+		font-size: 0.8125rem;
+		font-weight: 600;
+	}
+
+	.contact-steps b {
+		display: block;
+		color: #E4E4E7;
+		font-weight: 600;
+	}
+
+	.contact-points {
+		margin: 1.75rem 0 0;
+		padding: 1.25rem 0 0;
+		list-style: none;
+		display: grid;
+		gap: 0.5rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.07);
+		color: #A1A1AA;
+		font-size: 0.9375rem;
+	}
+
+	@media (max-width: 768px) {
+		.contact-layout {
+			grid-template-columns: 1fr;
+		}
+
+		.contact-aside {
+			order: 2;
+		}
 	}
 
 	.contact-form-container {
@@ -132,6 +252,7 @@ import Footer from '../components/ui/Footer.astro';
 	}
 
 	.contact-form input,
+	.contact-form select,
 	.contact-form textarea {
 		width: 100%;
 		box-sizing: border-box;
@@ -150,7 +271,16 @@ import Footer from '../components/ui/Footer.astro';
 		color: #71717A;
 	}
 
+	.contact-form select {
+		appearance: none;
+		-webkit-appearance: none;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23A1A1AA' stroke-width='2'%3E%3Cpath d='m1 1 5 5 5-5'/%3E%3C/svg%3E");
+		background-repeat: no-repeat;
+		background-position: right 0.875rem center;
+	}
+
 	.contact-form input:focus,
+	.contact-form select:focus,
 	.contact-form textarea:focus {
 		outline: none;
 		border-color: rgba(129, 140, 248, 0.7);
@@ -411,6 +541,8 @@ import Footer from '../components/ui/Footer.astro';
 				name: formData.get('Full Name'),
 				email: formData.get('Work Email'),
 				source: formData.get('Source'),
+				company: formData.get('Company'),
+				teamSize: formData.get('Team Size'),
 				useCase: formData.get('Use Case'),
 				liveChat: formData.get('Live Chat?') === 'on',
 				timestamp: new Date().toISOString()
