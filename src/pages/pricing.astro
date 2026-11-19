@@ -3,33 +3,32 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Navbar from '../components/nav/Navbar.astro';
 import CTASection from '../components/sections/CTASection.astro';
 import Footer from '../components/ui/Footer.astro';
+import { APP_URL } from '../config';
 
 const enterprise = [
-  { text: 'Unlimited call & email ingestion' },
-  { text: 'All AI signals — PWin, EWI, Deal Health, Churn Risk' },
-  { text: 'CRM write-back to Salesforce & HubSpot' },
-  { text: 'Custom warehouse destinations — BigQuery, Snowflake, Redshift' },
-  { text: 'Role-based access & SSO' },
-  { text: 'Dedicated onboarding & customer success manager' },
-  { text: 'Audit logging & compliance controls' },
-  { text: 'SLA-backed support with named contacts' },
+  { text: 'Your CRM and your calls — Salesforce or Attio, Zoom, Granola, Gong, or Teams' },
+  { text: 'Pipeline: open book by stage, and deals the calls don’t support' },
+  { text: 'Customer health: deal movement and the account story, with quotes' },
+  { text: 'Ask in Claude or ChatGPT (beta). Every answer cites the call or the record' },
+  { text: 'Email and calendar when you connect them' },
+  { text: 'We set the plan with you. There is no self-serve checkout' },
 ];
 
-const free = [
+const sample = [
   { text: 'Sample sales book — 30 deals, 3 reps, real-sounding calls' },
-  { text: 'Ask in Claude or ChatGPT' },
+  { text: 'Ask in Claude or ChatGPT (beta)' },
   { text: 'Every answer cites the call or record behind it' },
   { text: 'No card, no time limit' },
 ];
 
-// Free runs on sample data inside Claude via the public Starmesh plugin.
+// Sample data runs in the web app, or inside Claude via the public Starmesh plugin.
 const TRY_IN_CLAUDE_URL = 'https://github.com/starmesh-ai/starmesh-claude-plugin#install';
 // Price and seats are agreed on a call we set up by email.
 const CONTACT_URL = '/contact?source=pricing';
 ---
 <BaseLayout
   title="Pricing — Starmesh"
-  description="Try Starmesh free on sample data in Claude. Enterprise pricing for your own data is set on a call."
+  description="Try Starmesh on sample data in Claude or the web app. Pricing for your own CRM and calls is set on a call."
 >
   <Navbar />
   <main class="pt-16">
@@ -40,23 +39,23 @@ const CONTACT_URL = '/contact?source=pricing';
           <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">
             Built for <span class="gradient-text">enterprise teams</span>
           </h1>
-          <p class="text-[#A1A1AA] text-lg max-w-xl mx-auto">Try Starmesh free on sample data. For your own CRM, calls and email, pricing is usage-based — we'll give you a number on a call after understanding your use case.</p>
-          <p class="text-[#71717A] text-sm mt-4">Works in Claude and ChatGPT.</p>
+          <p class="text-[#A1A1AA] text-lg max-w-xl mx-auto">Try pipeline and customer health on sample data. Your own CRM and calls are usage-based — we agree the number with you after a look at the book.</p>
+          <p class="text-[#71717A] text-sm mt-4">Works in Claude, and in ChatGPT (beta).</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.6fr] gap-6 items-stretch">
           <div class="rounded-2xl overflow-hidden flex flex-col" style="border:1px solid rgba(255,255,255,.08); background:#0a0a0d;">
             <div class="px-8 py-8 border-b border-white/[0.06]">
-              <p class="text-xs text-[#A1A1AA] uppercase tracking-widest font-bold mb-3">Free</p>
+              <p class="text-xs text-[#A1A1AA] uppercase tracking-widest font-bold mb-3">Sample data</p>
               <div class="flex items-baseline gap-2 mb-2">
                 <span class="text-5xl font-bold text-[#FAFAFA] tracking-tight">$0</span>
               </div>
-              <p class="text-[#71717A] text-sm">Sample data in Claude · no time limit</p>
+              <p class="text-[#71717A] text-sm">Sample data in the app or in Claude · no time limit</p>
             </div>
             <div class="px-8 py-8 flex-1">
               <p class="text-xs text-[#52525B] uppercase tracking-widest font-semibold mb-6">What's included</p>
               <ul class="grid grid-cols-1 gap-3">
-                {free.map(f => (
+                {sample.map(f => (
                   <li class="flex items-start gap-3">
                     <span class="text-primary flex-shrink-0 mt-1">
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -67,7 +66,10 @@ const CONTACT_URL = '/contact?source=pricing';
               </ul>
             </div>
             <div class="px-8 py-6 border-t border-white/[0.06]" style="background:rgba(255,255,255,.01);">
-              <a href={TRY_IN_CLAUDE_URL} target="_blank" rel="noopener" class="btn-ghost w-full justify-center text-center">
+              <a href={APP_URL} class="btn-primary w-full justify-center text-center">
+                Get started
+              </a>
+              <a href={TRY_IN_CLAUDE_URL} target="_blank" rel="noopener" class="btn-ghost w-full justify-center text-center mt-3">
                 Try it in Claude
               </a>
             </div>
@@ -109,7 +111,7 @@ const CONTACT_URL = '/contact?source=pricing';
               >
                 Contact us
               </a>
-              <p class="text-[#52525B] text-sm text-center sm:text-left">We'll reply to set up a call, where price and seats are agreed. No commitment — we'll walk you through a live demo first.</p>
+              <p class="text-[#52525B] text-sm text-center sm:text-left">We'll reply to set up a call and agree price and seats. You connect your CRM and calls, then ask the book in Claude or ChatGPT (beta).</p>
             </div>
 
           </div>
