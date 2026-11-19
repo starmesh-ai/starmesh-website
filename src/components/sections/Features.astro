@@ -33,18 +33,18 @@ import InteractionTimelineWindow from '../InteractionTimelineWindow.astro';
           />
         </div>
 
-        <!-- Risk Alerts — same design system as Deal Forecast, intuitive at a glance -->
+        <!-- At-risk deals — same design system as Deal Forecast, intuitive at a glance -->
         <div class="flex flex-col">
           <div class="min-h-[7.5rem]">
             <div class="flex items-center gap-2.5 mb-1">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/></svg>
-              <h3 class="font-semibold text-[#FAFAFA]">Risk Alerts</h3>
-              <span class="text-[12px] text-[#52525B] uppercase tracking-wider">Early warning from your calls</span>
+              <h3 class="font-semibold text-[#FAFAFA]">At-risk deals</h3>
+              <span class="text-[12px] text-[#52525B] uppercase tracking-wider">Ask which deals need you</span>
             </div>
-            <p class="text-sm text-[#A1A1AA] leading-relaxed mb-5">Catch at-risk deals before they slip. Signals from every conversation — champion went quiet, pricing pushback, no next step — so you know who needs attention and why.</p>
+            <p class="text-sm text-[#A1A1AA] leading-relaxed mb-5">Ask which deals are at risk before they slip. Signals from every conversation — champion went quiet, pricing pushback, no next step — and get back who needs attention and why.</p>
           </div>
           <WinProbabilityWindow
-            title="Risk Alerts"
+            title="At-risk deals"
             variant="risk"
             compact
           />
@@ -196,7 +196,7 @@ import InteractionTimelineWindow from '../InteractionTimelineWindow.astro';
                 "Which deals look shaky, and which accounts went quiet",
                 "Grounded in the CRM and the linked calls",
                 "A citation for the call or the record",
-                "Works in Claude, and in ChatGPT (beta)",
+                "Works in Claude, and in ChatGPT (beta, needs developer mode)",
               ].map(b => (
                 <li class="flex items-start gap-3">
                   <svg class="w-4 h-4 text-primary flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
@@ -256,6 +256,23 @@ import InteractionTimelineWindow from '../InteractionTimelineWindow.astro';
           </div>
         </div>
 
+
+        <!-- Also in the app -->
+        <div>
+          <p class="text-xs text-[#71717A] uppercase tracking-widest mb-6 text-center">Also in the app</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-8">
+            {[
+              { t: "Win / loss", b: "Compare closed-won with closed-lost: objections, stakeholders, next steps, competitors." },
+              { t: "Team and rep views", b: "Admins and leads see each rep’s calls, talk share and what is connected. Reps see their own book." },
+              { t: "Review links", b: "Check and fix which deal a call belongs to. A wrong match is one click to correct." },
+            ].map(i => (
+              <div class="border-l-2 border-indigo-500/30 pl-6">
+                <h3 class="font-semibold text-[#E4E4E7] mb-2">{i.t}</h3>
+                <p class="text-sm text-[#A1A1AA] leading-relaxed">{i.b}</p>
+              </div>
+            ))}
+          </div>
+        </div>
 
       </div>
     </div>
