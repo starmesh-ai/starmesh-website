@@ -6,12 +6,20 @@ import Footer from '../components/ui/Footer.astro';
 import { APP_URL } from '../config';
 
 const enterprise = [
-  { text: 'Your CRM and your calls — Salesforce or Attio, Zoom, Granola, Gong, or Teams' },
-  { text: 'Pipeline: open book by stage, and deals the calls don’t support' },
-  { text: 'Customer health: deal movement and the account story, with quotes' },
-  { text: 'Ask in Claude or ChatGPT (beta). Every answer cites the call or the record' },
-  { text: 'Email and calendar when you connect them' },
-  { text: 'We set the plan with you. There is no self-serve checkout' },
+  { text: 'Everything in Starter' },
+  { text: 'Up to 12 months of history' },
+  { text: 'Whole-team CRM, with Admin, Lead and Rep views' },
+  { text: 'Admins can require sources for everyone' },
+  { text: 'Price and seats agreed with you on a call' },
+];
+
+// Mirrors the app's Pricing page (chat_app/src/onboarding/plans.ts).
+const starter = [
+  { text: 'Connect your own CRM, calls, email and calendar' },
+  { text: 'Up to 90 days of history' },
+  { text: 'Syncs every day' },
+  { text: 'Ask about your deals in Claude or ChatGPT (beta)' },
+  { text: 'Every answer cites the call or record behind it' },
 ];
 
 const sample = [
@@ -37,13 +45,13 @@ const CONTACT_URL = '/contact?source=pricing';
         <div class="text-center mb-16">
           <p class="text-xs text-[#71717A] uppercase tracking-widest mb-3">Pricing</p>
           <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-            Built for <span class="gradient-text">enterprise teams</span>
+            Start on sample data, <span class="gradient-text">then your own book</span>
           </h1>
-          <p class="text-[#A1A1AA] text-lg max-w-xl mx-auto">Try pipeline and customer health on sample data. Your own CRM and calls are usage-based — we agree the number with you after a look at the book.</p>
+          <p class="text-[#A1A1AA] text-lg max-w-xl mx-auto">Try pipeline and customer health on sample data for free. Connect your own CRM and calls on Starter, or talk to us about a team.</p>
           <p class="text-[#71717A] text-sm mt-4">Works in Claude, and in ChatGPT (beta, needs developer mode).</p>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.6fr] gap-6 items-stretch">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
           <div class="rounded-2xl overflow-hidden flex flex-col" style="border:1px solid rgba(255,255,255,.08); background:#0a0a0d;">
             <div class="px-8 py-8 border-b border-white/[0.06]">
               <p class="text-xs text-[#A1A1AA] uppercase tracking-widest font-bold mb-3">Sample data</p>
@@ -65,12 +73,41 @@ const CONTACT_URL = '/contact?source=pricing';
                 ))}
               </ul>
             </div>
-            <div class="px-8 py-6 border-t border-white/[0.06]" style="background:rgba(255,255,255,.01);">
+            <div class="px-8 py-6 border-t border-white/[0.06] min-h-[10rem] flex flex-col justify-center" style="background:rgba(255,255,255,.01);">
               <a href={APP_URL} class="btn-primary w-full justify-center text-center">
                 Get started
               </a>
               <a href={TRY_IN_CLAUDE_URL} target="_blank" rel="noopener" class="btn-ghost w-full justify-center text-center mt-3">
                 Try it in Claude
+              </a>
+            </div>
+          </div>
+
+          <div class="rounded-2xl overflow-hidden flex flex-col" style="border:1px solid rgba(255,255,255,.14); background:#0a0a0d;">
+            <div class="px-8 py-8 border-b border-white/[0.06]">
+              <p class="text-xs text-[#A1A1AA] uppercase tracking-widest font-bold mb-3">Starter</p>
+              <div class="flex items-baseline gap-2 mb-2">
+                <span class="text-5xl font-bold text-[#FAFAFA] tracking-tight">$29</span>
+                <span class="text-[#71717A] text-sm">per month</span>
+              </div>
+              <p class="text-[#71717A] text-sm">Analyze your own pipeline.</p>
+            </div>
+            <div class="px-8 py-8 flex-1">
+              <p class="text-xs text-[#52525B] uppercase tracking-widest font-semibold mb-6">What's included</p>
+              <ul class="grid grid-cols-1 gap-3">
+                {starter.map(f => (
+                  <li class="flex items-start gap-3">
+                    <span class="text-primary flex-shrink-0 mt-1">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                    <span class="text-sm text-[#A1A1AA] leading-snug">{f.text}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div class="px-8 py-6 border-t border-white/[0.06] min-h-[10rem] flex flex-col justify-center" style="background:rgba(255,255,255,.01);">
+              <a href={APP_URL} class="btn-primary w-full justify-center text-center">
+                Get started
               </a>
             </div>
           </div>
@@ -84,15 +121,15 @@ const CONTACT_URL = '/contact?source=pricing';
                   <div class="flex items-baseline gap-2 mb-2">
                     <span class="text-5xl font-bold text-[#FAFAFA] tracking-tight">Custom</span>
                   </div>
-                  <p class="text-[#71717A] text-sm">Usage-based pricing · scales with your data volume</p>
+                  <p class="text-[#71717A] text-sm">For teams · we set the plan with you</p>
                 </div>
-                <span class="flex-shrink-0 text-xs px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 font-semibold mt-1">Available now</span>
+                
               </div>
             </div>
 
             <div class="px-8 py-8 flex-1">
               <p class="text-xs text-[#52525B] uppercase tracking-widest font-semibold mb-6">What's included</p>
-              <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <ul class="grid grid-cols-1 gap-3">
                 {enterprise.map(f => (
                   <li class="flex items-start gap-3">
                     <span class="text-primary flex-shrink-0 mt-1">
@@ -104,14 +141,14 @@ const CONTACT_URL = '/contact?source=pricing';
               </ul>
             </div>
 
-            <div class="px-8 py-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center gap-4" style="background:rgba(255,255,255,.01);">
+            <div class="px-8 py-6 border-t border-white/[0.06] min-h-[10rem] flex flex-col justify-center items-stretch gap-3" style="background:rgba(255,255,255,.01);">
               <a
                 href={CONTACT_URL}
-                class="btn-primary w-full sm:w-auto flex-shrink-0 text-center"
+                class="btn-primary w-full text-center"
               >
                 Contact us
               </a>
-              <p class="text-[#52525B] text-sm text-center sm:text-left">We'll reply to set up a call and agree price and seats. You connect your CRM and calls, then ask the book in Claude or ChatGPT (beta).</p>
+              <p class="text-[#52525B] text-sm text-center">We'll reply to set up a call and agree price and seats.</p>
             </div>
 
           </div>
