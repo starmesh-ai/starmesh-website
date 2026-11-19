@@ -15,29 +15,29 @@ const dealMeta = metaProp ?? '74% · trending down';
 const dealPwinValue = dealMeta.split('·')[0]?.trim() ?? '74%';
 const dealTrend = dealMeta.includes('·') ? dealMeta.split('·').slice(1).join('·').trim() : '';
 
-// Deal: bar chart scale (max = target 2.4M)
-const dealTarget = 2.4;
-const dealManual = 1.9;
-const dealAI = 1.7;
-const dealBarPct = (v: number) => Math.round((v / dealTarget) * 100);
+const dealBars = [
+  { label: 'CRM', amount: '$2.4M', width: 100, bar: 'bg-[#E4E4E7]', text: 'text-[#FAFAFA]' },
+  { label: 'Calls', amount: '$1.7M', width: 71, bar: 'bg-teal-500', text: 'text-teal-400' },
+  { label: 'At risk', amount: '$0.6M', width: 25, bar: 'bg-red-400', text: 'text-red-400' },
+];
 const dealTopAtRisk = [
-  { name: 'Meridian', stage: 'Discovery', win: 41, risk: 'high', riskClass: 'text-red-400 bg-red-500/10 border-red-500/20' },
-  { name: 'Acme Corp', stage: 'Negotiation', win: 74, risk: 'medium', riskClass: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20' },
-  { name: 'Brightwave', stage: 'Demo', win: 79, risk: 'low', riskClass: 'text-green-400 bg-green-500/10 border-green-500/20' },
+  { name: 'Northwind', stage: 'Commit', note: 'no next step', risk: 'stuck', riskClass: 'text-red-400 bg-red-500/10 border-red-500/20' },
+  { name: 'Harbor', stage: 'Proposal', note: 'quiet 18d', risk: 'quiet', riskClass: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20' },
+  { name: 'Meridian', stage: 'Discover', note: 'one call', risk: 'thin', riskClass: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20' },
 ];
 
 // Account: single-number focus copy
-const accountHeadline = '5 at churn risk — act this week';
+const accountHeadline = 'What is still open';
 const accountBullets = [
-  'Acme Corp · renewal in 47 days, champion cold',
-  'Brightwave · health falling, renewal in 18 days',
-  '2 more in 30–90 day window need attention',
+  'Northwind · objection still open, no call in 18 days',
+  'Harbor · champion stopped replying',
+  'Meridian · one call, too thin to judge',
 ];
 const accountList = [
-  { name: 'Acme Corp', renewal: '47 days', health: 44, risk: 'high', riskClass: 'text-red-400 bg-red-500/10 border-red-500/20' },
-  { name: 'FinCo Ltd', renewal: '82 days', health: 78, risk: 'low', riskClass: 'text-green-400 bg-green-500/10 border-green-500/20' },
-  { name: 'Meridian', renewal: '120 days', health: 91, risk: 'low', riskClass: 'text-green-400 bg-green-500/10 border-green-500/20' },
-  { name: 'Brightwave', renewal: '18 days', health: 58, risk: 'medium', riskClass: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20' },
+  { name: 'Northwind', renewal: 'objection open', health: 0, risk: 'stuck', riskClass: 'text-red-400 bg-red-500/10 border-red-500/20' },
+  { name: 'Harbor', renewal: 'champion quiet', health: 0, risk: 'quiet', riskClass: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20' },
+  { name: 'Meridian', renewal: 'one call', health: 0, risk: 'thin', riskClass: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20' },
+  { name: 'Bright', renewal: 'moving', health: 0, risk: 'ok', riskClass: 'text-green-400 bg-green-500/10 border-green-500/20' },
 ];
 
 // Feature: narrative + compact list
@@ -81,11 +81,11 @@ const riskAlerts = [
     <div class="flex flex-col flex-shrink-0" style={compact ? "width:110px; background:#0a0a0d; border-right:1px solid rgba(255,255,255,0.05);" : "width:132px; background:#0a0a0d; border-right:1px solid rgba(255,255,255,0.05);"}>
       {variant === 'deal' && (
         <>
-          <div class="px-3 py-2 border-b border-white/[0.04]"><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold">Quarter</p></div>
-          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">Q1 2025</p></div>
-          <div class="px-3 py-2.5 border-b border-white/[0.03] bg-teal-500/10 border-l-2 border-l-teal-500/70"><p class="text-[11px] text-[#E4E4E7] font-semibold">Q2 2025</p></div>
-          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">Q3 2025</p></div>
-          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">Q4 2025</p></div>
+          <div class="px-3 py-2 border-b border-white/[0.04]"><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold">Stage</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">Discover</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03] bg-teal-500/10 border-l-2 border-l-teal-500/70"><p class="text-[11px] text-[#E4E4E7] font-semibold">Commit</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">Proposal</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">All open</p></div>
           <div class="px-3 pt-3 mt-auto border-t border-white/[0.04]">
             <p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold mb-2">Filter</p>
             <p class="text-[11px] py-0.5 text-[#A1A1AA] font-semibold">All</p>
@@ -96,15 +96,15 @@ const riskAlerts = [
       )}
       {variant === 'account' && (
         <>
-          <div class="px-3 py-2 border-b border-white/[0.04]"><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold">Renewal window</p></div>
-          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">90+ days</p></div>
-          <div class="px-3 py-2.5 border-b border-white/[0.03] bg-teal-500/10 border-l-2 border-l-teal-500/70"><p class="text-[11px] text-[#E4E4E7] font-semibold">30–90 days</p></div>
-          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">0–30 days</p></div>
+          <div class="px-3 py-2 border-b border-white/[0.04]"><p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold">Look at</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">Deals</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03] bg-teal-500/10 border-l-2 border-l-teal-500/70"><p class="text-[11px] text-[#E4E4E7] font-semibold">Accounts</p></div>
+          <div class="px-3 py-2.5 border-b border-white/[0.03]"><p class="text-[11px] text-[#52525B]">Both</p></div>
           <div class="px-3 pt-3 mt-auto border-t border-white/[0.04]">
             <p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold mb-2">Filter</p>
             <p class="text-[11px] py-0.5 text-[#A1A1AA] font-semibold">All</p>
-            <p class="text-[11px] py-0.5 text-[#3F3F46]">Churn risk</p>
-            <p class="text-[11px] py-0.5 text-[#3F3F46]">Healthy</p>
+            <p class="text-[11px] py-0.5 text-[#3F3F46]">Open items</p>
+            <p class="text-[11px] py-0.5 text-[#3F3F46]">Thin reads</p>
           </div>
         </>
       )}
@@ -147,29 +147,17 @@ const riskAlerts = [
           )}
           <!-- Chart-first: bar chart Target vs Manual vs AI (quarter forecast) -->
           <div class:list={["flex-shrink-0", compact ? "px-3 pt-2 pb-2" : "px-4 pt-4 pb-3"]}>
-            <p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold mb-2">Forecast vs target</p>
+            <p class="text-[9px] text-[#3F3F46] uppercase tracking-wider font-bold mb-2">CRM beside the calls</p>
             <div class={compact ? "space-y-1.5" : "space-y-2.5"}>
-              <div class="flex items-center gap-3">
-                <span class="text-[10px] text-[#71717A] w-14 flex-shrink-0">Target</span>
-                <div class={`flex-1 rounded bg-white/[0.06] overflow-hidden ${compact ? "h-4" : "h-5"}`}>
-                  <div class="h-full rounded bg-[#E4E4E7]" style={`width:${dealBarPct(dealTarget)}%`}></div>
+              {dealBars.map((row) => (
+                <div class="flex items-center gap-3">
+                  <span class="text-[10px] text-[#71717A] w-14 flex-shrink-0">{row.label}</span>
+                  <div class={`flex-1 rounded bg-white/[0.06] overflow-hidden ${compact ? "h-4" : "h-5"}`}>
+                    <div class={`h-full rounded ${row.bar}`} style={`width:${row.width}%`}></div>
+                  </div>
+                  <span class={`text-[11px] font-mono font-bold w-10 text-right ${row.text}`}>{row.amount}</span>
                 </div>
-                <span class="text-[11px] font-mono font-bold text-[#FAFAFA] w-10 text-right">$2.4M</span>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="text-[10px] text-[#71717A] w-14 flex-shrink-0">Manual</span>
-                <div class={`flex-1 rounded bg-white/[0.06] overflow-hidden ${compact ? "h-4" : "h-5"}`}>
-                  <div class="h-full rounded bg-[#A1A1AA]" style={`width:${dealBarPct(dealManual)}%`}></div>
-                </div>
-                <span class="text-[11px] font-mono font-bold text-[#A1A1AA] w-10 text-right">$1.9M</span>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="text-[10px] text-[#71717A] w-14 flex-shrink-0">AI</span>
-                <div class={`flex-1 rounded bg-white/[0.06] overflow-hidden ${compact ? "h-4" : "h-5"}`}>
-                  <div class="h-full rounded bg-teal-500" style={`width:${dealBarPct(dealAI)}%`}></div>
-                </div>
-                <span class="text-[11px] font-mono font-bold text-teal-400 w-10 text-right">$1.7M</span>
-              </div>
+              ))}
             </div>
           </div>
           <!-- Top 3 at risk (PWin per deal) -->
@@ -182,12 +170,8 @@ const riskAlerts = [
                     <p class="text-[12px] font-medium text-[#E4E4E7] truncate">{d.name}</p>
                     <p class="text-[10px] text-[#52525B]">{d.stage}</p>
                   </div>
-                  <div class="flex items-center gap-1.5 flex-shrink-0" title="PWin (predicted win probability)">
-                    <span class="text-[9px] text-[#52525B] uppercase tracking-wider w-8 text-right flex-shrink-0">PWin</span>
-                    <div class="w-10 h-1.5 rounded-full bg-white/[0.06]">
-                      <div class="h-1.5 rounded-full bg-teal-500 opacity-70" style={`width:${d.win}%`}></div>
-                    </div>
-                    <span class={`text-[11px] font-mono font-bold w-6 text-right ${d.win < 50 ? 'text-red-400' : 'text-[#E4E4E7]'}`}>{d.win}%</span>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] text-[#A1A1AA]">{d.note}</span>
                   </div>
                   <span class={`text-[10px] px-1.5 py-0.5 rounded border font-medium w-14 text-center flex-shrink-0 ${d.riskClass}`}>{d.risk}</span>
                 </div>
@@ -223,13 +207,7 @@ const riskAlerts = [
                   <div class="flex items-center px-3 py-2 gap-2 bg-white/[0.02]">
                     <div class="flex-1 min-w-0">
                       <p class="text-[12px] font-medium text-[#E4E4E7] truncate">{a.name}</p>
-                      <p class="text-[10px] text-[#52525B]">Renewal in {a.renewal}</p>
-                    </div>
-                    <div class="flex items-center gap-1.5 flex-shrink-0">
-                      <div class="w-10 h-1.5 rounded-full bg-white/[0.06]">
-                        <div class="h-1.5 rounded-full bg-teal-500 opacity-70" style={`width:${a.health}%`}></div>
-                      </div>
-                      <span class="text-[11px] font-mono font-bold w-5 text-right text-[#E4E4E7]">{a.health}</span>
+                      <p class="text-[10px] text-[#52525B]">{a.renewal}</p>
                     </div>
                     <span class={`text-[10px] px-1.5 py-0.5 rounded border font-medium w-14 text-center flex-shrink-0 ${a.riskClass}`}>{a.risk}</span>
                   </div>

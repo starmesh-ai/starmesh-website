@@ -5,123 +5,86 @@ import Footer from '../components/ui/Footer.astro';
 ---
 <BaseLayout
   title="Documentation — Starmesh"
-  description="Starmesh documentation: data sources, transforms, destinations, and support."
+  description="Starmesh documentation: getting started, asking in Claude or ChatGPT, connecting your CRM and calls, and support."
 >
   <Navbar />
   <main class="doc-page">
     <h1>Documentation</h1>
 
     <section>
-      <h2>What Is Starmesh?</h2>
-      <p>Starmesh is a unified analytics platform that transforms raw unstructured data — like call transcripts, meeting recordings, chats, social media posts, and documents — into structured, analyzable insights.</p>
-      <p>We support seamless ingestion from multiple platforms (Zoom, Teams, Gong, Fireflies, Reddit, Google Drive, etc.) and apply advanced AI to extract topics, sentiment, entities, and themes — all without requiring manual effort or custom code.</p>
+      <h2>What is Starmesh?</h2>
+      <p>Starmesh reads your CRM and your customer calls, and answers two questions: which deals are real, and how an account is doing. You ask in Claude or ChatGPT (beta). Every answer cites the call or the record it came from.</p>
     </section>
 
     <section>
-      <h2>Key Capabilities</h2>
+      <h2>Getting started</h2>
+      <ol>
+        <li>Go to <a href="https://app.starmesh.ai">app.starmesh.ai</a> and sign up with Google or email.</li>
+        <li>You land on a sample sales book (a fictional company). Look around, then ask questions about it in Claude or ChatGPT.</li>
+        <li>To use your own data, connect your CRM and call recorder on the Connect page and choose a plan. <a href="/contact">Contact us</a> to agree the plan.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Ask in Claude or ChatGPT</h2>
       <ul>
-        <li><strong>Multi-source ingestion:</strong> Connect to audio/video platforms, chat systems, forums, document storage, and more.</li>
-        <li><strong>AI-powered transforms:</strong>
-          <ul>
-            <li>Topic modeling (guided or unsupervised)</li>
-            <li>Sentiment analysis (overall, per speaker, per topic)</li>
-            <li>Entity recognition and classification</li>
-            <li>Embedding generation and semantic search</li>
-          </ul>
-        </li>
-        <li><strong>Pipeline builder:</strong> Define reusable data flows from source to transform to storage.</li>
-        <li><strong>Export to warehouse:</strong> Write output to BigQuery, GCS, or download as CSV/JSON.</li>
+        <li><strong>Claude:</strong> install the <a href="https://github.com/starmesh-ai/starmesh-claude-plugin#install" target="_blank" rel="noopener">Starmesh plugin</a>, or open the Ask button in the app.</li>
+        <li><strong>ChatGPT (beta):</strong> add Starmesh as a custom connector. This needs a ChatGPT plan with developer mode (Plus, Pro, Business or Enterprise). The app shows the exact steps and link.</li>
       </ul>
     </section>
 
     <section>
-      <h2>Connecting a Data Source</h2>
-      <p>Starmesh supports multiple types of sources. Here's a high-level process to connect one:</p>
-      <ol>
-        <li>Go to your dashboard → Sources.</li>
-        <li>Select the source type (e.g., Zoom, Reddit, Teams, Google Drive).</li>
-        <li>Follow the prompts to authenticate (via OAuth, service account, or API token).</li>
-        <li>Choose the subset of data you want to analyze (e.g., folders, users, topics, recordings).</li>
-        <li>Starmesh will begin ingesting and preprocessing the content.</li>
-      </ol>
-      <h3>Supported source types include:</h3>
+      <h2>What you can ask</h2>
       <table class="doc-table">
-        <thead>
-          <tr>
-            <th>Type</th>
-            <th>Examples</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Question</th><th>What you get</th></tr></thead>
         <tbody>
-          <tr><td>Audio/Video platforms</td><td>Zoom, Microsoft Teams, Gong, Fireflies</td></tr>
-          <tr><td>Social & forums</td><td>Reddit, Twitter/X, LinkedIn</td></tr>
-          <tr><td>Messaging & support</td><td>Intercom, Slack, Salesforce cases</td></tr>
-          <tr><td>File & doc storage</td><td>Google Drive, Dropbox, SharePoint</td></tr>
-          <tr><td>Email (upcoming)</td><td>Gmail, Outlook</td></tr>
+          <tr><td>Which deals look shaky?</td><td>Open pipeline by stage, and the deals the calls do not support: no next step, an open objection, a long silence</td></tr>
+          <tr><td>Is this deal moving?</td><td>Open commitments, unresolved objections, days since last contact, who is engaged, and whether the last two calls got better or worse, with quotes. A deal with too little to read is called a thin read</td></tr>
+          <tr><td>How is this account doing?</td><td>What happened, what changed and what is still open, in order, tied to the call each moment came from</td></tr>
+          <tr><td>Who is doing the talking?</td><td>Rep talk share and questions per call, next to the team median</td></tr>
         </tbody>
       </table>
-      <p class="doc-note">Note: Not all integrations are available yet. Some source types are coming soon!</p>
+      <p class="doc-note">Coverage against quota is not shown until quota data is connected.</p>
     </section>
 
     <section>
-      <h2>Built-in Transforms</h2>
+      <h2>Connecting your data</h2>
+      <p>Use the Connect page in the app. Connect your CRM and call recorder first. Email and calendar are optional.</p>
       <table class="doc-table">
-        <thead>
-          <tr>
-            <th>Transform</th>
-            <th>Description</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Type</th><th>Sources</th></tr></thead>
         <tbody>
-          <tr><td>Topic Modeling</td><td>Extract structured topics from conversations or text (LLM or traditional models)</td></tr>
-          <tr><td>Sentiment Analysis</td><td>Detect sentiment per document, per speaker, or by topic</td></tr>
-          <tr><td>Entity Recognition</td><td>Identify companies, products, features, competitors, people, and intent</td></tr>
-          <tr><td>Embeddings & Search</td><td>Generate dense vector representations for semantic similarity or retrieval</td></tr>
-          <tr><td>Custom Prompt Workflows</td><td>Define prompt-based transformations with output schema enforcement</td></tr>
+          <tr><td>CRM</td><td>Salesforce, Attio</td></tr>
+          <tr><td>Calls</td><td>Zoom, Microsoft Teams, Google Meet, Gong, Granola</td></tr>
+          <tr><td>Email</td><td>Gmail</td></tr>
+          <tr><td>Calendar</td><td>Google Calendar</td></tr>
         </tbody>
       </table>
+      <p>Starmesh matches each call to the right deal and account. You can review and correct those matches under Review links in the app. On a team, an Admin can make some sources required for everyone.</p>
     </section>
 
     <section>
-      <h2>Destinations</h2>
-      <p>Once analyzed, your data can be exported to:</p>
+      <h2>Plans</h2>
       <ul>
-        <li>Google BigQuery</li>
-        <li>Google Cloud Storage</li>
-        <li>Download</li>
-        <li>Upcoming: Snowflake and PostgreSQL</li>
+        <li><strong>Sample data:</strong> free, no time limit.</li>
+        <li><strong>Your own CRM and calls:</strong> paid, set up with us. How far back Starmesh reads and how often it syncs depend on the plan.</li>
       </ul>
     </section>
 
     <section>
-      <h2>Testing and Observability</h2>
+      <h2>Security and access</h2>
       <ul>
-        <li>Preview mode for pipeline testing</li>
-        <li>Logs and data flow diagrams</li>
-        <li>Versioned runs to compare model configurations</li>
+        <li>Sources connect with OAuth. You can disconnect any of them.</li>
+        <li>Encryption at rest and in transit.</li>
+        <li>Each person's calls, email and calendar stay their own, even on a team plan.</li>
       </ul>
     </section>
 
     <section>
-      <h2>Security and Access Control</h2>
-      <ul>
-        <li>OAuth 2.0 and service account authentication</li>
-        <li>Encryption at rest and in transit</li>
-        <li>Fine-grained access control</li>
-        <li>No indefinite storage of raw content unless explicitly configured</li>
-      </ul>
-    </section>
+      <h2>Disconnecting a source or deleting data</h2>
+      <p>To disconnect a source, open Settings in the app, go to Data sources and disconnect it.</p>
+      <p>To remove everything, open Settings, then Account. Reset removes every connected source and the data synced from it and keeps your sign-in. Delete removes your account and everything connected to it.</p>
+      <p>You can also email <a href="mailto:support@starmesh.ai">support@starmesh.ai</a>.</p>
 
-    <section>
-      <h2>Disconnecting a Source or Deleting Data</h2>
-      <p>To disconnect a data source:</p>
-      <ol>
-        <li>Go to Sources tab.</li>
-        <li>Click the settings icon for the source.</li>
-        <li>Click Revoke Access or Disconnect.</li>
-      </ol>
-      <p>To delete ingested data, go to Settings → Data Management and request deletion, or email <a href="mailto:support@starmesh.ai">support@starmesh.ai</a>.</p>
-      
       <h3>Removing Starmesh from your Zoom Apps</h3>
       <ol>
         <li>Log in to your Zoom account and navigate to the Zoom App Marketplace.</li>
@@ -132,9 +95,8 @@ import Footer from '../components/ui/Footer.astro';
     </section>
 
     <section>
-      <h2>Need Help?</h2>
+      <h2>Need help?</h2>
       <p>Email: <a href="mailto:support@starmesh.ai">support@starmesh.ai</a></p>
-      <p>Website: <a href="https://starmesh.ai" target="_blank" rel="noopener">https://starmesh.ai</a></p>
     </section>
   </main>
   <Footer />

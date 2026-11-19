@@ -1,48 +1,29 @@
 ---
 const tabs = [
   {
-    id: "sales",
-    label: "Sales",
-    description: "Turn every call and email into a structured signal that drives pipeline confidence.",
+    id: "pipeline",
+    label: "Pipeline",
+    description: "Open pipeline from the CRM, checked against what the calls actually support.",
     benefits: [
-      { title: "Early Deal Risk Detection", body: "Surface at-risk deals weeks before they slip — based on what's actually said, not just CRM fields." },
-      { title: "Forecast Confidence", body: "Score forecast accuracy from conversation signals, not just rep gut feel and stage dates." },
-      { title: "Objective Pipeline Signals", body: "Replace subjective call notes with structured, consistent data your whole RevOps team can trust." },
-      { title: "Fewer Surprise Slips", body: "Get ahead of deals going dark by catching negative sentiment and stalled engagement early." },
-      { title: "Consistent MEDDICC / Qualification Tracking", body: "Automatically track whether key qualification criteria were discussed on every call." },
-      { title: "Visibility Beyond CRM Fields", body: "See what's actually happening in deals — competitor mentions, pricing pushback, champion engagement." },
-      { title: "Identify Expansion Opportunities Early", body: "Spot upsell signals from customers who mention new use cases or growing teams." },
-      { title: "Reduce Manual Forecast Debates", body: "Give leadership structured, auditable evidence behind every call and pipeline update." },
+      { title: "Open pipeline by stage", body: "See the book the CRM shows, stage by stage, including deals with no amount so they are not silently dropped." },
+      { title: "Which deals the calls don’t support", body: "A stage can say Commit while the last call has no next step, an open objection, or nobody spoken to in weeks." },
+      { title: "What needs you this week", body: "Ask which deals need a person now. The answer names the deal, the blocker, and the call it came from." },
+      { title: "Risk you can check", body: "Stalled contact, unresolved objections, and a single champion are read from the conversations, not from a rep’s stage note." },
+      { title: "Ask it in Claude or ChatGPT (beta)", body: "“Do we have enough pipeline?” and “which deals are shaky?” run on your CRM and the calls linked to those deals." },
+      { title: "No invented coverage number", body: "Open pipeline and risk are available today. Coverage against quota waits until quota data is connected — Starmesh will say so." },
     ],
   },
   {
-    id: "cx",
-    label: "CX",
-    description: "Catch churn before it happens and build renewal confidence from real account signals.",
+    id: "health",
+    label: "Customer health",
+    description: "Whether a deal is moving, and the story of an account, from the calls and the CRM.",
     benefits: [
-      { title: "Early Churn Warning", body: "Detect dissatisfaction and disengagement in calls weeks before a customer churns or escalates." },
-      { title: "Renewal Risk Visibility", body: "Score every account's renewal health based on support tickets, call sentiment, and engagement trends." },
-      { title: "Account Health Clarity", body: "A single, consistent health score built from conversation data — not just product usage." },
-      { title: "Escalation Impact on Revenue", body: "Quantify how support escalations correlate with churn and contraction across your book." },
-      { title: "Expansion Signals from Usage & Conversations", body: "Identify customers who mention growing teams or new needs before they ever ask for a quote." },
-      { title: "Unified View Across Support + Sales", body: "See what CS and sales are hearing from the same account in one structured dataset." },
-      { title: "Proactive Renewal Conversations", body: "Know exactly which accounts need outreach — backed by sentiment and engagement data — before it's too late." },
-      { title: "Reduced Surprise Churn", body: "No more 'we had no idea they were unhappy.' Every signal, surfaced and structured in your warehouse." },
-    ],
-  },
-  {
-    id: "product",
-    label: "Product",
-    description: "Stop guessing what to build next. Get structured signal from every customer conversation.",
-    benefits: [
-      { title: "Voice-of-Customer Trends", body: "Track what customers talk about across every sales call and support interaction — at scale." },
-      { title: "Feature Demand Signals", body: "Automatically extract and count feature requests from calls, ranked by frequency and deal size." },
-      { title: "Product Friction Detection", body: "Surface the exact moments where customers say something doesn't work, is confusing, or is missing." },
-      { title: "Competitive Mentions Tracking", body: "Know which competitors come up, in which segments, and how often — straight from customer conversations." },
-      { title: "Root Causes of Churn", body: "Understand why customers left beyond 'price' — linked back to the actual conversations they had." },
-      { title: "Expansion Drivers", body: "Identify which product capabilities lead customers to expand — and double down on them." },
-      { title: "Customer Objection Patterns", body: "See recurring objections by segment, rep, and deal size so product and marketing can address them." },
-      { title: "Feedback Across Sales + Support", body: "Unify feedback from pre-sales calls, onboarding, and support into one structured product intelligence layer." },
+      { title: "Is this deal actually moving?", body: "Deal health checks open commitments, objections that were never resolved, how long since the last touch, and how many people are engaged." },
+      { title: "The quote, not a score", body: "Each claim points at the moment on the call. A thin deal — one conversation, or calls that may not belong to it — is called out as a thin read." },
+      { title: "Brief me on this account", body: "Account health is the story: what happened, what changed, what’s still open, and what you’d do next. Prose, with dates." },
+      { title: "Who went quiet", body: "A champion who stopped replying, a new stakeholder, or a shifted ask shows up as a change, not as a health-score delta." },
+      { title: "What’s owed, and by whom", body: "Commitments past their date, objections still open, and questions nobody answered — each tied to the conversation." },
+      { title: "Same sources as pipeline", body: "Salesforce or Attio, plus Zoom, Granola, Gong, or Teams. Email and calendar when you connect them. One book, two questions." },
     ],
   },
 ];
@@ -52,9 +33,9 @@ const tabs = [
     <div class="text-center mb-8">
       <p class="text-xs text-[#71717A] uppercase tracking-widest mb-3">Benefits</p>
       <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-        What every customer-facing team <span class="gradient-text">actually gains</span>
+        Two questions the product <span class="gradient-text">answers today</span>
       </h2>
-      <p class="text-[#A1A1AA] text-lg max-w-2xl mx-auto">When conversations become structured data, every team stops guessing and starts acting on what customers actually said.</p>
+      <p class="text-[#A1A1AA] text-lg max-w-2xl mx-auto">Pipeline management and customer health, from the CRM and the calls already on the deal or account.</p>
     </div>
 
     <!-- Tab inputs (hidden) -->
@@ -115,7 +96,7 @@ const tabs = [
     });
   });
 
-  showTab('sales');
+  showTab('pipeline');
 </script>
 
 <style>

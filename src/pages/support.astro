@@ -1,62 +1,49 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Navbar from '../components/Navbar.astro';
-import Footer from '../components/Footer.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/nav/Navbar.astro';
+import Footer from '../components/ui/Footer.astro';
 ---
-<Layout title="Starmesh Support">
+<BaseLayout title="Support — Starmesh" description="Get help with Starmesh: connecting your CRM and calls, asking in Claude or ChatGPT, and account questions.">
   <Navbar />
   <main class="support-page">
     <h1>Support</h1>
-    
+
     <section class="support-intro">
-      <h2>Need Help with Starmesh?</h2>
-      <p>We're here to assist you. If you have questions, encounter issues, or need support while using Starmesh - our unstructured data analytics platform - please reach out using one of the methods below.</p>
+      <h2>Need help with Starmesh?</h2>
+      <p>If you have a question or hit a problem connecting your CRM and calls, or asking about your pipeline and accounts in Claude or ChatGPT, email us.</p>
     </section>
-  
+
     <section class="support-contact">
-      <h3>Email Support</h3>
-      <p>For technical issues, onboarding help, data source configuration, or analytics questions, email us at:</p>
+      <h3>Email support</h3>
       <p><a href="mailto:support@starmesh.ai">support@starmesh.ai</a></p>
       <p>We typically respond within one (1) business day.</p>
     </section>
-  
+
     <section class="support-help">
-      <h3>What We Can Help With</h3>
+      <h3>What we can help with</h3>
       <ul>
-        <li><strong>Source Integration:</strong> Issues with connecting to supported platforms (e.g., Zoom, Microsoft Teams, Fireflies, Gong, Reddit, CRMs, cloud storage).</li>
-        <li><strong>Authentication & Permissions:</strong> Troubleshooting OAuth, service accounts, or access scopes.</li>
-        <li><strong>Data Ingestion:</strong> Missing or delayed data from meetings, documents, chats, or social platforms.</li>
-        <li><strong>Analysis Results:</strong> Questions about topic modeling, sentiment scoring, entity extraction, or embeddings.</li>
-        <li><strong>UI or Dashboard Bugs:</strong> Something not showing up as expected? Let us know.</li>
-        <li><strong>Account & Project Setup:</strong> Help configuring pipelines or setting up new analyses.</li>
-        <li><strong>Data Security & Deletion:</strong> Request removal of ingested data or revoke access to external sources.</li>
+        <li><strong>Connecting sources:</strong> Salesforce or Attio, and Zoom, Teams, Google Meet, Gong, Granola, Gmail or Google Calendar.</li>
+        <li><strong>Sign-in and permissions:</strong> OAuth errors, access scopes, team roles.</li>
+        <li><strong>Missing or late data:</strong> a call or deal that has not shown up after a sync.</li>
+        <li><strong>Wrong matches:</strong> a call linked to the wrong deal. You can also fix these under Review links in the app.</li>
+        <li><strong>Claude and ChatGPT:</strong> adding Starmesh as a plugin or connector.</li>
+        <li><strong>Plans:</strong> moving from the sample data to your own CRM and calls.</li>
+        <li><strong>Data removal:</strong> disconnecting a source, or resetting or deleting your account.</li>
       </ul>
     </section>
-  
+
     <section class="support-troubleshooting">
-      <h3>Troubleshooting Tips</h3>
-      <p>Before contacting support, you may want to:</p>
+      <h3>Before you write</h3>
       <ul>
-        <li>Re-check your credentials or OAuth settings for connected platforms.</li>
-        <li>Ensure the appropriate roles/permissions are granted (e.g., admin or editor access).</li>
-        <li>Verify that the data source (e.g. a call or post) has completed uploading or syncing.</li>
-        <li>Use the built-in logs or "last sync" indicators in your Starmesh workspace to confirm status.</li>
+        <li>Check the source is still connected in Settings, under Data sources.</li>
+        <li>Check the account you connected can see the calls or deals you expect.</li>
+        <li>Allow a few minutes after connecting for the first sync. The Connect page shows progress.</li>
+        <li>See the <a href="/documentation">documentation</a> for setup steps.</li>
       </ul>
     </section>
-  
-    <section class="support-protips">
-      <h3>Pro Tips for Getting the Most Out of Starmesh</h3>
-      <ul>
-        <li>Use pre-built transforms like topic detection, sentiment analysis, keyword tracking, or question classification.</li>
-        <li>Configure custom data connectors using your own API keys or service accounts for enterprise tools.</li>
-        <li>Filter by user group, department, or speaker role to focus insights (especially for call transcripts).</li>
-        <li>Export insights to BigQuery, GCS, or spreadsheets for deeper analysis.</li>
-        <li>If you're unsure how to use a feature, just ask — we're happy to walk you through it.</li>
-      </ul>
-    </section>
-  
+
     <section class="support-company">
-      <h3>Company Information</h3>
+      <h3>Company information</h3>
       <div class="company-info">
         <div>Starmesh Inc.</div>
         <div>California, USA</div>
@@ -66,7 +53,7 @@ import Footer from '../components/Footer.astro';
     </section>
   </main>
   <Footer />
-</Layout>
+</BaseLayout>
 
 <style>
 .support-page {
